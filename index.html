@@ -400,6 +400,47 @@ function ticketBadgeColor(ticket) {
   return 'bg-surface-variant text-on-surface-variant border-outline-variant/30';
 }
 
+function getLocalityImage(name) {
+  const specific = {
+    'Puerto Deseado': images.deseado,
+    '28 de Noviembre': images.noviembre,
+    'El Calafate': images.calafate,
+    'Río Gallegos': images.culture,
+    'El Chaltén': images.sport,
+    'Los Antiguos': images.food
+  };
+  if (specific[name]) return specific[name];
+  const fallbacks = [images.coast, images.tour, images.community, images.lodge];
+  const charSum = name.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+  return fallbacks[charSum % fallbacks.length];
+}
+
+function serviceCard(s) {
+  return `
+    <article class="bg-surface rounded-xl border border-outline-variant/50 p-md hover:ambient-shadow transition-shadow flex flex-col justify-between group">
+      <div>
+        <div class="flex items-center justify-between gap-2 mb-3">
+          <span class="font-label-sm text-[10px] font-bold text-primary-container uppercase bg-surface-container px-2 py-1 rounded">
+            ${s.rubric}
+          </span>
+          <span class="text-on-surface-variant font-label-sm flex items-center gap-[2px] truncate">
+            <span class="material-symbols-outlined text-[14px] leading-none">pin_drop</span>
+            ${s.locality}
+          </span>
+        </div>
+        <h3 class="font-title-sm text-primary mb-2 line-clamp-1 group-hover:text-secondary transition-colors">${s.name}</h3>
+        <p class="font-body-md text-on-surface-variant line-clamp-3 mb-4 text-sm">${s.description}</p>
+      </div>
+      <div class="pt-4 border-t border-outline-variant/30 flex items-center gap-2">
+        <a href="https://wa.me/5492974000000?text=Hola! Te contacto desde Agenda Santa Cruz." target="_blank" class="flex-grow bg-[#25D366] text-white font-button py-2 px-3 rounded-lg flex items-center justify-center gap-2 hover:bg-[#128C7E] transition-colors">
+          <span class="material-symbols-outlined text-[18px]">chat</span>
+          WhatsApp
+        </a>
+      </div>
+    </article>
+  `;
+}
+
 function eventCard(e, compact = false) {
   const badgeCls = ticketBadgeColor(e.ticket || 'A confirmar');
   const tkt = e.ticket || 'A confirmar';
@@ -468,21 +509,31 @@ function eventCard(e, compact = false) {
   `;
 }
 
-function localityCard(name, featured = false) {
-  const img = name === 'Puerto Deseado' ? images.deseado : name === '28 de Noviembre' ? images.noviembre : name === 'El Calafate' ? images.calafate : images.coast;
+function localityCard(name, context = 'grid', activeRegion = 'Todas') {
+  const img = getLocalityImage(name);
   const desc = localityDescriptions[name] || localityDescriptions.default;
   const region = regionFor(name);
+  const showBadge = region !== activeRegion;
   
-  if (featured) {
+  const eCount = baseEvents.filter(e => e.locality === name).length;
+  const sCount = services.filter(s => s.locality === name).length;
+  
+  let microText = '';
+  if (eCount > 0 && sCount > 0) microText = `${eCount} eventos &middot; ${sCount} servicios`;
+  else if (eCount > 0) microText = `${eCount} eventos`;
+  else if (sCount > 0) microText = `${sCount} servicios`;
+
+  if (context === 'hero') {
     return `
-      <article class="relative rounded-2xl overflow-hidden ambient-shadow group cursor-pointer h-72 md:h-80 lg:col-span-2" onclick="route('#/destinos/${slug(name)}')">
+      <article class="relative rounded-2xl overflow-hidden ambient-shadow group cursor-pointer h-72 md:h-80 lg:col-span-2 flex flex-col justify-end" onclick="route('#/destinos/${slug(name)}')">
         <img src="${img}" loading="lazy" alt="${name}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
         <div class="absolute inset-0 bg-gradient-to-t from-primary via-primary/60 to-transparent"></div>
-        <div class="absolute bottom-0 inset-x-0 p-lg flex flex-col justify-end">
-          <span class="font-label-sm uppercase tracking-widest text-secondary mb-1">${region}</span>
+        <div class="relative p-lg flex flex-col justify-end z-10 h-full">
+          ${showBadge ? `<span class="font-label-sm uppercase tracking-widest text-secondary mb-1">${region}</span>` : ''}
           <h3 class="font-display-lg text-[28px] text-white mb-2 leading-tight">${name}</h3>
           <p class="font-body-md text-surface-variant max-w-lg mb-4 line-clamp-2">${desc}</p>
-          <div class="flex">
+          <div class="flex items-center justify-between mt-auto">
+            ${microText ? `<span class="text-secondary text-sm font-medium bg-surface/20 px-2 py-1 rounded backdrop-blur-md">${microText}</span>` : '<div></div>'}
             <span class="bg-secondary text-primary font-button px-md py-sm rounded-lg flex items-center gap-1 group-hover:bg-secondary-container transition-colors">
               Explorar <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
             </span>
@@ -493,21 +544,24 @@ function localityCard(name, featured = false) {
   }
   
   return `
-    <article class="bg-surface rounded-2xl border border-outline-variant/50 overflow-hidden hover:ambient-shadow transition-shadow duration-300 cursor-pointer flex flex-col group" onclick="route('#/destinos/${slug(name)}')">
-      <div class="relative h-48 overflow-hidden bg-surface-container">
+    <article class="bg-surface rounded-xl border border-outline-variant/50 overflow-hidden hover:ambient-shadow transition-shadow duration-300 cursor-pointer flex flex-col group" onclick="route('#/destinos/${slug(name)}')">
+      <div class="relative h-32 overflow-hidden bg-surface-container">
         <img src="${img}" loading="lazy" alt="${name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-        <span class="absolute top-sm left-sm bg-primary/80 backdrop-blur-sm text-white font-label-sm text-[10px] uppercase px-2 py-1 rounded-md border border-outline-variant/20">
+        ${showBadge ? `
+        <span class="absolute top-sm left-sm bg-primary/80 backdrop-blur-sm text-white font-label-sm text-[10px] uppercase px-2 py-1 rounded-md border border-outline-variant/20 transition-opacity group-hover:opacity-0">
           ${region}
         </span>
+        ` : ''}
       </div>
-      <div class="p-md flex-grow flex flex-col justify-between">
-        <div>
-          <h3 class="font-title-sm text-primary mb-2 group-hover:text-secondary transition-colors">${name}</h3>
-          <p class="font-body-md text-on-surface-variant line-clamp-3 mb-4">${desc}</p>
+      <div class="p-md flex-grow flex flex-col">
+        <h3 class="font-title-sm text-primary mb-1 group-hover:text-secondary transition-colors line-clamp-1">${name}</h3>
+        <p class="font-body-md text-on-surface-variant line-clamp-2 mb-3 text-sm">${desc}</p>
+        <div class="mt-auto flex items-center justify-between border-t border-outline-variant/30 pt-3">
+           <span class="text-[11px] font-medium text-outline">${microText}</span>
+           <span class="text-secondary font-button text-xs hover:underline flex items-center gap-0.5">
+            Ver gu\xeda <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+          </span>
         </div>
-        <button class="w-full bg-surface-container text-on-surface font-button py-2 rounded-lg text-sm hover:bg-surface-container-high transition-colors flex items-center justify-center gap-1">
-          Ver gu\xeda <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
-        </button>
       </div>
     </article>
   `;
@@ -590,10 +644,10 @@ function renderHome() {
           </a>
         </div>
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-md">
-          ${localityCard('Puerto Deseado', true)}
+          ${localityCard('Puerto Deseado', 'hero')}
           <div class="grid grid-cols-1 gap-md">
-            ${localityCard('28 de Noviembre')}
-            ${localityCard('El Calafate')}
+            ${localityCard('28 de Noviembre', 'grid')}
+            ${localityCard('El Calafate', 'grid')}
           </div>
         </div>
       </div>
@@ -954,7 +1008,9 @@ function renderDestinations() {
   
   const results = filterLocality();
   
-  const featured = ['Puerto Deseado', 'El Calafate', 'Río Gallegos', 'El Chaltén', 'Los Antiguos', 'Puerto San Julián'];
+  const topFeatured = ['El Calafate', 'Río Gallegos', 'El Chaltén', 'Los Antiguos', 'Puerto Deseado', 'Puerto San Julián'];
+  const resultsFeatured = results.filter(l => topFeatured.includes(l));
+  const resultsRest = results.filter(l => !topFeatured.includes(l));
 
   const content = `
     <div class="bg-primary pt-xl pb-32 mt-[-16px] md:mt-0 relative overflow-hidden">
@@ -991,35 +1047,30 @@ function renderDestinations() {
     </div>
     
     <div class="max-w-7xl mx-auto px-container-margin -mt-20 relative z-20 mb-xl">
-      ${!state.destinationSearch && state.destinationRegion === 'Todas' ? `
-        <div class="mb-xl">
-          <h2 class="font-headline-md text-white mb-md drop-shadow-md">Destinos Principales</h2>
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-md">
-            ${featured.map(l => localityCard(l)).join('')}
-          </div>
-        </div>
-        
-        <div class="pt-lg border-t border-outline-variant/30">
-          <h2 class="font-headline-md text-primary mb-md">Todas las localidades</h2>
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-md">
-            ${localities.filter(l => !featured.includes(l)).map(l => localityCard(l)).join('')}
-          </div>
-        </div>
-      ` : `
-        ${results.length === 0 ? `
+      ${results.length === 0 ? `
           <div class="bg-surface border border-outline-variant/30 rounded-xl p-xl text-center ambient-shadow mt-xl">
             <span class="material-symbols-outlined text-outline-variant text-[48px] mb-sm">map</span>
             <h3 class="font-title-sm text-primary mb-xs">Destino no encontrado</h3>
             <p class="font-body-md text-on-surface-variant max-w-sm mx-auto">No tenemos información turística que coincida con tus filtros.</p>
           </div>
-        ` : `
-          <div class="mb-md text-white drop-shadow-md">
-            <h2 class="font-headline-md">Resultados de búsqueda</h2>
-          </div>
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-md">
-            ${results.map(l => localityCard(l)).join('')}
-          </div>
-        `}
+      ` : `
+          ${resultsFeatured.length > 0 ? `
+            <div class="mb-xl">
+              <h2 class="font-headline-md text-white mb-md drop-shadow-md">${state.destinationSearch || state.destinationRegion !== 'Todas' ? 'Principales resultados' : 'Destinos Principales'}</h2>
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-md">
+                ${resultsFeatured.map(l => localityCard(l, 'hero', state.destinationRegion)).join('')}
+              </div>
+            </div>
+          ` : ''}
+          
+          ${resultsRest.length > 0 ? `
+            <div class="${resultsFeatured.length > 0 ? 'pt-lg border-t border-outline-variant/30' : 'pt-md'}">
+              <h2 class="font-headline-md text-primary mb-md">${state.destinationSearch || state.destinationRegion !== 'Todas' ? 'Más resultados' : 'Todas las localidades'}</h2>
+              <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-md">
+                ${resultsRest.map(l => localityCard(l, 'grid', state.destinationRegion)).join('')}
+              </div>
+            </div>
+          ` : ''}
       `}
     </div>
   `;
