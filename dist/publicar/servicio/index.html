@@ -401,6 +401,7 @@ const services=[...makeServices('Puerto Deseado','full'),...makeServices('28 de 
 
 console.log("PATCH1 running, protocol:", window.location.protocol);
 console.log("PATCH1 running, protocol:", window.location.protocol);
+console.log("PATCH1 running, protocol:", window.location.protocol);
 const state = {
   route: 'home',
   params: {},
@@ -615,7 +616,7 @@ function getLocalityImage(name) {
 
 function serviceCard(s) {
   return `
-    <article class="bg-surface rounded-xl border border-outline-variant/50 p-md hover:ambient-shadow transition-shadow flex flex-col justify-between group cursor-pointer" onclick="if(!event.target.closest('a')) route('/prestador/' + s.id)">
+    <article class="bg-surface rounded-xl border border-outline-variant/50 p-md hover:ambient-shadow transition-shadow flex flex-col justify-between group cursor-pointer" onclick="if(!event.target.closest('a')) route('/prestador/${s.id}')">
       <div>
         <div class="flex items-center justify-between gap-2 mb-3">
           <span class="font-label-sm text-[10px] font-bold text-primary-container bg-surface-container px-2 py-1 rounded uppercase">
@@ -650,7 +651,7 @@ function eventCard(e, compact = false) {
 
   if (compact) {
     return `
-      <article class="bg-surface rounded-xl shadow-sm border border-outline-variant/50 overflow-hidden hover:ambient-shadow transition-shadow cursor-pointer flex gap-4 p-3 group" onclick="route('/evento/' + e.id)">
+      <article class="bg-surface rounded-xl shadow-sm border border-outline-variant/50 overflow-hidden hover:ambient-shadow transition-shadow cursor-pointer flex gap-4 p-3 group" onclick="route('/evento/${e.id}')">
         <div class="relative w-24 h-24 rounded-lg overflow-hidden flex-shrink-0">
           <img src="${e.image}" loading="lazy" alt="${e.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
           <div class="absolute top-1.5 left-1.5 bg-surface/90 backdrop-blur shadow-sm rounded-md px-1.5 py-0.5 text-center leading-none border border-outline-variant/30">
@@ -680,7 +681,7 @@ function eventCard(e, compact = false) {
   }
   
   return `
-    <div class="bg-surface rounded-xl border border-outline-variant/50 overflow-hidden hover:ambient-shadow transition-shadow duration-300 flex flex-col group cursor-pointer" onclick="route('/evento/' + e.id)">
+    <div class="bg-surface rounded-xl border border-outline-variant/50 overflow-hidden hover:ambient-shadow transition-shadow duration-300 flex flex-col group cursor-pointer" onclick="route('/evento/${e.id}')">
       <div class="h-48 relative overflow-hidden">
         <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" src="${e.image}" alt="${e.title}" />
         <div class="absolute top-sm right-sm bg-surface/90 backdrop-blur-sm rounded-lg px-sm py-xs text-center border border-outline-variant/30">
@@ -728,7 +729,7 @@ function localityCard(name, context = 'grid', activeRegion = 'Todas') {
 
   if (context === 'hero') {
     return `
-      <article class="relative rounded-2xl overflow-hidden ambient-shadow group cursor-pointer h-72 flex flex-col justify-end" onclick="route('/localidad/' + slug(name))">
+      <article class="relative rounded-2xl overflow-hidden ambient-shadow group cursor-pointer h-72 flex flex-col justify-end" onclick="route('/localidad/${slug(name)}')">
         <img src="${img}" loading="lazy" alt="${name}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
         <div class="absolute inset-0 bg-gradient-to-t from-primary via-primary/60 to-transparent"></div>
         <div class="relative p-md flex flex-col justify-end z-10 h-full">
@@ -747,7 +748,7 @@ function localityCard(name, context = 'grid', activeRegion = 'Todas') {
   }
   
   return `
-    <article class="bg-surface rounded-xl border border-outline-variant/50 overflow-hidden hover:ambient-shadow transition-shadow duration-300 cursor-pointer flex flex-col group" onclick="route('/localidad/' + slug(name))">
+    <article class="bg-surface rounded-xl border border-outline-variant/50 overflow-hidden hover:ambient-shadow transition-shadow duration-300 cursor-pointer flex flex-col group" onclick="route('/localidad/${slug(name)}')">
       <div class="relative h-32 overflow-hidden bg-surface-container">
         <img src="${img}" loading="lazy" alt="${name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
         ${showBadge ? `
@@ -1593,7 +1594,7 @@ function renderLocality(slugName) {
                   </h3>
                   <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     ${catServices.map(s => `
-                      <div class="bg-surface border border-outline-variant/30 rounded-xl p-4 flex flex-col justify-between group cursor-pointer" onclick="if(!event.target.closest('a')) route('/prestador/' + s.id)">
+                      <div class="bg-surface border border-outline-variant/30 rounded-xl p-4 flex flex-col justify-between group cursor-pointer" onclick="if(!event.target.closest('a')) route('/prestador/${s.id}')">
                         <div>
                           <h4 class="font-title-sm text-primary font-bold text-sm group-hover:text-secondary transition-colors truncate">${s.name}</h4>
                           <p class="font-body-md text-on-surface-variant text-xs mt-1 line-clamp-2">${s.description}</p>
