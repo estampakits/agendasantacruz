@@ -195,7 +195,7 @@ const baseEvents=[
   ['Festival comunitario de invierno','Institucional','28 de Noviembre','24','JUL',images.community],
   ['Ciclo de cine santacruceño','Cultural','Caleta Olivia','25','JUL',images.culture],
   ['Travesía fotográfica urbana','Deportivo','El Calafate','27','JUL',images.tour]
-].map((e,i)=>({id:'e'+(i+1),title:e[0],category:e[1],locality:e[2],day:e[3],month:e[4],image:e[5],time:i%2?'18:30':'16:00',place:i%2?'Centro Cultural Municipal':'Punto de encuentro turístico',featured:i<6,description:'Una propuesta abierta para residentes y visitantes, con cupos sujetos a disponibilidad. Actividad pensada para disfrutar la identidad local y conectar con la comunidad.'}));
+].map((e,i)=>({id:'e'+(i+1),title:e[0],category:e[1],locality:e[2],day:e[3],month:e[4],image:e[5],time:i%2?'18:30':'16:00',place:i%2?'Centro Cultural Municipal':'Punto de encuentro turístico',featured:i<6,description:'Una propuesta abierta para residentes y visitantes, con cupos sujetos a disponibilidad. Actividad pensada para disfrutar la identidad local y conectar con la comunidad.',ticket:['Gratis','Con entrada','Reserva','A confirmar'][i%4]}));
 
 const serviceNames={
   'Alojamiento':['Hostería Viento Sur','Apart Patagonia Clara','Cabañas Bahía Serena','Posada del Estuario','Refugio Austral','Hotel Mirador del Sur','Casa de Campo Calafate','Hostería Cerro Negro','Apart Cóndor Blanco','Residencial La Costa'],
@@ -218,7 +218,9 @@ const state = {
   params: {},
   agenda: { locality: 'Todas', category: 'Todas', date: 'Esta semana' },
   services: { locality: 'Todas', rubric: 'Todos', query: '' },
-  destinationSearch: ''
+  destinationSearch: '',
+  prefilledLocality: '',
+  destinationRegion: 'Todas'
 };
 
 function slug(s) {
@@ -246,6 +248,7 @@ function parseRoute() {
   if (parts[0] === 'servicios' && parts[1]) return { route: 'provider', params: { id: parts[1] } };
   if (parts[0] === 'publicar') return { route: 'publish', params: { kind: parts[1] === 'servicio' ? 'service' : 'event' } };
   if (parts[0] === 'confirmacion') return { route: 'confirmation', params: { kind: parts[1] === 'servicio' ? 'service' : 'event' } };
+  if (parts[0] === 'municipios') return { route: 'municipios', params: {} };
   return { route: parts[0], params: {} };
 }
 
@@ -294,7 +297,7 @@ function header(active = '') {
           </div>
           Agenda Santa Cruz
         </a>
-        <div class="flex space-x-lg font-body-md text-body-md text-primary h-full">
+        <div class="flex space-x-lg font-body-md text-body-md text-primary h-full items-center">
           ${[
             ['home', 'Home', '#/'],
             ['agenda', 'Agenda', '#/agenda'],
@@ -306,9 +309,12 @@ function header(active = '') {
             </a>
           `).join('')}
         </div>
-        <a href="#/publicar/evento" class="bg-primary-container text-on-primary font-button text-button px-lg py-sm rounded-lg hover:bg-primary transition-colors duration-200">
-          Publicar
-        </a>
+        <div class="flex items-center gap-md">
+          <a href="#/municipios" class="font-button text-sm text-on-surface-variant hover:text-primary transition-colors">Soluciones para Municipios</a>
+          <a href="#/publicar/evento" class="bg-primary-container text-on-primary font-button text-button px-lg py-sm rounded-lg hover:bg-primary transition-colors duration-200">
+            Publicar
+          </a>
+        </div>
       </div>
     </nav>
   `;
@@ -353,6 +359,7 @@ function footer() {
             <a href="#/agenda" class="text-on-surface-variant hover:text-secondary transition-colors">Próximos Eventos</a>
             <a href="#/destinos" class="text-on-surface-variant hover:text-secondary transition-colors">Destinos Turísticos</a>
             <a href="#/servicios" class="text-on-surface-variant hover:text-secondary transition-colors">Directorio de Servicios</a>
+            <a href="#/municipios" class="text-on-surface-variant hover:text-secondary transition-colors mt-2 font-medium">Servicios B2G (Municipios)</a>
           </div>
         </div>
         <div>
@@ -386,13 +393,22 @@ function shell(content, active = '', opts = { footer: true }) {
   `;
 }
 
-// Card Renderers
+function ticketBadgeColor(ticket) {
+  if(ticket === 'Gratis') return 'bg-[#E8F5E9] text-[#2E7D32] border-[#C8E6C9]';
+  if(ticket === 'Con entrada') return 'bg-[#FFF3E0] text-[#E65100] border-[#FFE0B2]';
+  if(ticket === 'Reserva') return 'bg-[#E3F2FD] text-[#1565C0] border-[#BBDEFB]';
+  return 'bg-surface-variant text-on-surface-variant border-outline-variant/30';
+}
+
 function eventCard(e, compact = false) {
+  const badgeCls = ticketBadgeColor(e.ticket || 'A confirmar');
+  const tkt = e.ticket || 'A confirmar';
+
   if (compact) {
     return `
       <article class="bg-surface rounded-xl shadow-sm border border-outline-variant/50 overflow-hidden hover:ambient-shadow transition-shadow cursor-pointer flex gap-4 p-3 group" onclick="route('#/agenda/${e.id}')">
         <div class="relative w-24 h-24 rounded-lg overflow-hidden flex-shrink-0">
-          <img src="${e.image}" alt="${e.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <img src="${e.image}" loading="lazy" alt="${e.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
           <div class="absolute top-1.5 left-1.5 bg-surface/90 backdrop-blur shadow-sm rounded-md px-1.5 py-0.5 text-center leading-none border border-outline-variant/30">
             <span class="block text-[8px] uppercase font-bold text-outline">${e.month}</span>
             <span class="text-xs font-black text-primary">${e.day}</span>
@@ -405,11 +421,15 @@ function eventCard(e, compact = false) {
               <span class="text-on-surface-variant font-label-sm truncate flex items-center"><span class="material-symbols-outlined text-[12px] mr-[2px]">pin_drop</span>${e.locality}</span>
             </div>
             <h3 class="font-title-sm text-primary leading-snug line-clamp-2 group-hover:text-secondary transition-colors">${e.title}</h3>
+            ${e.place ? `<p class="font-label-sm text-outline truncate mt-0.5">${e.place}</p>` : ''}
           </div>
-          <p class="text-outline font-label-sm flex items-center gap-1">
-            <span class="material-symbols-outlined text-[14px] leading-none">schedule</span>
-            <span>${e.time}</span>
-          </p>
+          <div class="flex items-center justify-between mt-1">
+            <p class="text-outline font-label-sm flex items-center gap-1">
+              <span class="material-symbols-outlined text-[14px] leading-none">schedule</span>
+              <span>${e.time}</span>
+            </p>
+            <span class="text-[10px] font-bold uppercase px-1.5 py-0.5 rounded border ${badgeCls}">${tkt}</span>
+          </div>
         </div>
       </article>
     `;
@@ -418,18 +438,21 @@ function eventCard(e, compact = false) {
   return `
     <div class="bg-surface rounded-xl border border-outline-variant/50 overflow-hidden hover:ambient-shadow transition-shadow duration-300 flex flex-col group cursor-pointer" onclick="route('#/agenda/${e.id}')">
       <div class="h-48 relative overflow-hidden">
-        <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="${e.image}" alt="${e.title}" />
+        <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" src="${e.image}" alt="${e.title}" />
         <div class="absolute top-sm right-sm bg-surface/90 backdrop-blur-sm rounded-lg px-sm py-xs text-center border border-outline-variant/30">
           <span class="block font-title-sm text-primary leading-none">${e.day}</span>
           <span class="block font-label-sm text-secondary leading-none uppercase">${e.month}</span>
         </div>
+        <div class="absolute bottom-sm left-sm font-label-sm text-[10px] uppercase px-2 py-1 rounded-md border shadow-sm backdrop-blur-md ${badgeCls}">${tkt}</div>
       </div>
       <div class="p-md flex flex-col flex-grow">
         <div class="flex items-center gap-xs mb-xs">
           <span class="bg-surface-container-low text-primary-container font-label-sm text-[10px] px-2 py-1 rounded-full uppercase tracking-wider">${e.category}</span>
-          <span class="text-on-surface-variant font-label-sm flex items-center gap-[2px]"><span class="material-symbols-outlined text-[14px]">location_on</span> ${e.locality}</span>
+          <span class="text-on-surface-variant font-label-sm flex items-center gap-[2px] truncate"><span class="material-symbols-outlined text-[14px]">location_on</span> ${e.locality}</span>
         </div>
-        <h3 class="font-title-sm text-primary mb-sm line-clamp-2 group-hover:text-secondary transition-colors">${e.title}</h3>
+        <h3 class="font-title-sm text-primary mb-0.5 line-clamp-2 group-hover:text-secondary transition-colors">${e.title}</h3>
+        ${e.place ? `<p class="font-label-sm text-outline truncate mb-sm">${e.place}</p>` : ''}
+        
         <p class="font-body-md text-on-surface-variant mb-md line-clamp-2 flex-grow">${e.description}</p>
         <div class="pt-3 border-t border-outline-variant/30 flex justify-between items-center">
            <span class="text-outline font-label-sm flex items-center gap-1">
@@ -453,7 +476,7 @@ function localityCard(name, featured = false) {
   if (featured) {
     return `
       <article class="relative rounded-2xl overflow-hidden ambient-shadow group cursor-pointer h-72 md:h-80 lg:col-span-2" onclick="route('#/destinos/${slug(name)}')">
-        <img src="${img}" alt="${name}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+        <img src="${img}" loading="lazy" alt="${name}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
         <div class="absolute inset-0 bg-gradient-to-t from-primary via-primary/60 to-transparent"></div>
         <div class="absolute bottom-0 inset-x-0 p-lg flex flex-col justify-end">
           <span class="font-label-sm uppercase tracking-widest text-secondary mb-1">${region}</span>
@@ -472,7 +495,7 @@ function localityCard(name, featured = false) {
   return `
     <article class="bg-surface rounded-2xl border border-outline-variant/50 overflow-hidden hover:ambient-shadow transition-shadow duration-300 cursor-pointer flex flex-col group" onclick="route('#/destinos/${slug(name)}')">
       <div class="relative h-48 overflow-hidden bg-surface-container">
-        <img src="${img}" alt="${name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+        <img src="${img}" loading="lazy" alt="${name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
         <span class="absolute top-sm left-sm bg-primary/80 backdrop-blur-sm text-white font-label-sm text-[10px] uppercase px-2 py-1 rounded-md border border-outline-variant/20">
           ${region}
         </span>
@@ -490,32 +513,6 @@ function localityCard(name, featured = false) {
   `;
 }
 
-function serviceCard(s) {
-  return `
-    <article class="bg-surface rounded-xl border border-outline-variant/50 p-md hover:ambient-shadow transition-shadow flex flex-col justify-between group">
-      <div>
-        <div class="flex items-center justify-between gap-2 mb-3">
-          <span class="font-label-sm text-[10px] font-bold text-primary-container uppercase bg-surface-container px-2 py-1 rounded">
-            ${s.rubric}
-          </span>
-          <span class="text-on-surface-variant font-label-sm flex items-center gap-[2px]">
-            <span class="material-symbols-outlined text-[14px] leading-none">pin_drop</span>
-            ${s.locality}
-          </span>
-        </div>
-        <h3 class="font-title-sm text-primary mb-2 line-clamp-1 group-hover:text-secondary transition-colors">${s.name}</h3>
-        <p class="font-body-md text-on-surface-variant line-clamp-3 mb-4">${s.description}</p>
-      </div>
-      <div class="pt-4 border-t border-outline-variant/30 flex items-center gap-2">
-        <a href="https://wa.me/5492974000000?text=Hola! Te contacto desde Agenda Santa Cruz." target="_blank" class="flex-grow bg-[#25D366] text-white font-button py-2 px-3 rounded-lg flex items-center justify-center gap-2 hover:bg-[#128C7E] transition-colors">
-          <span class="material-symbols-outlined text-[18px]">chat</span>
-          WhatsApp
-        </a>
-      </div>
-    </article>
-  `;
-}
-
 
 // View Renderers
 function renderHome() {
@@ -527,12 +524,14 @@ function renderHome() {
     <!-- Hero Section -->
     <section class="relative w-full h-[600px] flex items-center justify-center bg-surface-container-low mb-xl mt-[-16px] md:mt-0">
       <div class="absolute inset-0 bg-cover bg-center w-full h-full opacity-40" style="background-image: url('${images.calafate}')"></div>
+      <img src="${images.calafate}" fetchpriority="high" class="hidden" alt="Hero background preload">
       <div class="absolute inset-0 bg-gradient-to-b from-transparent to-surface-container-low"></div>
       <div class="relative z-10 max-w-4xl mx-auto px-container-margin text-center w-full">
-        <h1 class="font-display-lg md:text-[48px] text-[36px] md:leading-[56px] leading-tight text-primary mb-lg drop-shadow-sm font-bold">Qué hacer en Santa Cruz</h1>
+        <h1 class="font-display-lg md:text-[48px] text-[36px] md:leading-[56px] leading-tight text-primary mb-2 drop-shadow-sm font-bold">Qué hacer en Santa Cruz</h1>
+        <p class="font-body-lg text-primary mb-lg drop-shadow-sm">Agenda + destinos + servicios en un solo portal para toda la provincia.</p>
         
         <!-- Search Bar Container -->
-        <div class="bg-surface/90 rounded-xl p-md ambient-shadow flex flex-col md:flex-row gap-md items-end border border-outline-variant/50 backdrop-blur-md">
+        <div class="bg-surface/90 rounded-xl p-md ambient-shadow flex flex-col md:flex-row gap-md items-end border border-outline-variant/50 backdrop-blur-md mb-xs">
           <form id="home-search-form" class="w-full flex flex-col md:flex-row gap-md">
             <div class="flex-1 w-full text-left">
               <label class="font-label-sm text-on-surface-variant mb-xs block">Localidad</label>
@@ -558,6 +557,7 @@ function renderHome() {
             </button>
           </form>
         </div>
+        <p class="text-xs text-on-surface-variant font-medium mt-2">Publicá tu evento gratis. Municipios e instituciones: micrositios y difusión.</p>
       </div>
     </section>
 
@@ -622,6 +622,63 @@ function renderHome() {
   });
 }
 
+function renderMunicipios() {
+  const content = `
+    <div class="max-w-7xl mx-auto px-container-margin py-xl">
+      <div class="mb-xl text-center max-w-3xl mx-auto">
+        <span class="material-symbols-outlined text-secondary text-[48px] mb-sm">assured_workload</span>
+        <h1 class="font-display-lg text-[32px] md:text-[40px] text-primary mb-md">Soluciones para Municipios e Instituciones</h1>
+        <p class="font-body-lg text-on-surface-variant leading-relaxed">
+          Agenda Santa Cruz ofrece a los gobiernos locales, secretarías de turismo y asociaciones la posibilidad de digitalizar y promover su oferta turística en un portal provincial consolidado y de alta performance.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-lg mb-xl">
+        <!-- Bloque 1 -->
+        <div class="bg-surface border border-outline-variant/30 rounded-2xl p-lg ambient-shadow">
+          <div class="bg-surface-container w-12 h-12 rounded-xl flex items-center justify-center mb-md">
+            <span class="material-symbols-outlined text-primary text-[24px]">view_quilt</span>
+          </div>
+          <h3 class="font-title-sm text-primary mb-sm">Micrositios Turísticos</h3>
+          <p class="font-body-md text-on-surface-variant">Desarrollamos una sección dedicada "Qué hacer en [Localidad]" con información histórica, guías de atractivos, directorio de servicios y calendario de eventos integrado al motor de búsqueda provincial.</p>
+        </div>
+
+        <!-- Bloque 2 -->
+        <div class="bg-surface border border-outline-variant/30 rounded-2xl p-lg ambient-shadow">
+          <div class="bg-surface-container w-12 h-12 rounded-xl flex items-center justify-center mb-md">
+            <span class="material-symbols-outlined text-primary text-[24px]">edit_document</span>
+          </div>
+          <h3 class="font-title-sm text-primary mb-sm">Redacción SEO</h3>
+          <p class="font-body-md text-on-surface-variant">Creación mensual de contenidos y notas periodísticas optimizadas para buscadores (SEO), posicionando a tu localidad en Google para atraer a más turistas y fortalecer tu identidad digital.</p>
+        </div>
+
+        <!-- Bloque 3 -->
+        <div class="bg-surface border border-outline-variant/30 rounded-2xl p-lg ambient-shadow">
+          <div class="bg-surface-container w-12 h-12 rounded-xl flex items-center justify-center mb-md">
+            <span class="material-symbols-outlined text-primary text-[24px]">videocam</span>
+          </div>
+          <h3 class="font-title-sm text-primary mb-sm">Cobertura Audiovisual</h3>
+          <p class="font-body-md text-on-surface-variant">Servicio integral de fotografía, grabación con drones, y streaming en vivo para tus eventos o fiestas nacionales, asegurando material de alta calidad para redes sociales y archivo histórico.</p>
+        </div>
+      </div>
+
+      <div class="bg-surface-container-low border border-outline-variant/30 rounded-2xl p-xl text-center max-w-4xl mx-auto">
+        <h2 class="font-headline-md text-primary mb-sm">¿Cómo empezar a trabajar juntos?</h2>
+        <p class="font-body-md text-on-surface-variant mb-lg max-w-2xl mx-auto">
+          Escribinos para coordinar una reunión y evaluar qué solución se adapta mejor a las necesidades de promoción turística y cultural de tu localidad.
+        </p>
+        <a href="mailto:hola@agendasantacruz.ar" class="inline-flex items-center gap-2 bg-primary text-white font-button px-xl py-3 rounded-xl hover:bg-primary-container transition-colors shadow-sm">
+          <span class="material-symbols-outlined text-[20px]">mail</span>
+          Contactar al equipo
+        </a>
+        <p class="text-xs text-outline mt-md">Agenda Santa Cruz es un proyecto independiente. La integración de municipios no implica dependencia gubernamental del sitio.</p>
+      </div>
+    </div>
+  `;
+  document.getElementById('app').innerHTML = shell(content, '');
+}
+
+
 function renderAgenda() {
   const localitiesList = ['Todas', ...localities];
   const categoriesList = ['Todas', 'Cultural', 'Deportivo', 'Gastronómico', 'Institucional'];
@@ -638,6 +695,8 @@ function renderAgenda() {
   };
 
   const currentEvents = filterEvents();
+  
+  const hasFilters = state.agenda.locality !== 'Todas' || state.agenda.category !== 'Todas' || state.agenda.date !== 'Esta semana';
 
   const content = `
     <div class="max-w-7xl mx-auto px-container-margin py-xl">
@@ -688,11 +747,15 @@ function renderAgenda() {
         <!-- Results Column -->
         <div class="flex-grow">
           <div class="flex flex-wrap items-center gap-2 mb-md">
-            <span class="font-label-sm text-outline">Filtros activos:</span>
-            ${state.agenda.locality !== 'Todas' ? `<span class="bg-secondary/15 text-secondary border border-secondary/20 font-label-sm px-3 py-1 rounded-full flex items-center gap-1">Localidad: ${state.agenda.locality} <button onclick="clearAgendaFilter('locality')" class="hover:text-primary"><span class="material-symbols-outlined text-[14px] leading-none">close</span></button></span>` : ''}
-            ${state.agenda.category !== 'Todas' ? `<span class="bg-secondary/15 text-secondary border border-secondary/20 font-label-sm px-3 py-1 rounded-full flex items-center gap-1">Categoría: ${state.agenda.category} <button onclick="clearAgendaFilter('category')" class="hover:text-primary"><span class="material-symbols-outlined text-[14px] leading-none">close</span></button></span>` : ''}
-            ${state.agenda.date !== 'Esta semana' ? `<span class="bg-secondary/15 text-secondary border border-secondary/20 font-label-sm px-3 py-1 rounded-full flex items-center gap-1">Fecha: ${state.agenda.date} <button onclick="clearAgendaFilter('date')" class="hover:text-primary"><span class="material-symbols-outlined text-[14px] leading-none">close</span></button></span>` : ''}
-            ${state.agenda.locality === 'Todas' && state.agenda.category === 'Todas' && state.agenda.date === 'Esta semana' ? '<span class="font-label-sm text-outline">Ninguno</span>' : ''}
+            ${!hasFilters ? `
+              <span class="font-label-sm text-outline">Mostrando: Toda la provincia &middot; Esta semana &middot; Todas las categorías</span>
+            ` : `
+              <span class="font-label-sm text-outline">Filtros activos:</span>
+              ${state.agenda.locality !== 'Todas' ? `<button onclick="clearAgendaFilter('locality')" class="bg-secondary/10 hover:bg-secondary/20 text-secondary border border-secondary/30 font-label-sm px-3 py-1 rounded-full flex items-center gap-1 transition-colors">Localidad: ${state.agenda.locality} <span class="material-symbols-outlined text-[14px] leading-none">close</span></button>` : ''}
+              ${state.agenda.category !== 'Todas' ? `<button onclick="clearAgendaFilter('category')" class="bg-secondary/10 hover:bg-secondary/20 text-secondary border border-secondary/30 font-label-sm px-3 py-1 rounded-full flex items-center gap-1 transition-colors">Categoría: ${state.agenda.category} <span class="material-symbols-outlined text-[14px] leading-none">close</span></button>` : ''}
+              ${state.agenda.date !== 'Esta semana' ? `<button onclick="clearAgendaFilter('date')" class="bg-secondary/10 hover:bg-secondary/20 text-secondary border border-secondary/30 font-label-sm px-3 py-1 rounded-full flex items-center gap-1 transition-colors">Fecha: ${state.agenda.date} <span class="material-symbols-outlined text-[14px] leading-none">close</span></button>` : ''}
+              <button onclick="resetAgendaFilters()" class="text-error hover:underline font-label-sm ml-2">Limpiar filtros</button>
+            `}
           </div>
           
           ${currentEvents.length === 0 ? `
@@ -766,6 +829,8 @@ function renderEventDetail(id) {
   }
 
   const related = baseEvents.filter(e => e.id !== ev.id && e.locality === ev.locality).slice(0, 3);
+  const badgeCls = ticketBadgeColor(ev.ticket || 'A confirmar');
+  const tkt = ev.ticket || 'A confirmar';
 
   const content = `
     <div class="max-w-7xl mx-auto px-container-margin py-xl">
@@ -780,6 +845,9 @@ function renderEventDetail(id) {
             <img src="${ev.image}" alt="${ev.title}" class="w-full h-full object-cover">
             <div class="absolute bottom-md left-md bg-primary text-white font-label-sm uppercase px-3 py-1.5 rounded-lg">
               ${ev.category}
+            </div>
+            <div class="absolute bottom-md right-md font-label-sm uppercase px-3 py-1.5 rounded-lg border shadow-sm backdrop-blur-md ${badgeCls}">
+              ${tkt}
             </div>
           </div>
           
@@ -830,7 +898,7 @@ function renderEventDetail(id) {
                 <span class="material-symbols-outlined text-secondary text-[24px]">monetization_on</span>
                 <div>
                   <h4 class="font-label-sm text-outline uppercase">Entrada</h4>
-                  <p class="font-body-md text-on-background font-medium">Libre y gratuita</p>
+                  <p class="font-body-md text-on-background font-medium">${tkt}</p>
                 </div>
               </div>
             </div>
@@ -873,11 +941,20 @@ function renderEventDetail(id) {
 
 function renderDestinations() {
   const filterLocality = () => {
-    const q = state.destinationSearch.toLowerCase();
-    return localities.filter(l => l.toLowerCase().includes(q) || localityDescriptions[l]?.toLowerCase().includes(q) || regionFor(l).toLowerCase().includes(q));
+    let q = state.destinationSearch.toLowerCase();
+    let res = localities;
+    if (state.destinationRegion !== 'Todas') {
+      res = res.filter(l => regionFor(l) === state.destinationRegion);
+    }
+    if (q) {
+      res = res.filter(l => l.toLowerCase().includes(q) || localityDescriptions[l]?.toLowerCase().includes(q) || regionFor(l).toLowerCase().includes(q));
+    }
+    return res;
   };
   
   const results = filterLocality();
+  
+  const featured = ['Puerto Deseado', 'El Calafate', 'Río Gallegos', 'El Chaltén', 'Los Antiguos', 'Puerto San Julián'];
 
   const content = `
     <div class="bg-primary pt-xl pb-32 mt-[-16px] md:mt-0 relative overflow-hidden">
@@ -896,8 +973,11 @@ function renderDestinations() {
         
         <!-- Region pills -->
         <div class="flex flex-wrap gap-2 mt-md">
+          <button onclick="setDestRegion('Todas')" class="${state.destinationRegion === 'Todas' ? 'bg-secondary text-primary font-bold' : 'bg-surface-container/20 hover:bg-surface-container/40 text-surface-bright'} font-label-sm border border-surface-container/50 px-3 py-1 rounded-full transition-colors backdrop-blur-sm">
+            Todas
+          </button>
           ${['Costa atlántica', 'Cordillera y lagos', 'Cuenca carbonífera', 'Estepa santacruceña'].map(r => `
-            <button onclick="setDestSearch('${r}')" class="bg-surface-container/20 hover:bg-surface-container/40 text-surface-bright font-label-sm border border-surface-container/50 px-3 py-1 rounded-full transition-colors backdrop-blur-sm">
+            <button onclick="setDestRegion('${r}')" class="${state.destinationRegion === r ? 'bg-secondary text-primary font-bold' : 'bg-surface-container/20 hover:bg-surface-container/40 text-surface-bright'} font-label-sm border border-surface-container/50 px-3 py-1 rounded-full transition-colors backdrop-blur-sm">
               ${r}
             </button>
           `).join('')}
@@ -911,16 +991,35 @@ function renderDestinations() {
     </div>
     
     <div class="max-w-7xl mx-auto px-container-margin -mt-20 relative z-20 mb-xl">
-      ${results.length === 0 ? `
-        <div class="bg-surface border border-outline-variant/30 rounded-xl p-xl text-center ambient-shadow">
-          <span class="material-symbols-outlined text-outline-variant text-[48px] mb-sm">map</span>
-          <h3 class="font-title-sm text-primary mb-xs">Destino no encontrado</h3>
-          <p class="font-body-md text-on-surface-variant max-w-sm mx-auto">No tenemos información turística que coincida con "${state.destinationSearch}".</p>
+      ${!state.destinationSearch && state.destinationRegion === 'Todas' ? `
+        <div class="mb-xl">
+          <h2 class="font-headline-md text-white mb-md drop-shadow-md">Destinos Principales</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-md">
+            ${featured.map(l => localityCard(l)).join('')}
+          </div>
+        </div>
+        
+        <div class="pt-lg border-t border-outline-variant/30">
+          <h2 class="font-headline-md text-primary mb-md">Todas las localidades</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-md">
+            ${localities.filter(l => !featured.includes(l)).map(l => localityCard(l)).join('')}
+          </div>
         </div>
       ` : `
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-md">
-          ${results.map(l => localityCard(l)).join('')}
-        </div>
+        ${results.length === 0 ? `
+          <div class="bg-surface border border-outline-variant/30 rounded-xl p-xl text-center ambient-shadow mt-xl">
+            <span class="material-symbols-outlined text-outline-variant text-[48px] mb-sm">map</span>
+            <h3 class="font-title-sm text-primary mb-xs">Destino no encontrado</h3>
+            <p class="font-body-md text-on-surface-variant max-w-sm mx-auto">No tenemos información turística que coincida con tus filtros.</p>
+          </div>
+        ` : `
+          <div class="mb-md text-white drop-shadow-md">
+            <h2 class="font-headline-md">Resultados de búsqueda</h2>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-md">
+            ${results.map(l => localityCard(l)).join('')}
+          </div>
+        `}
       `}
     </div>
   `;
@@ -944,6 +1043,10 @@ window.setDestSearch = function(val) {
   renderDestinations();
 };
 
+window.setDestRegion = function(val) {
+  state.destinationRegion = val;
+  renderDestinations();
+};
 
 function renderLocality(slugName) {
   const name = localityFromSlug(slugName);
@@ -957,7 +1060,7 @@ function renderLocality(slugName) {
   const content = `
     <!-- Locality Hero -->
     <div class="relative w-full h-[500px] mt-[-16px] md:mt-0 mb-xl">
-      <img src="${locImg}" alt="${name}" class="absolute inset-0 w-full h-full object-cover">
+      <img src="${locImg}" alt="${name}" fetchpriority="high" class="absolute inset-0 w-full h-full object-cover">
       <div class="absolute inset-0 bg-gradient-to-t from-primary via-primary/60 to-transparent"></div>
       <div class="absolute bottom-0 w-full pb-xl">
         <div class="max-w-7xl mx-auto px-container-margin">
@@ -989,8 +1092,14 @@ function renderLocality(slugName) {
             ${locEvents.slice(0, 4).map(e => eventCard(e)).join('')}
           </div>
         ` : `
-          <div class="bg-surface border border-outline-variant/30 rounded-xl p-md text-center ambient-shadow mb-xl">
-            <p class="font-body-md text-on-surface-variant">No hay eventos próximos registrados para esta localidad.</p>
+          <div class="bg-surface border border-outline-variant/30 rounded-xl p-lg text-center ambient-shadow mb-xl">
+            <span class="material-symbols-outlined text-outline-variant text-[40px] mb-xs">event</span>
+            <h3 class="font-title-sm text-primary mb-2">No hay eventos próximos registrados</h3>
+            <p class="font-body-md text-on-surface-variant mb-md max-w-md mx-auto">Sé el primero en difundir una actividad en ${name}. Publicá tu evento de forma 100% gratuita.</p>
+            <button onclick="state.prefilledLocality='${name}'; route('#/publicar/evento');" class="bg-secondary text-primary font-button px-md py-2.5 rounded-lg hover:bg-secondary-container transition-colors inline-flex items-center gap-2">
+              <span class="material-symbols-outlined text-[18px]">add_circle</span>
+              Publicar el primer evento en esta localidad
+            </button>
           </div>
         `}
       </div>
@@ -1000,7 +1109,7 @@ function renderLocality(slugName) {
         <div class="bg-surface border border-outline-variant/30 p-md rounded-2xl ambient-shadow">
           <div class="flex justify-between items-center mb-md pb-xs border-b border-outline-variant/30">
             <h3 class="font-title-sm text-primary">Servicios Turísticos</h3>
-            <a href="#/servicios" onclick="state.services.locality='${name}'" class="font-button text-secondary text-sm hover:underline">Ver directorio</a>
+            ${locServices.length > 0 ? `<a href="#/servicios" onclick="state.services.locality='${name}'" class="font-button text-secondary text-sm hover:underline">Ver directorio</a>` : ''}
           </div>
           
           ${locServices.length > 0 ? `
@@ -1017,15 +1126,24 @@ function renderLocality(slugName) {
               `).join('')}
             </div>
           ` : `
-            <p class="font-body-md text-outline italic text-center py-sm">No hay servicios destacados registrados.</p>
+            <div class="text-center py-md">
+              <span class="material-symbols-outlined text-outline-variant text-[32px] mb-xs">storefront</span>
+              <p class="font-body-md text-on-surface-variant mb-md">No hay servicios destacados registrados aún.</p>
+              <button onclick="state.prefilledLocality='${name}'; route('#/publicar/servicio');" class="w-full bg-surface-container-high hover:bg-surface-container-highest text-primary font-button py-2.5 rounded-lg flex items-center justify-center gap-1 transition-colors">
+                Sumar el primer servicio (gratis)
+              </button>
+              <p class="text-[11px] text-outline mt-2">Publicación en menos de 24 hs con verificación.</p>
+            </div>
           `}
           
-          <div class="mt-md pt-sm border-t border-outline-variant/30">
-            <a href="#/publicar/servicio" class="w-full bg-surface-container-high hover:bg-surface-container-highest text-primary font-button py-2 rounded-lg flex items-center justify-center gap-1 transition-colors">
-              <span class="material-symbols-outlined text-[18px]">add_business</span>
-              Ofrecé un servicio acá
-            </a>
-          </div>
+          ${locServices.length > 0 ? `
+            <div class="mt-md pt-sm border-t border-outline-variant/30">
+              <button onclick="state.prefilledLocality='${name}'; route('#/publicar/servicio');" class="w-full bg-surface-container-high hover:bg-surface-container-highest text-primary font-button py-2 rounded-lg flex items-center justify-center gap-1 transition-colors">
+                <span class="material-symbols-outlined text-[18px]">add_business</span>
+                Ofrecé un servicio acá
+              </button>
+            </div>
+          ` : ''}
         </div>
       </div>
     </div>
@@ -1033,6 +1151,7 @@ function renderLocality(slugName) {
   
   document.getElementById('app').innerHTML = shell(content, 'destinos');
 }
+
 
 function renderServices() {
   const localitiesList = ['Todas', ...localities];
@@ -1051,6 +1170,7 @@ function renderServices() {
   };
 
   const currentServices = filterServices();
+  const hasFilters = state.services.query || state.services.locality !== 'Todas' || state.services.rubric !== 'Todos';
 
   const content = `
     <div class="max-w-7xl mx-auto px-container-margin py-xl">
@@ -1094,10 +1214,15 @@ function renderServices() {
       </div>
       
       <div class="flex flex-wrap items-center gap-2 mb-md">
-        <span class="font-label-sm text-outline">Filtros:</span>
-        ${state.services.query ? `<span class="bg-secondary/15 text-secondary border border-secondary/20 font-label-sm px-3 py-1 rounded-full flex items-center gap-1">Búsqueda: "${state.services.query}" <button onclick="clearSrvFilter('query')" class="hover:text-primary"><span class="material-symbols-outlined text-[14px]">close</span></button></span>` : ''}
-        ${state.services.locality !== 'Todas' ? `<span class="bg-secondary/15 text-secondary border border-secondary/20 font-label-sm px-3 py-1 rounded-full flex items-center gap-1">Localidad: ${state.services.locality} <button onclick="clearSrvFilter('locality')" class="hover:text-primary"><span class="material-symbols-outlined text-[14px]">close</span></button></span>` : ''}
-        ${state.services.rubric !== 'Todos' ? `<span class="bg-secondary/15 text-secondary border border-secondary/20 font-label-sm px-3 py-1 rounded-full flex items-center gap-1">Rubro: ${state.services.rubric} <button onclick="clearSrvFilter('rubric')" class="hover:text-primary"><span class="material-symbols-outlined text-[14px]">close</span></button></span>` : ''}
+        ${!hasFilters ? `
+          <span class="font-label-sm text-outline">Mostrando: Toda la provincia &middot; Todos los rubros</span>
+        ` : `
+          <span class="font-label-sm text-outline">Filtros activos:</span>
+          ${state.services.query ? `<button onclick="clearSrvFilter('query')" class="bg-secondary/10 hover:bg-secondary/20 text-secondary border border-secondary/30 font-label-sm px-3 py-1 rounded-full flex items-center gap-1 transition-colors">Búsqueda: "${state.services.query}" <span class="material-symbols-outlined text-[14px]">close</span></button>` : ''}
+          ${state.services.locality !== 'Todas' ? `<button onclick="clearSrvFilter('locality')" class="bg-secondary/10 hover:bg-secondary/20 text-secondary border border-secondary/30 font-label-sm px-3 py-1 rounded-full flex items-center gap-1 transition-colors">Localidad: ${state.services.locality} <span class="material-symbols-outlined text-[14px]">close</span></button>` : ''}
+          ${state.services.rubric !== 'Todos' ? `<button onclick="clearSrvFilter('rubric')" class="bg-secondary/10 hover:bg-secondary/20 text-secondary border border-secondary/30 font-label-sm px-3 py-1 rounded-full flex items-center gap-1 transition-colors">Rubro: ${state.services.rubric} <span class="material-symbols-outlined text-[14px]">close</span></button>` : ''}
+          <button onclick="resetSrvFilters()" class="text-error hover:underline font-label-sm ml-2">Limpiar filtros</button>
+        `}
       </div>
 
       ${currentServices.length === 0 ? `
@@ -1142,9 +1267,10 @@ window.resetSrvFilters = function() {
   renderServices();
 };
 
-
 function renderPublish(kind = 'event') {
   const isEvent = kind === 'event';
+  const prefLoc = state.prefilledLocality || localities[0];
+  state.prefilledLocality = ''; // clear it after using
   
   const content = `
     <div class="max-w-7xl mx-auto px-container-margin py-xl">
@@ -1171,22 +1297,28 @@ function renderPublish(kind = 'event') {
       
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-xl">
         <!-- Form Column -->
-        <form id="publish-form" class="lg:col-span-8 bg-surface border border-outline-variant/30 p-lg md:p-xl rounded-2xl ambient-shadow flex flex-col gap-md">
+        <form id="publish-form" class="lg:col-span-8 bg-surface border border-outline-variant/30 p-lg md:p-xl rounded-2xl ambient-shadow flex flex-col gap-md" novalidate>
+          <div id="form-error-summary" class="hidden bg-error-container text-on-error-container p-sm rounded-lg font-body-md mb-sm border border-error/20 flex items-start gap-2">
+            <span class="material-symbols-outlined text-[20px]">error</span>
+            <span id="form-error-text">Por favor revisá los campos marcados en rojo.</span>
+          </div>
+          
           <div>
-            <label class="font-label-sm text-outline block mb-xs">Título / Nombre</label>
-            <input type="text" required class="w-full bg-surface-bright border border-outline-variant rounded-lg px-sm py-2.5 focus:border-primary outline-none font-body-md text-on-background" placeholder="${isEvent ? 'Ej. Peña Folclórica Nocturna' : 'Ej. Alquiler de Cabañas Las Nubes'}">
+            <label class="font-label-sm text-outline block mb-xs">Título / Nombre *</label>
+            <input type="text" id="pub-title" required class="w-full bg-surface-bright border border-outline-variant rounded-lg px-sm py-2.5 focus:border-primary outline-none font-body-md text-on-background peer invalid:[&:not(:placeholder-shown)]:border-error" placeholder="${isEvent ? 'Ej. Peña Folclórica Nocturna' : 'Ej. Alquiler de Cabañas Las Nubes'}">
+            <span class="hidden peer-invalid:[&:not(:placeholder-shown)]:block text-error text-[11px] mt-1">Este campo es obligatorio.</span>
           </div>
           
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-md">
             <div>
-              <label class="font-label-sm text-outline block mb-xs">Localidad</label>
-              <select required class="w-full bg-surface-bright border border-outline-variant rounded-lg px-sm py-2.5 focus:border-primary outline-none font-body-md text-on-background">
-                ${localities.map(l => `<option value="${l}">${l}</option>`).join('')}
+              <label class="font-label-sm text-outline block mb-xs">Localidad *</label>
+              <select id="pub-locality" required class="w-full bg-surface-bright border border-outline-variant rounded-lg px-sm py-2.5 focus:border-primary outline-none font-body-md text-on-background">
+                ${localities.map(l => `<option value="${l}" ${l === prefLoc ? 'selected' : ''}>${l}</option>`).join('')}
               </select>
             </div>
             <div>
-              <label class="font-label-sm text-outline block mb-xs">Categoría / Rubro</label>
-              <select required class="w-full bg-surface-bright border border-outline-variant rounded-lg px-sm py-2.5 focus:border-primary outline-none font-body-md text-on-background">
+              <label class="font-label-sm text-outline block mb-xs">Categoría / Rubro *</label>
+              <select id="pub-category" required class="w-full bg-surface-bright border border-outline-variant rounded-lg px-sm py-2.5 focus:border-primary outline-none font-body-md text-on-background">
                 ${isEvent 
                   ? ['Cultural', 'Deportivo', 'Gastronómico', 'Institucional'].map(c => `<option value="${c}">${c}</option>`).join('')
                   : ['Alojamiento', 'Gastronomía', 'Excursiones/Actividades', 'Transporte', 'Agencias'].map(r => `<option value="${r}">${r}</option>`).join('')
@@ -1198,32 +1330,45 @@ function renderPublish(kind = 'event') {
           ${isEvent ? `
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-md">
               <div>
-                <label class="font-label-sm text-outline block mb-xs">Fecha</label>
-                <input type="date" required class="w-full bg-surface-bright border border-outline-variant rounded-lg px-sm py-2.5 focus:border-primary outline-none font-body-md text-on-background">
+                <label class="font-label-sm text-outline block mb-xs">Fecha *</label>
+                <input type="date" id="pub-date" required class="w-full bg-surface-bright border border-outline-variant rounded-lg px-sm py-2.5 focus:border-primary outline-none font-body-md text-on-background peer invalid:[&:not(:placeholder-shown)]:border-error">
               </div>
               <div>
-                <label class="font-label-sm text-outline block mb-xs">Horario de Inicio</label>
-                <input type="time" required class="w-full bg-surface-bright border border-outline-variant rounded-lg px-sm py-2.5 focus:border-primary outline-none font-body-md text-on-background">
+                <label class="font-label-sm text-outline block mb-xs">Horario de Inicio *</label>
+                <input type="time" id="pub-time" required class="w-full bg-surface-bright border border-outline-variant rounded-lg px-sm py-2.5 focus:border-primary outline-none font-body-md text-on-background peer invalid:[&:not(:placeholder-shown)]:border-error">
               </div>
             </div>
-            <div>
-              <label class="font-label-sm text-outline block mb-xs">Lugar / Dirección del Evento</label>
-              <input type="text" required class="w-full bg-surface-bright border border-outline-variant rounded-lg px-sm py-2.5 focus:border-primary outline-none font-body-md text-on-background" placeholder="Ej. Gimnasio Municipal, Calle San Martín 150">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-md">
+              <div>
+                <label class="font-label-sm text-outline block mb-xs">Lugar / Dirección del Evento *</label>
+                <input type="text" id="pub-place" required class="w-full bg-surface-bright border border-outline-variant rounded-lg px-sm py-2.5 focus:border-primary outline-none font-body-md text-on-background peer invalid:[&:not(:placeholder-shown)]:border-error" placeholder="Ej. Gimnasio Municipal">
+              </div>
+              <div>
+                <label class="font-label-sm text-outline block mb-xs">Tipo de Entrada *</label>
+                <select id="pub-ticket" required class="w-full bg-surface-bright border border-outline-variant rounded-lg px-sm py-2.5 focus:border-primary outline-none font-body-md text-on-background">
+                  <option value="Gratis">Gratis</option>
+                  <option value="Con entrada">Con entrada</option>
+                  <option value="Reserva">Reserva previa</option>
+                  <option value="A confirmar">A confirmar</option>
+                </select>
+              </div>
             </div>
           ` : ''}
 
           <div>
-            <label class="font-label-sm text-outline block mb-xs">Descripción</label>
-            <textarea required rows="4" class="w-full bg-surface-bright border border-outline-variant rounded-lg px-sm py-2.5 focus:border-primary outline-none font-body-md text-on-background resize-y" placeholder="Brindá información útil para los visitantes (duración, costos, características)..."></textarea>
+            <label class="font-label-sm text-outline block mb-xs">Descripción *</label>
+            <textarea id="pub-desc" required rows="4" class="w-full bg-surface-bright border border-outline-variant rounded-lg px-sm py-2.5 focus:border-primary outline-none font-body-md text-on-background resize-y peer invalid:[&:not(:placeholder-shown)]:border-error" placeholder="Brindá información útil para los visitantes (duración, costos, características)..."></textarea>
+            <span class="hidden peer-invalid:[&:not(:placeholder-shown)]:block text-error text-[11px] mt-1">Este campo es obligatorio.</span>
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-md">
             <div>
-              <label class="font-label-sm text-outline block mb-xs">WhatsApp de Contacto</label>
+              <label class="font-label-sm text-outline block mb-xs">WhatsApp de Contacto *</label>
               <div class="relative">
                 <span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">phone</span>
-                <input type="tel" required class="w-full bg-surface-bright border border-outline-variant rounded-lg pl-9 pr-sm py-2.5 focus:border-primary outline-none font-body-md text-on-background" placeholder="Ej. 2974123456">
+                <input type="tel" id="pub-phone" required pattern="^\\+?549?\\d{10}$" class="w-full bg-surface-bright border border-outline-variant rounded-lg pl-9 pr-sm py-2.5 focus:border-primary outline-none font-body-md text-on-background peer invalid:[&:not(:placeholder-shown)]:border-error" placeholder="+54 9 297 4123456">
               </div>
+              <span class="hidden peer-invalid:[&:not(:placeholder-shown)]:block text-error text-[11px] mt-1">Ingresá un número válido con código de área (ej: +549...).</span>
             </div>
             <div>
               <label class="font-label-sm text-outline block mb-xs">Foto ilustrativa</label>
@@ -1237,7 +1382,7 @@ function renderPublish(kind = 'event') {
           <div class="mt-md">
             <button type="submit" class="w-full bg-secondary text-primary font-button py-3.5 rounded-lg hover:bg-secondary-container transition-colors shadow-sm flex items-center justify-center gap-2">
               <span class="material-symbols-outlined text-[20px]">send</span>
-              Enviar para Moderación
+              Enviar (publicación en menos de 24 hs)
             </button>
           </div>
         </form>
@@ -1275,9 +1420,30 @@ function renderPublish(kind = 'event') {
 
   document.getElementById('app').innerHTML = shell(content, 'publicar', { footer: false });
 
-  document.getElementById('publish-form').addEventListener('submit', function(e) {
+  const form = document.getElementById('publish-form');
+  form.addEventListener('submit', function(e) {
     e.preventDefault();
+    if (!form.checkValidity()) {
+      document.getElementById('form-error-summary').classList.remove('hidden');
+      // Highlight empty required fields
+      const inputs = form.querySelectorAll('input, select, textarea');
+      inputs.forEach(i => {
+        if(!i.checkValidity()) {
+          i.classList.add('border-error');
+        } else {
+          i.classList.remove('border-error');
+        }
+      });
+      return;
+    }
     route(`#/confirmacion/${kind === 'service' ? 'servicio' : 'evento'}`);
+  });
+  
+  // Clear error highlight on input
+  form.querySelectorAll('input, select, textarea').forEach(i => {
+    i.addEventListener('input', () => {
+      i.classList.remove('border-error');
+    });
   });
 }
 
@@ -1322,6 +1488,7 @@ function navigate() {
   else if (state.route === 'servicios') renderServices();
   else if (state.route === 'publish') renderPublish(state.params.kind);
   else if (state.route === 'confirmation') renderConfirmation(state.params.kind);
+  else if (state.route === 'municipios') renderMunicipios();
   else renderHome();
 }
 
