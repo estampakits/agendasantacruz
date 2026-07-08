@@ -236,12 +236,21 @@ function localityFromSlug(s) {
 }
 
 function route(path) {
-  window.history.pushState(null, '', path);
-  navigate();
+  if (window.location.protocol === 'file:') {
+    window.location.hash = '#' + path;
+  } else {
+    window.history.pushState(null, '', path);
+    navigate();
+  }
 }
 
 function parseRoute() {
-  const raw = window.location.pathname.replace(/^\//, '');
+  let raw = '';
+  if (window.location.protocol === 'file:') {
+    raw = (window.location.hash || '#/').replace(/^#\/?/, '');
+  } else {
+    raw = window.location.pathname.replace(/^\//, '');
+  }
   const parts = raw.split('/').filter(Boolean);
   if (!parts.length) return { route: 'home', params: {} };
   if (parts[0] === 'agenda' && parts[1]) return { route: 'event', params: { id: parts[1] } };
@@ -292,7 +301,7 @@ function header(active = '') {
   return `
     <nav class="bg-surface/95 dark:bg-on-background/95 fixed top-0 w-full z-50 border-b border-outline-variant/30 backdrop-blur-md shadow-sm hidden md:block">
       <div class="flex justify-between items-center px-container-margin h-16 max-w-7xl mx-auto">
-        <a href="/" class="font-display-lg text-[22px] font-bold text-primary flex items-center gap-2 hover:opacity-90 transition-opacity">
+        <a href="#/" class="font-display-lg text-[22px] font-bold text-primary flex items-center gap-2 hover:opacity-90 transition-opacity">
           <div class="bg-secondary-fixed text-primary p-1.5 rounded-lg flex items-center justify-center">
             <span class="material-symbols-outlined text-lg leading-none">explore</span>
           </div>
@@ -300,10 +309,10 @@ function header(active = '') {
         </a>
         <div class="flex space-x-lg font-body-md text-body-md text-primary h-full items-center">
           ${[
-            ['home', 'Home', '/'],
-            ['agenda', 'Agenda', '/agenda'],
-            ['destinos', 'Destinos', '/destinos'],
-            ['servicios', 'Servicios', '/servicios']
+            ['home', 'Home', '#/'],
+            ['agenda', 'Agenda', '#/agenda'],
+            ['destinos', 'Destinos', '#/destinos'],
+            ['servicios', 'Servicios', '#/servicios']
           ].map(([key, label, link]) => `
             <a href="${link}" class="flex items-center h-full transition-all duration-200 border-b-2 ${active === key ? 'text-secondary font-bold border-secondary' : 'text-on-surface-variant hover:text-primary hover:bg-surface-container-low border-transparent'}">
               <span class="px-2">${label}</span>
@@ -311,8 +320,8 @@ function header(active = '') {
           `).join('')}
         </div>
         <div class="flex items-center gap-md">
-          <a href="/municipios" class="font-button text-sm text-on-surface-variant hover:text-primary transition-colors">Soluciones para Municipios</a>
-          <a href="/publicar/evento" class="bg-primary-container text-on-primary font-button text-button px-lg py-sm rounded-lg hover:bg-primary transition-colors duration-200">
+          <a href="#/municipios" class="font-button text-sm text-on-surface-variant hover:text-primary transition-colors">Soluciones para Municipios</a>
+          <a href="#/publicar/evento" class="bg-primary-container text-on-primary font-button text-button px-lg py-sm rounded-lg hover:bg-primary transition-colors duration-200">
             Publicar
           </a>
         </div>
@@ -325,11 +334,11 @@ function bottomNav(active = '') {
   return `
     <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-surface border-t border-outline-variant/30 z-50 flex justify-around items-center h-16 px-2 ambient-shadow">
       ${[
-        ['home', 'Inicio', 'home', '/'],
-        ['agenda', 'Agenda', 'calendar_today', '/agenda'],
-        ['destinos', 'Destinos', 'explore', '/destinos'],
-        ['servicios', 'Servicios', 'business_center', '/servicios'],
-        ['publicar', 'Publicar', 'add_box', '/publicar/evento']
+        ['home', 'Inicio', 'home', '#/'],
+        ['agenda', 'Agenda', 'calendar_today', '#/agenda'],
+        ['destinos', 'Destinos', 'explore', '#/destinos'],
+        ['servicios', 'Servicios', 'business_center', '#/servicios'],
+        ['publicar', 'Publicar', 'add_box', '#/publicar/evento']
       ].map(([key, label, icon, link]) => `
         <a href="${link}" class="flex flex-col items-center justify-center flex-1 h-full py-1 ${active === key ? 'text-secondary font-bold' : 'text-on-surface-variant hover:text-primary'}">
           <span class="material-symbols-outlined text-[20px] mb-0.5 ${active === key ? 'fill-current' : ''}">${icon}</span>
@@ -357,10 +366,10 @@ function footer() {
         <div>
           <h4 class="font-title-sm text-primary mb-4 uppercase tracking-wider">Explorar el Portal</h4>
           <div class="flex flex-col gap-3 font-body-md">
-            <a href="/agenda" class="text-on-surface-variant hover:text-secondary transition-colors">Próximos Eventos</a>
-            <a href="/destinos" class="text-on-surface-variant hover:text-secondary transition-colors">Destinos Turísticos</a>
-            <a href="/servicios" class="text-on-surface-variant hover:text-secondary transition-colors">Directorio de Servicios</a>
-            <a href="/municipios" class="text-on-surface-variant hover:text-secondary transition-colors mt-2 font-medium">Servicios B2G (Municipios)</a>
+            <a href="#/agenda" class="text-on-surface-variant hover:text-secondary transition-colors">Próximos Eventos</a>
+            <a href="#/destinos" class="text-on-surface-variant hover:text-secondary transition-colors">Destinos Turísticos</a>
+            <a href="#/servicios" class="text-on-surface-variant hover:text-secondary transition-colors">Directorio de Servicios</a>
+            <a href="#/municipios" class="text-on-surface-variant hover:text-secondary transition-colors mt-2 font-medium">Servicios B2G (Municipios)</a>
           </div>
         </div>
         <div>
@@ -418,7 +427,7 @@ function getLocalityImage(name) {
 
 function serviceCard(s) {
   return `
-    <article class="bg-surface rounded-xl border border-outline-variant/50 p-md hover:ambient-shadow transition-shadow flex flex-col justify-between group cursor-pointer" onclick="if(!event.target.closest('a')) route('/servicios/${s.id}')">
+    <article class="bg-surface rounded-xl border border-outline-variant/50 p-md hover:ambient-shadow transition-shadow flex flex-col justify-between group cursor-pointer" onclick="if(!event.target.closest('a')) route('/servicios/' + s.id)">
       <div>
         <div class="flex items-center justify-between gap-2 mb-3">
           <span class="font-label-sm text-[10px] font-bold text-primary-container bg-surface-container px-2 py-1 rounded uppercase">
@@ -439,7 +448,7 @@ function serviceCard(s) {
           WhatsApp de Reservas
         </a>
         <!-- Ver detalles as Secondary (discrete text link) -->
-        <a href="/servicios/${s.id}" class="text-on-surface-variant hover:text-primary font-button py-1 text-center text-xs transition-colors hover:underline">
+        <a href="#/servicios/${s.id}" class="text-on-surface-variant hover:text-primary font-button py-1 text-center text-xs transition-colors hover:underline">
           Ver Detalles y Ubicación
         </a>
       </div>
@@ -453,7 +462,7 @@ function eventCard(e, compact = false) {
 
   if (compact) {
     return `
-      <article class="bg-surface rounded-xl shadow-sm border border-outline-variant/50 overflow-hidden hover:ambient-shadow transition-shadow cursor-pointer flex gap-4 p-3 group" onclick="route('/agenda/${e.id}')">
+      <article class="bg-surface rounded-xl shadow-sm border border-outline-variant/50 overflow-hidden hover:ambient-shadow transition-shadow cursor-pointer flex gap-4 p-3 group" onclick="route('/agenda/' + e.id)">
         <div class="relative w-24 h-24 rounded-lg overflow-hidden flex-shrink-0">
           <img src="${e.image}" loading="lazy" alt="${e.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
           <div class="absolute top-1.5 left-1.5 bg-surface/90 backdrop-blur shadow-sm rounded-md px-1.5 py-0.5 text-center leading-none border border-outline-variant/30">
@@ -483,7 +492,7 @@ function eventCard(e, compact = false) {
   }
   
   return `
-    <div class="bg-surface rounded-xl border border-outline-variant/50 overflow-hidden hover:ambient-shadow transition-shadow duration-300 flex flex-col group cursor-pointer" onclick="route('/agenda/${e.id}')">
+    <div class="bg-surface rounded-xl border border-outline-variant/50 overflow-hidden hover:ambient-shadow transition-shadow duration-300 flex flex-col group cursor-pointer" onclick="route('/agenda/' + e.id)">
       <div class="h-48 relative overflow-hidden">
         <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" src="${e.image}" alt="${e.title}" />
         <div class="absolute top-sm right-sm bg-surface/90 backdrop-blur-sm rounded-lg px-sm py-xs text-center border border-outline-variant/30">
@@ -531,7 +540,7 @@ function localityCard(name, context = 'grid', activeRegion = 'Todas') {
 
   if (context === 'hero') {
     return `
-      <article class="relative rounded-2xl overflow-hidden ambient-shadow group cursor-pointer h-72 flex flex-col justify-end" onclick="route('/destinos/${slug(name)}')">
+      <article class="relative rounded-2xl overflow-hidden ambient-shadow group cursor-pointer h-72 flex flex-col justify-end" onclick="route('/destinos/' + slug(name))">
         <img src="${img}" loading="lazy" alt="${name}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
         <div class="absolute inset-0 bg-gradient-to-t from-primary via-primary/60 to-transparent"></div>
         <div class="relative p-md flex flex-col justify-end z-10 h-full">
@@ -550,7 +559,7 @@ function localityCard(name, context = 'grid', activeRegion = 'Todas') {
   }
   
   return `
-    <article class="bg-surface rounded-xl border border-outline-variant/50 overflow-hidden hover:ambient-shadow transition-shadow duration-300 cursor-pointer flex flex-col group" onclick="route('/destinos/${slug(name)}')">
+    <article class="bg-surface rounded-xl border border-outline-variant/50 overflow-hidden hover:ambient-shadow transition-shadow duration-300 cursor-pointer flex flex-col group" onclick="route('/destinos/' + slug(name))">
       <div class="relative h-32 overflow-hidden bg-surface-container">
         <img src="${img}" loading="lazy" alt="${name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
         ${showBadge ? `
@@ -642,23 +651,23 @@ function renderHome() {
         <!-- Quick Access links to 3 routes -->
         <div class="flex flex-wrap gap-4 justify-center items-center text-white text-sm mb-6">
           <span class="text-white/70 text-xs uppercase font-semibold tracking-wider">Accesos rápidos:</span>
-          <a href="/agenda" class="bg-white/10 hover:bg-white/20 border border-white/15 rounded-xl px-4 py-2 transition-all flex items-center gap-1.5 shadow-sm font-semibold text-xs">
+          <a href="#/agenda" class="bg-white/10 hover:bg-white/20 border border-white/15 rounded-xl px-4 py-2 transition-all flex items-center gap-1.5 shadow-sm font-semibold text-xs">
             <span class="material-symbols-outlined text-[18px]">calendar_month</span> Agenda
           </a>
-          <a href="/destinos" class="bg-white/10 hover:bg-white/20 border border-white/15 rounded-xl px-4 py-2 transition-all flex items-center gap-1.5 shadow-sm font-semibold text-xs">
+          <a href="#/destinos" class="bg-white/10 hover:bg-white/20 border border-white/15 rounded-xl px-4 py-2 transition-all flex items-center gap-1.5 shadow-sm font-semibold text-xs">
             <span class="material-symbols-outlined text-[18px]">map</span> Destinos
           </a>
-          <a href="/servicios" class="bg-white/10 hover:bg-white/20 border border-white/15 rounded-xl px-4 py-2 transition-all flex items-center gap-1.5 shadow-sm font-semibold text-xs">
+          <a href="#/servicios" class="bg-white/10 hover:bg-white/20 border border-white/15 rounded-xl px-4 py-2 transition-all flex items-center gap-1.5 shadow-sm font-semibold text-xs">
             <span class="material-symbols-outlined text-[18px]">storefront</span> Servicios
           </a>
         </div>
         
         <!-- Visible CTAs to post -->
         <div class="flex flex-wrap gap-3 justify-center items-center">
-          <a href="/publicar/evento" class="bg-white/15 hover:bg-white/25 border border-white/20 text-white font-button px-4 py-2.5 rounded-xl transition-colors text-xs font-bold flex items-center gap-1">
+          <a href="#/publicar/evento" class="bg-white/15 hover:bg-white/25 border border-white/20 text-white font-button px-4 py-2.5 rounded-xl transition-colors text-xs font-bold flex items-center gap-1">
             <span class="material-symbols-outlined text-[16px]">add_circle</span> Publicar Evento
           </a>
-          <a href="/publicar/servicio" class="bg-white/15 hover:bg-white/25 border border-white/20 text-white font-button px-4 py-2.5 rounded-xl transition-colors text-xs font-bold flex items-center gap-1">
+          <a href="#/publicar/servicio" class="bg-white/15 hover:bg-white/25 border border-white/20 text-white font-button px-4 py-2.5 rounded-xl transition-colors text-xs font-bold flex items-center gap-1">
             <span class="material-symbols-outlined text-[16px]">add_business</span> Sumar Servicio (Gratis)
           </a>
         </div>
@@ -693,7 +702,7 @@ function renderHome() {
           <h2 class="font-headline-md text-primary mb-xs font-bold text-lg">Próximos Eventos Destacados</h2>
           <p class="font-body-md text-on-surface-variant text-xs">Descubrí lo que está pasando en la provincia en las próximas fechas.</p>
         </div>
-        <a href="/agenda" class="font-button text-secondary flex items-center gap-xs hover:underline whitespace-nowrap text-xs font-bold">
+        <a href="#/agenda" class="font-button text-secondary flex items-center gap-xs hover:underline whitespace-nowrap text-xs font-bold">
           Ver agenda completa <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
         </a>
       </div>
@@ -710,7 +719,7 @@ function renderHome() {
             <h2 class="font-headline-md text-primary mb-xs font-bold text-lg">Explorá por Localidades</h2>
             <p class="font-body-md text-on-surface-variant text-xs">Guías locales y directorio de servicios para planificar tu viaje.</p>
           </div>
-          <a href="/destinos" class="font-button text-secondary flex items-center gap-xs hover:underline whitespace-nowrap text-xs font-bold">
+          <a href="#/destinos" class="font-button text-secondary flex items-center gap-xs hover:underline whitespace-nowrap text-xs font-bold">
             Ver todas las localidades <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
           </a>
         </div>
@@ -728,10 +737,10 @@ function renderHome() {
             <p class="font-body-md text-on-surface-variant text-xs mt-1">Río Gallegos, El Chaltén, San Julián, Los Antiguos y más destinos están en construcción.</p>
           </div>
           <div class="flex gap-3">
-            <a href="/destinos" class="bg-secondary-fixed text-primary font-button px-4 py-2.5 rounded-lg text-xs font-bold hover:bg-white transition-colors shadow-sm">
+            <a href="#/destinos" class="bg-secondary-fixed text-primary font-button px-4 py-2.5 rounded-lg text-xs font-bold hover:bg-white transition-colors shadow-sm">
               Ver Todos los Destinos
             </a>
-            <a href="mailto:hola@agendasantacruz.ar?subject=Coordinación de carga de información de localidad" class="bg-primary text-white font-button px-4 py-2.5 rounded-lg text-xs font-bold hover:bg-primary-container transition-colors shadow-sm">
+            <a href="mailto:hola@agendasantacruz.ar?subject=Sumar localidad" class="bg-primary text-white font-button px-4 py-2.5 rounded-lg text-xs font-bold hover:bg-primary-container transition-colors shadow-sm">
               ¿Sos de prensa o turismo local? Escribinos
             </a>
           </div>
@@ -984,7 +993,7 @@ function renderEventDetail(id) {
         <span class="material-symbols-outlined text-error text-[48px] mb-sm">warning</span>
         <h2 class="font-headline-md text-primary mb-xs">Evento no encontrado</h2>
         <p class="font-body-md text-on-surface-variant mb-md">El evento al que intentás acceder no existe o fue reprogramado.</p>
-        <a href="/agenda" class="bg-primary text-white font-button px-md py-sm rounded-lg hover:bg-primary-container transition-colors inline-block">Ir a la Agenda</a>
+        <a href="#/agenda" class="bg-primary text-white font-button px-md py-sm rounded-lg hover:bg-primary-container transition-colors inline-block">Ir a la Agenda</a>
       </div>
     `, 'agenda');
     return;
@@ -996,7 +1005,7 @@ function renderEventDetail(id) {
 
   const content = `
     <div class="max-w-7xl mx-auto px-container-margin py-xl pb-24 md:pb-xl">
-      <a href="/agenda" class="inline-flex items-center gap-1 font-button text-on-surface-variant hover:text-primary mb-md transition-colors text-sm">
+      <a href="#/agenda" class="inline-flex items-center gap-1 font-button text-on-surface-variant hover:text-primary mb-md transition-colors text-sm">
         <span class="material-symbols-outlined text-[18px]">arrow_back</span> Volver a la Agenda
       </a>
       
@@ -1018,7 +1027,7 @@ function renderEventDetail(id) {
             
             <!-- Link to Locality (Internal linking) -->
             <div class="mb-4">
-              <a href="/destinos/${slug(ev.locality)}" class="inline-flex items-center gap-1 text-secondary hover:underline font-title-sm text-sm font-bold">
+              <a href="#/destinos/${slug(ev.locality)}" class="inline-flex items-center gap-1 text-secondary hover:underline font-title-sm text-sm font-bold">
                 <span class="material-symbols-outlined text-[16px]">location_on</span>
                 Ver guía y servicios de ${ev.locality}
               </a>
@@ -1286,7 +1295,7 @@ function renderLocality(slugName) {
       <div class="absolute inset-0 bg-gradient-to-t from-primary via-primary/60 to-transparent"></div>
       <div class="absolute bottom-0 w-full pb-8">
         <div class="max-w-7xl mx-auto px-container-margin">
-          <a href="/destinos" class="inline-flex items-center gap-1 font-button text-surface-container hover:text-white mb-4 transition-colors opacity-80 hover:opacity-100 text-sm">
+          <a href="#/destinos" class="inline-flex items-center gap-1 font-button text-surface-container hover:text-white mb-4 transition-colors opacity-80 hover:opacity-100 text-sm">
             <span class="material-symbols-outlined text-[18px]">arrow_back</span> Volver a Destinos
           </a>
           <span class="block font-label-sm uppercase tracking-widest text-secondary-fixed mb-1 text-xs font-semibold">${region}</span>
@@ -1317,7 +1326,7 @@ function renderLocality(slugName) {
           <span class="material-symbols-outlined text-secondary text-[48px] mb-3">construction</span>
           <h3 class="font-title-sm text-primary mb-2 font-bold text-lg">Guía en preparación</h3>
           <p class="font-body-md text-on-surface-variant mb-6 max-w-lg mx-auto text-sm">
-            Estamos compilando y verificando la información turística oficial, prestadores de servicios y atractivos para hacer de tu visita a ${name} una experiencia increíble.
+            Estamos compilando y verifying la información turística oficial, prestadores de servicios y atractivos para hacer de tu visita a ${name} una experiencia increíble.
           </p>
           <div class="flex flex-col sm:flex-row gap-4 justify-center">
             <button onclick="state.prefilledLocality='${name}'; route('/publicar/evento');" class="bg-secondary-fixed text-primary font-button px-5 py-3 rounded-xl hover:bg-white transition-colors flex items-center justify-center gap-2 text-sm font-bold shadow-sm">
@@ -1352,7 +1361,7 @@ function renderLocality(slugName) {
         <section class="mb-8">
           <h2 class="font-headline-md text-primary mb-4 font-bold text-lg flex justify-between items-end">
             Próximos Eventos en ${name}
-            ${locEvents.length > 0 ? `<a href="/agenda" onclick="state.agenda.locality='${name}'" class="font-button text-secondary text-xs hover:underline flex items-center">Ver todos <span class="material-symbols-outlined text-[14px]">arrow_forward</span></a>` : ''}
+            ${locEvents.length > 0 ? `<a href="#/agenda" onclick="state.agenda.locality='${name}'" class="font-button text-secondary text-xs hover:underline flex items-center">Ver todos <span class="material-symbols-outlined text-[14px]">arrow_forward</span></a>` : ''}
           </h2>
     `;
     if (locEvents.length > 0) {
@@ -1395,7 +1404,7 @@ function renderLocality(slugName) {
                   </h3>
                   <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     ${catServices.map(s => `
-                      <div class="bg-surface border border-outline-variant/30 rounded-xl p-4 flex flex-col justify-between group cursor-pointer" onclick="if(!event.target.closest('a')) route('/servicios/${s.id}')">
+                      <div class="bg-surface border border-outline-variant/30 rounded-xl p-4 flex flex-col justify-between group cursor-pointer" onclick="if(!event.target.closest('a')) route('/servicios/' + s.id)">
                         <div>
                           <h4 class="font-title-sm text-primary font-bold text-sm group-hover:text-secondary transition-colors truncate">${s.name}</h4>
                           <p class="font-body-md text-on-surface-variant text-xs mt-1 line-clamp-2">${s.description}</p>
@@ -1405,7 +1414,7 @@ function renderLocality(slugName) {
                             <span class="material-symbols-outlined text-[16px]">chat</span>
                             WhatsApp de Reservas
                           </a>
-                          <a href="/servicios/${s.id}" class="text-on-surface-variant hover:text-primary font-button py-1 text-center text-xs transition-colors hover:underline">
+                          <a href="#/servicios/${s.id}" class="text-on-surface-variant hover:text-primary font-button py-1 text-center text-xs transition-colors hover:underline">
                             Ver Detalles y Ubicación
                           </a>
                         </div>
@@ -1522,7 +1531,7 @@ function renderServices() {
           <h1 class="font-display-lg text-primary mb-xs font-bold text-2xl md:text-3xl">Servicios Turísticos en la Provincia</h1>
           <p class="font-body-md text-on-surface-variant">Conectá directamente con prestadores turísticos por WhatsApp.</p>
         </div>
-        <a href="/publicar/servicio" class="bg-secondary-fixed text-primary font-button px-md py-2 rounded-lg hover:bg-white transition-colors flex items-center gap-1 w-fit font-bold shadow-sm">
+        <a href="#/publicar/servicio" class="bg-secondary-fixed text-primary font-button px-md py-2 rounded-lg hover:bg-white transition-colors flex items-center gap-1 w-fit font-bold shadow-sm">
           <span class="material-symbols-outlined text-[18px]">add_business</span> Ofrecer mi servicio
         </a>
       </div>
@@ -1625,7 +1634,7 @@ function renderProvider(id) {
         <span class="material-symbols-outlined text-error text-[48px] mb-sm">warning</span>
         <h2 class="font-headline-md text-primary mb-xs">Prestador no encontrado</h2>
         <p class="font-body-md text-on-surface-variant mb-md">El servicio turístico al que intentás acceder no existe o fue dado de baja.</p>
-        <a href="/servicios" class="bg-primary text-white font-button px-md py-sm rounded-lg hover:bg-primary-container transition-colors inline-block">Ir a Servicios</a>
+        <a href="#/servicios" class="bg-primary text-white font-button px-md py-sm rounded-lg hover:bg-primary-container transition-colors inline-block">Ir a Servicios</a>
       </div>
     `, 'servicios');
     return;
@@ -1633,7 +1642,7 @@ function renderProvider(id) {
 
   const content = `
     <div class="max-w-3xl mx-auto px-container-margin py-12">
-      <a href="/servicios" class="inline-flex items-center gap-1 font-button text-on-surface-variant hover:text-primary mb-6 transition-colors text-sm">
+      <a href="#/servicios" class="inline-flex items-center gap-1 font-button text-on-surface-variant hover:text-primary mb-6 transition-colors text-sm">
         <span class="material-symbols-outlined text-[18px]">arrow_back</span> Volver a Servicios
       </a>
       
@@ -1642,7 +1651,7 @@ function renderProvider(id) {
           <span class="font-label-sm text-xs font-bold text-primary-container bg-surface-container px-3 py-1 rounded-full uppercase tracking-wider">
             ${s.rubric}
           </span>
-          <a href="/destinos/${slug(s.locality)}" class="text-on-surface-variant hover:text-primary font-label-sm text-xs flex items-center gap-1 font-bold">
+          <a href="#/destinos/${slug(s.locality)}" class="text-on-surface-variant hover:text-primary font-label-sm text-xs flex items-center gap-1 font-bold">
             <span class="material-symbols-outlined text-[14px]">location_on</span>
             ${s.locality}
           </a>
@@ -1699,7 +1708,7 @@ function renderProvider(id) {
 function renderPublish(kind = 'event') {
   const isEvent = kind === 'event';
   const prefLoc = state.prefilledLocality || localities[0];
-  state.prefilledLocality = ''; // clear it after using
+  state.prefilledLocality = '';
   
   const content = `
     <div class="max-w-7xl mx-auto px-container-margin py-xl">
@@ -1714,11 +1723,11 @@ function renderPublish(kind = 'event') {
       </div>
       
       <div class="flex gap-4 mb-xl font-label-sm uppercase">
-        <a href="/publicar/evento" class="flex-1 py-3 text-center rounded-xl border ${isEvent ? 'border-primary bg-primary text-white shadow-md' : 'border-outline-variant/50 text-on-surface-variant hover:bg-surface-container-low'} transition-all text-xs font-bold">
+        <a href="#/publicar/evento" class="flex-1 py-3 text-center rounded-xl border ${isEvent ? 'border-primary bg-primary text-white shadow-md' : 'border-outline-variant/50 text-on-surface-variant hover:bg-surface-container-low'} transition-all text-xs font-bold">
           <span class="material-symbols-outlined text-[20px] block mb-1">event</span>
           Evento Público
         </a>
-        <a href="/publicar/servicio" class="flex-1 py-3 text-center rounded-xl border ${!isEvent ? 'border-primary bg-primary text-white shadow-md' : 'border-outline-variant/50 text-on-surface-variant hover:bg-surface-container-low'} transition-all text-xs font-bold">
+        <a href="#/publicar/servicio" class="flex-1 py-3 text-center rounded-xl border ${!isEvent ? 'border-primary bg-primary text-white shadow-md' : 'border-outline-variant/50 text-on-surface-variant hover:bg-surface-container-low'} transition-all text-xs font-bold">
           <span class="material-symbols-outlined text-[20px] block mb-1">add_business</span>
           Servicio Privado
         </a>
@@ -1865,7 +1874,7 @@ function renderPublish(kind = 'event') {
       });
       return;
     }
-    route(`/confirmacion/${kind === 'service' ? 'servicio' : 'evento'}`);
+    route('/confirmacion/' + (kind === 'service' ? 'servicio' : 'evento'));
   });
   
   form.querySelectorAll('input, select, textarea').forEach(i => {
@@ -1887,10 +1896,10 @@ function renderConfirmation(kind = 'event') {
         Nuestro equipo lo revisará en las próximas horas para verificar la información.
       </p>
       <div class="flex flex-col gap-3 max-w-[250px] mx-auto">
-        <a href="/" class="bg-primary text-white font-button py-3 rounded-lg hover:bg-primary-container transition-colors shadow-sm text-xs font-bold">
+        <a href="#/" class="bg-primary text-white font-button py-3 rounded-lg hover:bg-primary-container transition-colors shadow-sm text-xs font-bold">
           Volver al Inicio
         </a>
-        <a href="/publicar/${kind === 'service' ? 'servicio' : 'evento'}" class="text-secondary font-button py-2 hover:underline text-xs font-bold">
+        <a href="#/publicar/${kind === 'service' ? 'servicio' : 'evento'}" class="text-secondary font-button py-2 hover:underline text-xs font-bold">
           Enviar otra propuesta
         </a>
       </div>
@@ -1922,16 +1931,21 @@ function navigate() {
   else renderHome();
 }
 
-// Click interception for internal paths (HTML5 history)
+// Intercept clicks to transform hashes into clean path states when served over HTTP/HTTPS
 document.addEventListener('click', e => {
   const anchor = e.target.closest('a');
-  if (anchor && anchor.getAttribute('href') && anchor.getAttribute('href').startsWith('/') && !anchor.getAttribute('target')) {
-    e.preventDefault();
-    route(anchor.getAttribute('href'));
+  if (anchor && anchor.getAttribute('href')) {
+    const href = anchor.getAttribute('href');
+    if (window.location.protocol !== 'file:' && href.startsWith('#/')) {
+      e.preventDefault();
+      const path = href.replace(/^#/, '');
+      route(path);
+    }
   }
 });
 
 window.addEventListener('popstate', navigate);
+window.addEventListener('hashchange', navigate);
 window.onload = navigate;
 
   </script>
