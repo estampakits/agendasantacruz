@@ -1,84 +1,131 @@
 <!doctype html>
-<html lang="es">
+<html lang="es" class="light">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#002130" />
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Agenda Santa Cruz | Eventos, Destinos y Servicios</title>
   <meta name="description" content="Portal interactivo de la Agenda Santa Cruz. Eventos, destinos turísticos y directorio de servicios profesionales." />
-  <title>Agenda Santa Cruz | Eventos, Destinos y Servicios</title>
-  
-  <!-- Google Fonts: Montserrat (Encabezados) e Inter (Cuerpo) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  
-  <!-- Material Symbols Outlined -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-  
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            primary: '#002130',
-            'primary-container': '#00384d',
-            secondary: '#006a60',
-            'secondary-container': '#85f6e5',
-            background: '#f8f9ff',
-            surface: '#ffffff',
-            'surface-container': '#e5eeff',
-            'surface-container-low': '#eff4ff',
-            'surface-container-high': '#dce9ff',
-            'surface-container-highest': '#d3e4fe',
-            'surface-container-lowest': '#ffffff',
-            'on-background': '#0b1c30',
-            'on-surface': '#0b1c30',
-            'on-surface-variant': '#41484c',
-            'outline-variant': '#c1c7cd',
-            outline: '#71787d',
-            error: '#ba1a1a',
-            'error-container': '#ffdad6',
-            'on-primary': '#ffffff',
-            'on-secondary': '#ffffff',
-            'on-error': '#ffffff',
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Montserrat:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "error-container": "#ffdad6",
+                      "error": "#ba1a1a",
+                      "surface-variant": "#d3e4fe",
+                      "inverse-surface": "#213145",
+                      "on-background": "#0b1c30",
+                      "tertiary-fixed-dim": "#3de273",
+                      "primary": "#002130",
+                      "surface-container-high": "#dce9ff",
+                      "surface": "#f8f9ff",
+                      "surface-container-highest": "#d3e4fe",
+                      "on-secondary-fixed-variant": "#005048",
+                      "on-primary": "#ffffff",
+                      "on-surface": "#0b1c30",
+                      "tertiary-fixed": "#66ff8e",
+                      "on-error-container": "#93000a",
+                      "primary-container": "#00384d",
+                      "on-secondary": "#ffffff",
+                      "surface-container-low": "#eff4ff",
+                      "on-primary-fixed-variant": "#1d4c61",
+                      "background": "#f8f9ff",
+                      "on-primary-container": "#77a2ba",
+                      "on-secondary-container": "#007166",
+                      "on-error": "#ffffff",
+                      "inverse-on-surface": "#eaf1ff",
+                      "surface-tint": "#38637a",
+                      "surface-container-lowest": "#ffffff",
+                      "outline-variant": "#c1c7cd",
+                      "inverse-primary": "#a1cce6",
+                      "on-tertiary": "#ffffff",
+                      "on-tertiary-container": "#00b452",
+                      "tertiary": "#00250b",
+                      "surface-container": "#e5eeff",
+                      "on-primary-fixed": "#001e2c",
+                      "outline": "#71787d",
+                      "secondary-fixed": "#85f6e5",
+                      "surface-bright": "#f8f9ff",
+                      "secondary-container": "#85f6e5",
+                      "secondary": "#006a60",
+                      "on-tertiary-fixed-variant": "#005322",
+                      "primary-fixed-dim": "#a1cce6",
+                      "surface-dim": "#cbdbf5",
+                      "on-tertiary-fixed": "#002109",
+                      "tertiary-container": "#003d17",
+                      "secondary-fixed-dim": "#67d9c9",
+                      "primary-fixed": "#c2e8ff",
+                      "on-surface-variant": "#41484c",
+                      "on-secondary-fixed": "#00201c"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "sm": "8px",
+                      "xs": "4px",
+                      "xl": "40px",
+                      "container-margin": "20px",
+                      "lg": "24px",
+                      "gutter": "16px",
+                      "md": "16px",
+                      "base": "4px"
+              },
+              "fontFamily": {
+                      "body-md": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "title-sm": ["Montserrat"],
+                      "display-lg": ["Montserrat"],
+                      "button": ["Inter"],
+                      "label-sm": ["Inter"],
+                      "display-lg-mobile": ["Montserrat"],
+                      "headline-md": ["Montserrat"]
+              },
+              "fontSize": {
+                      "body-md": ["14px", {"lineHeight": "22px", "fontWeight": "400"}],
+                      "body-lg": ["16px", {"lineHeight": "26px", "fontWeight": "400"}],
+                      "title-sm": ["16px", {"lineHeight": "24px", "fontWeight": "600"}],
+                      "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "button": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                      "display-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                      "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}]
+              }
+            },
           },
-          fontFamily: {
-            sans: ['Inter', 'sans-serif'],
-            display: ['Montserrat', 'sans-serif'],
-          }
         }
-      }
-    }
-  </script>
-  
-  <style>
-    .font-display { font-family: 'Montserrat', sans-serif; }
-    body { font-family: 'Inter', sans-serif; }
-    
-    .no-scrollbar::-webkit-scrollbar { display: none; }
-    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-    
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .animate-fade-in {
-      animation: fadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    }
-    
-    .toast-anim {
-      animation: toastIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-    }
-    @keyframes toastIn {
-      from { transform: translateY(20px) scale(0.9); opacity: 0; }
-      to { transform: translateY(0) scale(1); opacity: 1; }
-    }
-  </style>
+      </script>
+<style>
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-auto-rows: minmax(200px, auto);
+            gap: 16px;
+        }
+        .bento-item-large {
+            grid-column: span 2;
+            grid-row: span 2;
+        }
+        .bento-item-wide {
+            grid-column: span 2;
+            grid-row: span 1;
+        }
+        
+        /* Soft ambient shadow for level 2 floating/interactive elements */
+        .ambient-shadow {
+            box-shadow: 0px 4px 12px rgba(0, 56, 77, 0.08);
+        }
+      </style>
 </head>
-<body class="bg-background text-on-background min-h-screen flex flex-col font-sans">
+<body class="bg-background text-on-background min-h-screen flex flex-col font-body-md">
   <div id="toast-container" class="fixed top-5 right-5 z-[9999] flex flex-col gap-2 pointer-events-none"></div>
   <div id="app" class="flex-grow flex flex-col"></div>
   <script>
@@ -165,6 +212,7 @@ function makeServices(locality, density='full'){
 }
 const services=[...makeServices('Puerto Deseado','full'),...makeServices('28 de Noviembre','full'),...makeServices('El Calafate','lite'),...['Río Gallegos','Caleta Olivia','El Chaltén','Puerto San Julián','Los Antiguos','Perito Moreno'].flatMap((l,idx)=>makeServices(l,'lite').slice(0,5+idx%2))];
 
+
 const state = {
   route: 'home',
   params: {},
@@ -175,7 +223,7 @@ const state = {
 
 function slug(s) {
   return s.normalize('NFD')
-    .replace(/[̀-ͯ]/g, '')
+    .replace(/[\u0300-\u036f]/g, '')
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/(^-|-$)/g, '');
@@ -208,11 +256,10 @@ function regionFor(name) {
   return 'Estepa santacruceña';
 }
 
-// UI Elements & Shell
 function showToast(message, type = 'success') {
   const container = document.getElementById('toast-container');
   const toast = document.createElement('div');
-  toast.className = `toast-anim flex items-center gap-3 px-4 py-3 rounded-lg shadow-lg border border-opacity-20 pointer-events-auto bg-white min-w-[280px] max-w-sm`;
+  toast.className = `toast-anim flex items-center gap-3 px-4 py-3 rounded-lg shadow-lg border border-opacity-20 pointer-events-auto bg-surface min-w-[280px] max-w-sm ambient-shadow`;
   
   let icon = 'check_circle';
   let colorClass = 'text-secondary border-secondary';
@@ -226,8 +273,8 @@ function showToast(message, type = 'success') {
   
   toast.innerHTML = `
     <span class="material-symbols-outlined ${colorClass.split(' ')[0]}">${icon}</span>
-    <p class="text-sm font-medium text-on-background flex-grow">${message}</p>
-    <button class="text-outline hover:text-on-background" onclick="this.parentElement.remove()">
+    <p class="text-sm font-medium text-on-surface flex-grow">${message}</p>
+    <button class="text-outline hover:text-on-surface" onclick="this.parentElement.remove()">
       <span class="material-symbols-outlined text-sm">close</span>
     </button>
   `;
@@ -239,43 +286,37 @@ function showToast(message, type = 'success') {
 
 function header(active = '') {
   return `
-    <header class="sticky top-0 z-50 bg-primary text-white shadow-md">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-        <a href="#/" class="flex items-center gap-2.5 group">
-          <div class="bg-secondary text-primary p-1.5 rounded-lg flex items-center justify-center transition-transform group-hover:scale-105">
+    <nav class="bg-surface/95 dark:bg-on-background/95 fixed top-0 w-full z-50 border-b border-outline-variant/30 backdrop-blur-md shadow-sm hidden md:block">
+      <div class="flex justify-between items-center px-container-margin h-16 max-w-7xl mx-auto">
+        <a href="#/" class="font-display-lg text-[22px] font-bold text-primary flex items-center gap-2 hover:opacity-90 transition-opacity">
+          <div class="bg-secondary text-primary p-1.5 rounded-lg flex items-center justify-center">
             <span class="material-symbols-outlined text-lg leading-none">explore</span>
           </div>
-          <div>
-            <h1 class="font-display font-bold text-lg leading-tight tracking-tight">Agenda Santa Cruz</h1>
-            <p class="text-[9px] uppercase tracking-widest text-secondary font-semibold -mt-1">Eventos · Destinos · Servicios</p>
-          </div>
+          Agenda Santa Cruz
         </a>
-        <nav class="hidden md:flex items-center gap-8 font-medium text-sm">
+        <div class="flex space-x-lg font-body-md text-body-md text-primary h-full">
           ${[
-            ['home', 'Inicio', '#/'],
+            ['home', 'Home', '#/'],
             ['agenda', 'Agenda', '#/agenda'],
             ['destinos', 'Destinos', '#/destinos'],
             ['servicios', 'Servicios', '#/servicios']
           ].map(([key, label, link]) => `
-            <a href="${link}" class="transition-colors hover:text-secondary ${active === key ? 'text-secondary font-semibold border-b-2 border-secondary pb-1 pt-1.5' : 'text-slate-300'}" id="nav-link-${key}">
-              ${label}
+            <a href="${link}" class="flex items-center h-full transition-all duration-200 border-b-2 ${active === key ? 'text-secondary font-bold border-secondary' : 'text-on-surface-variant hover:text-primary hover:bg-surface-container-low border-transparent'}">
+              <span class="px-2">${label}</span>
             </a>
           `).join('')}
-        </nav>
-        <div class="flex items-center gap-3">
-          <a href="#/publicar/evento" class="bg-secondary text-primary font-bold px-4 py-2 rounded-lg text-sm transition-all hover:bg-secondary-container hover:shadow-md flex items-center gap-1.5">
-            <span class="material-symbols-outlined text-base">add_circle</span>
-            <span>Publicar</span>
-          </a>
         </div>
+        <a href="#/publicar/evento" class="bg-primary-container text-on-primary font-button text-button px-lg py-sm rounded-lg hover:bg-primary transition-colors duration-200">
+          Publicar
+        </a>
       </div>
-    </header>
+    </nav>
   `;
 }
 
 function bottomNav(active = '') {
   return `
-    <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-primary text-white border-t border-slate-800 z-50 flex justify-around items-center h-16 px-2 shadow-2xl">
+    <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-surface border-t border-outline-variant/30 z-50 flex justify-around items-center h-16 px-2 ambient-shadow">
       ${[
         ['home', 'Inicio', 'home', '#/'],
         ['agenda', 'Agenda', 'calendar_today', '#/agenda'],
@@ -283,8 +324,8 @@ function bottomNav(active = '') {
         ['servicios', 'Servicios', 'business_center', '#/servicios'],
         ['publicar', 'Publicar', 'add_box', '#/publicar/evento']
       ].map(([key, label, icon, link]) => `
-        <a href="${link}" class="flex flex-col items-center justify-center flex-1 h-full py-1 text-slate-400 hover:text-white ${active === key ? 'text-secondary font-semibold' : ''}">
-          <span class="material-symbols-outlined text-xl mb-0.5">${icon}</span>
+        <a href="${link}" class="flex flex-col items-center justify-center flex-1 h-full py-1 ${active === key ? 'text-secondary font-bold' : 'text-on-surface-variant hover:text-primary'}">
+          <span class="material-symbols-outlined text-[20px] mb-0.5 ${active === key ? 'fill-current' : ''}">${icon}</span>
           <span class="text-[10px] tracking-wide">${label}</span>
         </a>
       `).join('')}
@@ -294,40 +335,40 @@ function bottomNav(active = '') {
 
 function footer() {
   return `
-    <footer class="bg-primary text-slate-300 pt-12 pb-24 md:pb-12 border-t border-slate-900 mt-auto">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8">
+    <footer class="bg-surface-container-lowest text-on-surface pt-12 pb-24 md:pb-12 border-t border-outline-variant/30 mt-auto">
+      <div class="max-w-7xl mx-auto px-container-margin grid grid-cols-1 md:grid-cols-3 gap-8">
         <div>
           <div class="flex items-center gap-2 mb-4">
-            <span class="material-symbols-outlined text-secondary text-2xl">explore</span>
-            <span class="font-display font-bold text-white text-lg">Agenda Santa Cruz</span>
+            <span class="material-symbols-outlined text-secondary text-[24px]">explore</span>
+            <span class="font-display-lg text-[20px] font-bold text-primary">Agenda Santa Cruz</span>
           </div>
-          <p class="text-sm text-slate-400 mb-4 leading-relaxed">Encontrá qué hacer y cómo organizar tu visita en Santa Cruz, por localidad, con acceso rápido a WhatsApp.</p>
-          <div class="text-[11px] text-slate-500 leading-normal">
+          <p class="font-body-md text-on-surface-variant mb-4 leading-relaxed">Encontrá qué hacer y cómo organizar tu visita en Santa Cruz, por localidad, con acceso rápido a WhatsApp.</p>
+          <div class="text-[11px] text-outline font-label-sm leading-normal">
             Proyecto digital independiente de difusión turística. No es un sitio gubernamental oficial.
           </div>
         </div>
         <div>
-          <h4 class="font-display font-bold text-white text-sm mb-4 uppercase tracking-wider">Explorar el Portal</h4>
-          <div class="flex flex-col gap-2.5 text-sm">
-            <a href="#/agenda" class="hover:text-secondary transition-colors">Próximos Eventos</a>
-            <a href="#/destinos" class="hover:text-secondary transition-colors">Destinos Turísticos</a>
-            <a href="#/servicios" class="hover:text-secondary transition-colors">Directorio de Servicios</a>
+          <h4 class="font-title-sm text-primary mb-4 uppercase tracking-wider">Explorar el Portal</h4>
+          <div class="flex flex-col gap-3 font-body-md">
+            <a href="#/agenda" class="text-on-surface-variant hover:text-secondary transition-colors">Próximos Eventos</a>
+            <a href="#/destinos" class="text-on-surface-variant hover:text-secondary transition-colors">Destinos Turísticos</a>
+            <a href="#/servicios" class="text-on-surface-variant hover:text-secondary transition-colors">Directorio de Servicios</a>
           </div>
         </div>
         <div>
-          <h4 class="font-display font-bold text-white text-sm mb-4 uppercase tracking-wider">Contacto</h4>
-          <div class="flex flex-col gap-2.5 text-sm mb-4">
-            <a href="mailto:hola@agendasantacruz.ar" class="hover:text-secondary transition-colors flex items-center gap-2">
-              <span class="material-symbols-outlined text-base">mail</span> hola@agendasantacruz.ar
+          <h4 class="font-title-sm text-primary mb-4 uppercase tracking-wider">Contacto</h4>
+          <div class="flex flex-col gap-3 font-body-md mb-4">
+            <a href="mailto:hola@agendasantacruz.ar" class="text-on-surface-variant hover:text-secondary transition-colors flex items-center gap-2">
+              <span class="material-symbols-outlined text-[18px]">mail</span> hola@agendasantacruz.ar
             </a>
           </div>
           <div class="flex gap-3">
-            <span class="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center hover:bg-slate-700 transition-colors text-white font-bold cursor-pointer text-xs">IG</span>
-            <span class="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center hover:bg-slate-700 transition-colors text-white font-bold cursor-pointer text-xs">FB</span>
+            <span class="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center hover:bg-surface-container-high transition-colors text-primary font-bold cursor-pointer text-sm">IG</span>
+            <span class="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center hover:bg-surface-container-high transition-colors text-primary font-bold cursor-pointer text-sm">FB</span>
           </div>
         </div>
       </div>
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 pt-8 border-t border-slate-900 text-center text-xs text-slate-500">
+      <div class="max-w-7xl mx-auto px-container-margin mt-8 pt-8 border-t border-outline-variant/30 text-center font-label-sm text-outline">
         &copy; 2026 Agenda Santa Cruz. Todos los derechos reservados.
       </div>
     </footer>
@@ -337,7 +378,7 @@ function footer() {
 function shell(content, active = '', opts = { footer: true }) {
   return `
     ${header(active)}
-    <main class="flex-grow pb-16 md:pb-0 animate-fade-in">
+    <main class="flex-grow pt-[16px] md:pt-[80px] pb-16 md:pb-0 animate-fade-in">
       ${content}
     </main>
     ${opts.footer ? footer() : ''}
@@ -349,24 +390,24 @@ function shell(content, active = '', opts = { footer: true }) {
 function eventCard(e, compact = false) {
   if (compact) {
     return `
-      <article class="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-md transition-shadow cursor-pointer flex gap-4 p-3" onclick="route('#/agenda/${e.id}')">
+      <article class="bg-surface rounded-xl shadow-sm border border-outline-variant/50 overflow-hidden hover:ambient-shadow transition-shadow cursor-pointer flex gap-4 p-3 group" onclick="route('#/agenda/${e.id}')">
         <div class="relative w-24 h-24 rounded-lg overflow-hidden flex-shrink-0">
-          <img src="${e.image}" alt="${e.title}" class="w-full h-full object-cover">
-          <div class="absolute top-1.5 left-1.5 bg-white bg-opacity-95 backdrop-blur shadow-sm rounded-md px-1.5 py-0.5 text-center leading-none">
-            <span class="block text-[8px] uppercase font-bold text-slate-500">${e.month}</span>
+          <img src="${e.image}" alt="${e.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <div class="absolute top-1.5 left-1.5 bg-surface/90 backdrop-blur shadow-sm rounded-md px-1.5 py-0.5 text-center leading-none border border-outline-variant/30">
+            <span class="block text-[8px] uppercase font-bold text-outline">${e.month}</span>
             <span class="text-xs font-black text-primary">${e.day}</span>
           </div>
         </div>
         <div class="flex-grow min-w-0 flex flex-col justify-between">
           <div>
             <div class="flex items-center gap-2 mb-1">
-              <span class="text-[10px] font-bold text-secondary uppercase bg-secondary-container bg-opacity-30 px-1.5 py-0.5 rounded">${e.category}</span>
-              <span class="text-slate-500 text-xs truncate">${e.locality}</span>
+              <span class="text-[10px] font-bold text-secondary uppercase bg-surface-container-low px-2 py-0.5 rounded">${e.category}</span>
+              <span class="text-on-surface-variant font-label-sm truncate flex items-center"><span class="material-symbols-outlined text-[12px] mr-[2px]">pin_drop</span>${e.locality}</span>
             </div>
-            <h3 class="font-display font-semibold text-slate-900 text-sm leading-snug line-clamp-2">${e.title}</h3>
+            <h3 class="font-title-sm text-primary leading-snug line-clamp-2 group-hover:text-secondary transition-colors">${e.title}</h3>
           </div>
-          <p class="text-slate-500 text-[11px] flex items-center gap-1">
-            <span class="material-symbols-outlined text-xs leading-none">schedule</span>
+          <p class="text-outline font-label-sm flex items-center gap-1">
+            <span class="material-symbols-outlined text-[14px] leading-none">schedule</span>
             <span>${e.time}</span>
           </p>
         </div>
@@ -375,37 +416,32 @@ function eventCard(e, compact = false) {
   }
   
   return `
-    <article class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden hover:-translate-y-1 hover:shadow-md transition-all duration-300 cursor-pointer flex flex-col" onclick="route('#/agenda/${e.id}')">
-      <div class="relative h-48 w-full overflow-hidden bg-slate-100">
-        <img src="${e.image}" alt="${e.title}" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
-        <div class="absolute top-3 left-3 bg-white bg-opacity-95 backdrop-blur shadow-sm rounded-lg p-2 text-center min-w-[45px] leading-tight">
-          <span class="block text-[10px] uppercase font-bold text-slate-500">${e.month}</span>
-          <span class="text-lg font-black text-primary">${e.day}</span>
+    <div class="bg-surface rounded-xl border border-outline-variant/50 overflow-hidden hover:ambient-shadow transition-shadow duration-300 flex flex-col group cursor-pointer" onclick="route('#/agenda/${e.id}')">
+      <div class="h-48 relative overflow-hidden">
+        <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="${e.image}" alt="${e.title}" />
+        <div class="absolute top-sm right-sm bg-surface/90 backdrop-blur-sm rounded-lg px-sm py-xs text-center border border-outline-variant/30">
+          <span class="block font-title-sm text-primary leading-none">${e.day}</span>
+          <span class="block font-label-sm text-secondary leading-none uppercase">${e.month}</span>
         </div>
-        <span class="absolute bottom-3 right-3 bg-primary text-white bg-opacity-90 backdrop-blur text-xs font-semibold px-2.5 py-1 rounded-md">
-          ${e.category}
-        </span>
       </div>
-      <div class="p-5 flex-grow flex flex-col justify-between">
-        <div class="mb-4">
-          <div class="flex items-center gap-1 text-slate-500 text-xs mb-2">
-            <span class="material-symbols-outlined text-sm leading-none">pin_drop</span>
-            <span>${e.locality}</span>
-          </div>
-          <h3 class="font-display font-bold text-slate-900 text-base leading-snug hover:text-secondary mb-2 line-clamp-2">${e.title}</h3>
-          <p class="text-slate-600 text-xs line-clamp-2">${e.description}</p>
+      <div class="p-md flex flex-col flex-grow">
+        <div class="flex items-center gap-xs mb-xs">
+          <span class="bg-surface-container-low text-primary-container font-label-sm text-[10px] px-2 py-1 rounded-full uppercase tracking-wider">${e.category}</span>
+          <span class="text-on-surface-variant font-label-sm flex items-center gap-[2px]"><span class="material-symbols-outlined text-[14px]">location_on</span> ${e.locality}</span>
         </div>
-        <div class="pt-4 border-t border-slate-50 flex justify-between items-center text-xs text-slate-500">
-          <span class="flex items-center gap-1">
-            <span class="material-symbols-outlined text-sm leading-none">schedule</span>
+        <h3 class="font-title-sm text-primary mb-sm line-clamp-2 group-hover:text-secondary transition-colors">${e.title}</h3>
+        <p class="font-body-md text-on-surface-variant mb-md line-clamp-2 flex-grow">${e.description}</p>
+        <div class="pt-3 border-t border-outline-variant/30 flex justify-between items-center">
+           <span class="text-outline font-label-sm flex items-center gap-1">
+            <span class="material-symbols-outlined text-[14px] leading-none">schedule</span>
             <span>${e.time}</span>
           </span>
-          <button class="text-secondary font-bold hover:underline flex items-center gap-0.5">
-            Ver más <span class="material-symbols-outlined text-sm leading-none">chevron_right</span>
-          </button>
+          <span class="text-secondary font-button text-button hover:underline flex items-center gap-0.5">
+            Ver m\xe1s <span class="material-symbols-outlined text-[16px] leading-none">arrow_forward</span>
+          </span>
         </div>
       </div>
-    </article>
+    </div>
   `;
 }
 
@@ -416,16 +452,16 @@ function localityCard(name, featured = false) {
   
   if (featured) {
     return `
-      <article class="relative rounded-2xl overflow-hidden shadow-md group cursor-pointer h-72 md:h-80 lg:col-span-2" onclick="route('#/destinos/${slug(name)}')">
-        <img src="${img}" alt="Fotografía de ${name}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
-        <div class="absolute inset-0 bg-gradient-to-t from-primary via-primary/50 to-transparent"></div>
-        <div class="absolute bottom-0 inset-x-0 p-6 flex flex-col justify-end">
-          <span class="text-xs uppercase tracking-widest text-secondary font-semibold mb-1">${region}</span>
-          <h3 class="font-display font-black text-2xl text-white mb-2">${name}</h3>
-          <p class="text-slate-200 text-sm max-w-lg mb-4 line-clamp-2">${desc}</p>
+      <article class="relative rounded-2xl overflow-hidden ambient-shadow group cursor-pointer h-72 md:h-80 lg:col-span-2" onclick="route('#/destinos/${slug(name)}')">
+        <img src="${img}" alt="${name}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+        <div class="absolute inset-0 bg-gradient-to-t from-primary via-primary/60 to-transparent"></div>
+        <div class="absolute bottom-0 inset-x-0 p-lg flex flex-col justify-end">
+          <span class="font-label-sm uppercase tracking-widest text-secondary mb-1">${region}</span>
+          <h3 class="font-display-lg text-[28px] text-white mb-2 leading-tight">${name}</h3>
+          <p class="font-body-md text-surface-variant max-w-lg mb-4 line-clamp-2">${desc}</p>
           <div class="flex">
-            <span class="bg-secondary text-primary font-bold text-xs px-3.5 py-1.5 rounded-lg flex items-center gap-1 group-hover:bg-secondary-container">
-              Ver Guía Local <span class="material-symbols-outlined text-sm">chevron_right</span>
+            <span class="bg-secondary text-primary font-button px-md py-sm rounded-lg flex items-center gap-1 group-hover:bg-secondary-container transition-colors">
+              Explorar <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
             </span>
           </div>
         </div>
@@ -434,20 +470,20 @@ function localityCard(name, featured = false) {
   }
   
   return `
-    <article class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden hover:-translate-y-1 hover:shadow-md transition-all duration-300 cursor-pointer flex flex-col" onclick="route('#/destinos/${slug(name)}')">
-      <div class="relative h-44 overflow-hidden bg-slate-100">
-        <img src="${img}" alt="Fotografía de ${name}" class="w-full h-full object-cover">
-        <span class="absolute top-3 left-3 bg-black bg-opacity-65 backdrop-blur text-white text-[10px] uppercase font-bold px-2 py-0.5 rounded-md">
+    <article class="bg-surface rounded-2xl border border-outline-variant/50 overflow-hidden hover:ambient-shadow transition-shadow duration-300 cursor-pointer flex flex-col group" onclick="route('#/destinos/${slug(name)}')">
+      <div class="relative h-48 overflow-hidden bg-surface-container">
+        <img src="${img}" alt="${name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+        <span class="absolute top-sm left-sm bg-primary/80 backdrop-blur-sm text-white font-label-sm text-[10px] uppercase px-2 py-1 rounded-md border border-outline-variant/20">
           ${region}
         </span>
       </div>
-      <div class="p-5 flex-grow flex flex-col justify-between">
+      <div class="p-md flex-grow flex flex-col justify-between">
         <div>
-          <h3 class="font-display font-bold text-slate-900 text-base mb-2">${name}</h3>
-          <p class="text-slate-600 text-xs line-clamp-3 mb-4">${desc}</p>
+          <h3 class="font-title-sm text-primary mb-2 group-hover:text-secondary transition-colors">${name}</h3>
+          <p class="font-body-md text-on-surface-variant line-clamp-3 mb-4">${desc}</p>
         </div>
-        <button class="w-full bg-slate-50 text-slate-800 font-semibold py-2 rounded-lg text-xs hover:bg-slate-100 flex items-center justify-center gap-0.5">
-          Explorar Guía <span class="material-symbols-outlined text-sm">chevron_right</span>
+        <button class="w-full bg-surface-container text-on-surface font-button py-2 rounded-lg text-sm hover:bg-surface-container-high transition-colors flex items-center justify-center gap-1">
+          Ver gu\xeda <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
         </button>
       </div>
     </article>
@@ -456,29 +492,30 @@ function localityCard(name, featured = false) {
 
 function serviceCard(s) {
   return `
-    <article class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5 hover:shadow-md transition-shadow flex flex-col justify-between">
+    <article class="bg-surface rounded-xl border border-outline-variant/50 p-md hover:ambient-shadow transition-shadow flex flex-col justify-between group">
       <div>
         <div class="flex items-center justify-between gap-2 mb-3">
-          <span class="text-[10px] font-bold text-primary uppercase bg-surface-container px-2 py-0.5 rounded">
+          <span class="font-label-sm text-[10px] font-bold text-primary-container uppercase bg-surface-container px-2 py-1 rounded">
             ${s.rubric}
           </span>
-          <span class="text-slate-500 text-xs flex items-center gap-0.5">
-            <span class="material-symbols-outlined text-sm leading-none">pin_drop</span>
+          <span class="text-on-surface-variant font-label-sm flex items-center gap-[2px]">
+            <span class="material-symbols-outlined text-[14px] leading-none">pin_drop</span>
             ${s.locality}
           </span>
         </div>
-        <h3 class="font-display font-bold text-slate-900 text-base mb-2 line-clamp-1">${s.name}</h3>
-        <p class="text-slate-600 text-xs line-clamp-3 mb-4">${s.description}</p>
+        <h3 class="font-title-sm text-primary mb-2 line-clamp-1 group-hover:text-secondary transition-colors">${s.name}</h3>
+        <p class="font-body-md text-on-surface-variant line-clamp-3 mb-4">${s.description}</p>
       </div>
-      <div class="pt-4 border-t border-slate-50 flex items-center gap-2">
-        <a href="https://wa.me/5492974000000?text=Hola! Te contacto desde Agenda Santa Cruz para consultar sobre tus servicios turísticos." target="_blank" class="flex-grow bg-emerald-600 text-white font-semibold py-2 px-3 rounded-lg text-xs hover:bg-emerald-700 flex items-center justify-center gap-1.5 transition-colors">
-          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M20.5 3.5A11.8 11.8 0 0 0 12.1 0C5.6 0 .3 5.3.3 11.8c0 2.1.5 4.1 1.6 5.9L.2 24l6.5-1.7a11.8 11.8 0 0 0 5.4 1.4h.1c6.5 0 11.8-5.3 11.8-11.8 0-3.1-1.2-6.1-3.5-8.4Zm-8.3 18.2h-.1a9.8 9.8 0 0 1-5-1.4l-.4-.2-3.8 1 1-3.7-.2-.4a9.8 9.8 0 1 1 8.5 4.7Zm5.4-7.4c-.3-.1-1.8-.9-2.1-1-.3-.1-.5-.1-.7.2l-1 1.2c-.2.2-.4.2-.7.1-1.9-.9-3.2-1.7-4.5-3.9-.3-.5.3-.5.9-1.7.1-.2 0-.4 0-.6l-.9-2.2c-.2-.5-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.2-1.2 2.9 0 1.7 1.3 3.4 1.4 3.6.2.2 2.5 3.8 6 5.3.8.4 1.5.6 2 .7.8.3 1.6.2 2.2.1.7-.1 1.8-.7 2.1-1.5.3-.7.3-1.4.2-1.5-.1-.2-.3-.3-.6-.4Z"/></svg>
-          Contactar por WhatsApp
+      <div class="pt-4 border-t border-outline-variant/30 flex items-center gap-2">
+        <a href="https://wa.me/5492974000000?text=Hola! Te contacto desde Agenda Santa Cruz." target="_blank" class="flex-grow bg-[#25D366] text-white font-button py-2 px-3 rounded-lg flex items-center justify-center gap-2 hover:bg-[#128C7E] transition-colors">
+          <span class="material-symbols-outlined text-[18px]">chat</span>
+          WhatsApp
         </a>
       </div>
     </article>
   `;
 }
+
 
 // View Renderers
 function renderHome() {
@@ -488,87 +525,73 @@ function renderHome() {
   
   const content = `
     <!-- Hero Section -->
-    <section class="relative bg-primary text-white py-20 px-4 md:py-28 overflow-hidden">
-      <div class="absolute inset-0 opacity-40 bg-cover bg-center" style="background-image: url('${images.calafate}')"></div>
-      <div class="absolute inset-0 bg-gradient-to-r from-primary via-primary/80 to-transparent"></div>
-      <div class="relative max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-        <div class="lg:col-span-7">
-          <span class="text-xs uppercase tracking-widest text-secondary font-bold mb-3 block">GUÍA TURÍSTICA DIGITAL</span>
-          <h2 class="font-display font-black text-4xl sm:text-5xl leading-tight mb-4">Descubrí Santa Cruz con información local.</h2>
-          <p class="text-slate-300 text-base mb-8 max-w-xl">Encontrá eventos locales, explorá destinos recomendados y conectá directamente con prestadores de servicios por WhatsApp.</p>
-          
-          <!-- Search Flotante -->
-          <div class="bg-white text-slate-800 p-4 rounded-2xl shadow-xl max-w-xl">
-            <form id="home-search-form" class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <div class="sm:col-span-2">
-                <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Buscar</label>
-                <div class="relative">
-                  <span class="material-symbols-outlined absolute left-2 top-2.5 text-slate-400 text-lg">search</span>
-                  <input type="text" id="hero-search" placeholder="¿Qué querés hacer?" class="w-full pl-8 py-1.5 border-slate-200 rounded-lg text-sm focus:ring-secondary focus:border-secondary">
-                </div>
-              </div>
-              <div>
-                <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Localidad</label>
-                <select id="hero-locality" class="w-full py-1.5 border-slate-200 rounded-lg text-sm focus:ring-secondary focus:border-secondary">
+    <section class="relative w-full h-[600px] flex items-center justify-center bg-surface-container-low mb-xl mt-[-16px] md:mt-0">
+      <div class="absolute inset-0 bg-cover bg-center w-full h-full opacity-40" style="background-image: url('${images.calafate}')"></div>
+      <div class="absolute inset-0 bg-gradient-to-b from-transparent to-surface-container-low"></div>
+      <div class="relative z-10 max-w-4xl mx-auto px-container-margin text-center w-full">
+        <h1 class="font-display-lg md:text-[48px] text-[36px] md:leading-[56px] leading-tight text-primary mb-lg drop-shadow-sm font-bold">Qué hacer en Santa Cruz</h1>
+        
+        <!-- Search Bar Container -->
+        <div class="bg-surface/90 rounded-xl p-md ambient-shadow flex flex-col md:flex-row gap-md items-end border border-outline-variant/50 backdrop-blur-md">
+          <form id="home-search-form" class="w-full flex flex-col md:flex-row gap-md">
+            <div class="flex-1 w-full text-left">
+              <label class="font-label-sm text-on-surface-variant mb-xs block">Localidad</label>
+              <div class="relative">
+                <span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">location_on</span>
+                <select id="hero-locality" class="w-full bg-surface-bright border border-outline-variant rounded-lg pl-10 pr-sm py-2.5 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-body-md text-on-background appearance-none">
                   <option value="Todas">Toda la provincia</option>
                   ${localities.map(l => `<option value="${l}">${l}</option>`).join('')}
                 </select>
+                <span class="material-symbols-outlined absolute right-sm top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none text-[20px]">expand_more</span>
               </div>
-              <button type="submit" class="sm:col-span-3 bg-secondary text-primary font-bold py-2 rounded-lg text-sm hover:bg-secondary-container transition-colors mt-2">
-                Buscar Actividades
-              </button>
-            </form>
-          </div>
-        </div>
-        
-        <!-- Featured Card -->
-        <div class="lg:col-span-5 hidden lg:block">
-          <div class="bg-white/10 backdrop-blur rounded-2xl border border-white/10 p-5 text-white">
-            <span class="text-[10px] font-bold uppercase tracking-widest text-secondary mb-2 block">RECOMENDADO DE HOY</span>
-            <div class="h-44 rounded-lg overflow-hidden mb-4">
-              <img src="${featuredEvent.image}" alt="${featuredEvent.title}" class="w-full h-full object-cover">
             </div>
-            <h3 class="font-display font-bold text-lg leading-tight mb-2">${featuredEvent.title}</h3>
-            <p class="text-slate-300 text-xs line-clamp-2 mb-4">${featuredEvent.description}</p>
-            <a href="#/agenda/${featuredEvent.id}" class="inline-flex items-center text-xs font-bold text-secondary hover:text-white transition-colors">
-              Explorar evento <span class="material-symbols-outlined text-sm leading-none ml-0.5">arrow_forward</span>
-            </a>
-          </div>
+            <div class="flex-1 w-full text-left">
+              <label class="font-label-sm text-on-surface-variant mb-xs block">Búsqueda libre</label>
+              <div class="relative">
+                <span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">search</span>
+                <input id="hero-search" type="text" class="w-full bg-surface-bright border border-outline-variant rounded-lg pl-10 pr-sm py-2.5 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-body-md text-on-background" placeholder="Ej: pingüinos, trekking...">
+              </div>
+            </div>
+            <button type="submit" class="bg-primary-container text-on-primary font-button text-button px-xl py-2.5 rounded-lg hover:bg-primary transition-colors duration-200 flex items-center justify-center gap-xs w-full md:w-auto mt-auto">
+              <span class="material-symbols-outlined text-[20px]">search</span>
+              Buscar
+            </button>
+          </form>
         </div>
       </div>
     </section>
 
-    <!-- Próximos Eventos -->
-    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-      <div class="flex justify-between items-end mb-8">
+    <!-- Próximos eventos -->
+    <section class="max-w-7xl mx-auto px-container-margin mb-xl">
+      <div class="flex justify-between items-end mb-lg border-b border-outline-variant/30 pb-sm">
         <div>
-          <h3 class="font-display font-black text-2xl text-slate-900 leading-tight">Eventos Destacados</h3>
-          <p class="text-slate-500 text-sm mt-1">Agenda cultural, deportiva y gastronómica de la provincia.</p>
+          <h2 class="font-headline-md text-primary mb-xs">Próximos Eventos</h2>
+          <p class="font-body-md text-on-surface-variant">Descubrí lo que está pasando en la provincia.</p>
         </div>
-        <a href="#/agenda" class="text-secondary font-bold text-sm hover:underline flex items-center gap-0.5">
-          Ver Agenda Completa <span class="material-symbols-outlined text-base leading-none">chevron_right</span>
+        <a href="#/agenda" class="font-button text-secondary flex items-center gap-xs hover:underline whitespace-nowrap">
+          Ver agenda <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
         </a>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-md">
         ${upcomingEvents.map(e => eventCard(e)).join('')}
       </div>
     </section>
 
-    <!-- Destinos -->
-    <section class="bg-slate-50 py-16 border-y border-slate-100">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between items-end mb-8">
+    <!-- Destinos (Bento Grid) -->
+    <section class="bg-surface-container-low py-xl border-y border-outline-variant/30">
+      <div class="max-w-7xl mx-auto px-container-margin">
+        <div class="flex justify-between items-end mb-lg border-b border-outline-variant/30 pb-sm">
           <div>
-            <h3 class="font-display font-black text-2xl text-slate-900 leading-tight">Destinos Recomendados</h3>
-            <p class="text-slate-500 text-sm mt-1">Descubrí las guías específicas preparadas para tu viaje.</p>
+            <h2 class="font-headline-md text-primary mb-xs">Destinos Recomendados</h2>
+            <p class="font-body-md text-on-surface-variant">Explorá nuestras guías turísticas locales.</p>
           </div>
-          <a href="#/destinos" class="text-secondary font-bold text-sm hover:underline flex items-center gap-0.5">
-            Ver Todos los Destinos <span class="material-symbols-outlined text-base leading-none">chevron_right</span>
+          <a href="#/destinos" class="font-button text-secondary flex items-center gap-xs hover:underline whitespace-nowrap">
+            Ver destinos <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
           </a>
         </div>
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-md">
           ${localityCard('Puerto Deseado', true)}
-          <div class="grid grid-cols-1 gap-6">
+          <div class="grid grid-cols-1 gap-md">
             ${localityCard('28 de Noviembre')}
             ${localityCard('El Calafate')}
           </div>
@@ -579,7 +602,6 @@ function renderHome() {
   
   document.getElementById('app').innerHTML = shell(content, 'home');
   
-  // Bind form search events
   document.getElementById('home-search-form').addEventListener('submit', function(e) {
     e.preventDefault();
     const q = document.getElementById('hero-search').value;
@@ -605,16 +627,12 @@ function renderAgenda() {
   const categoriesList = ['Todas', 'Cultural', 'Deportivo', 'Gastronómico', 'Institucional'];
   const datesList = ['Esta semana', 'Hoy', 'Próximamente'];
 
-  // Filters logic helper
   const filterEvents = () => {
     return baseEvents.filter(e => {
       if (state.agenda.locality !== 'Todas' && e.locality !== state.agenda.locality) return false;
       if (state.agenda.category !== 'Todas' && e.category !== state.agenda.category) return false;
-      
-      // Simulated date filters
-      if (state.agenda.date === 'Hoy' && parseInt(e.day) !== 12) return false; // simulated today is Jul 12
-      if (state.agenda.date === 'Esta semana' && parseInt(e.day) > 19) return false; // simulated week ends Jul 19
-      
+      if (state.agenda.date === 'Hoy' && parseInt(e.day) !== 12) return false; 
+      if (state.agenda.date === 'Esta semana' && parseInt(e.day) > 19) return false; 
       return true;
     });
   };
@@ -622,47 +640,44 @@ function renderAgenda() {
   const currentEvents = filterEvents();
 
   const content = `
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-      <div class="mb-8">
-        <h2 class="font-display font-black text-3xl text-slate-900 leading-tight">Agenda Santa Cruz</h2>
-        <p class="text-slate-500 text-sm mt-1">Actividades de esparcimiento, ferias, deportes y cultura en la provincia.</p>
+    <div class="max-w-7xl mx-auto px-container-margin py-xl">
+      <div class="mb-lg border-b border-outline-variant/30 pb-sm">
+        <h1 class="font-display-lg text-primary mb-xs">Agenda Santa Cruz</h1>
+        <p class="font-body-md text-on-surface-variant">Actividades de esparcimiento, ferias, deportes y cultura en la provincia.</p>
       </div>
       
-      <div class="flex flex-col lg:flex-row gap-8">
+      <div class="flex flex-col lg:flex-row gap-lg">
         <!-- Sidebar Filters -->
-        <aside class="w-full lg:w-64 flex-shrink-0 bg-white border border-slate-100 p-5 rounded-2xl shadow-sm h-fit">
-          <h3 class="font-display font-bold text-slate-900 text-sm mb-4 pb-2 border-b border-slate-100 flex items-center gap-1.5">
-            <span class="material-symbols-outlined text-base">filter_alt</span> Filtrar Agenda
+        <aside class="w-full lg:w-72 flex-shrink-0 bg-surface border border-outline-variant/50 p-md rounded-xl ambient-shadow h-fit">
+          <h3 class="font-title-sm text-primary mb-md pb-xs border-b border-outline-variant/30 flex items-center gap-2">
+            <span class="material-symbols-outlined text-[20px]">filter_alt</span> Filtros
           </h3>
           
-          <!-- Locality dropdown -->
-          <div class="mb-5">
-            <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Localidad</label>
-            <select id="agenda-filter-locality" class="w-full text-sm border-slate-200 rounded-lg focus:ring-secondary focus:border-secondary">
+          <div class="mb-md">
+            <label class="font-label-sm text-on-surface-variant mb-xs block">Localidad</label>
+            <select id="agenda-filter-locality" class="w-full bg-surface-bright border border-outline-variant rounded-lg px-sm py-2 focus:border-primary outline-none font-body-md text-on-background">
               ${localitiesList.map(l => `<option value="${l}" ${state.agenda.locality === l ? 'selected' : ''}>${l === 'Todas' ? 'Toda la provincia' : l}</option>`).join('')}
             </select>
           </div>
           
-          <!-- Date Radios -->
-          <div class="mb-5">
-            <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Fecha</label>
+          <div class="mb-md">
+            <label class="font-label-sm text-on-surface-variant mb-xs block">Fecha</label>
             <div class="flex flex-col gap-2">
               ${datesList.map(d => `
-                <label class="flex items-center gap-2.5 text-sm text-slate-700 cursor-pointer">
-                  <input type="radio" name="agenda-date" value="${d}" ${state.agenda.date === d ? 'checked' : ''} class="text-secondary focus:ring-secondary border-slate-300">
+                <label class="flex items-center gap-2 font-body-md text-on-background cursor-pointer">
+                  <input type="radio" name="agenda-date" value="${d}" ${state.agenda.date === d ? 'checked' : ''} class="text-secondary focus:ring-secondary border-outline-variant w-4 h-4">
                   <span>${d}</span>
                 </label>
               `).join('')}
             </div>
           </div>
           
-          <!-- Category Selector -->
-          <div class="mb-2">
-            <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Categoría</label>
+          <div class="mb-xs">
+            <label class="font-label-sm text-on-surface-variant mb-xs block">Categoría</label>
             <div class="flex flex-col gap-2">
               ${categoriesList.map(c => `
-                <label class="flex items-center gap-2.5 text-sm text-slate-700 cursor-pointer">
-                  <input type="radio" name="agenda-category" value="${c}" ${state.agenda.category === c ? 'checked' : ''} class="text-secondary focus:ring-secondary border-slate-300">
+                <label class="flex items-center gap-2 font-body-md text-on-background cursor-pointer">
+                  <input type="radio" name="agenda-category" value="${c}" ${state.agenda.category === c ? 'checked' : ''} class="text-secondary focus:ring-secondary border-outline-variant w-4 h-4">
                   <span>${c}</span>
                 </label>
               `).join('')}
@@ -672,27 +687,25 @@ function renderAgenda() {
         
         <!-- Results Column -->
         <div class="flex-grow">
-          <!-- Active filter indicators -->
-          <div class="flex flex-wrap items-center gap-2 mb-6 text-xs">
-            <span class="text-slate-500">Filtros aplicados:</span>
-            ${state.agenda.locality !== 'Todas' ? `<span class="bg-secondary/15 text-secondary border border-secondary/20 font-semibold px-2.5 py-1 rounded-full flex items-center gap-1">Localidad: ${state.agenda.locality} <button onclick="clearAgendaFilter('locality')" class="hover:text-primary"><span class="material-symbols-outlined text-xs leading-none">close</span></button></span>` : ''}
-            ${state.agenda.category !== 'Todas' ? `<span class="bg-secondary/15 text-secondary border border-secondary/20 font-semibold px-2.5 py-1 rounded-full flex items-center gap-1">Categoría: ${state.agenda.category} <button onclick="clearAgendaFilter('category')" class="hover:text-primary"><span class="material-symbols-outlined text-xs leading-none">close</span></button></span>` : ''}
-            ${state.agenda.date !== 'Esta semana' ? `<span class="bg-secondary/15 text-secondary border border-secondary/20 font-semibold px-2.5 py-1 rounded-full flex items-center gap-1">Fecha: ${state.agenda.date} <button onclick="clearAgendaFilter('date')" class="hover:text-primary"><span class="material-symbols-outlined text-xs leading-none">close</span></button></span>` : ''}
-            ${state.agenda.locality === 'Todas' && state.agenda.category === 'Todas' && state.agenda.date === 'Esta semana' ? '<span class="text-slate-400 font-medium">Todos los eventos de la semana</span>' : ''}
+          <div class="flex flex-wrap items-center gap-2 mb-md">
+            <span class="font-label-sm text-outline">Filtros activos:</span>
+            ${state.agenda.locality !== 'Todas' ? `<span class="bg-secondary/15 text-secondary border border-secondary/20 font-label-sm px-3 py-1 rounded-full flex items-center gap-1">Localidad: ${state.agenda.locality} <button onclick="clearAgendaFilter('locality')" class="hover:text-primary"><span class="material-symbols-outlined text-[14px] leading-none">close</span></button></span>` : ''}
+            ${state.agenda.category !== 'Todas' ? `<span class="bg-secondary/15 text-secondary border border-secondary/20 font-label-sm px-3 py-1 rounded-full flex items-center gap-1">Categoría: ${state.agenda.category} <button onclick="clearAgendaFilter('category')" class="hover:text-primary"><span class="material-symbols-outlined text-[14px] leading-none">close</span></button></span>` : ''}
+            ${state.agenda.date !== 'Esta semana' ? `<span class="bg-secondary/15 text-secondary border border-secondary/20 font-label-sm px-3 py-1 rounded-full flex items-center gap-1">Fecha: ${state.agenda.date} <button onclick="clearAgendaFilter('date')" class="hover:text-primary"><span class="material-symbols-outlined text-[14px] leading-none">close</span></button></span>` : ''}
+            ${state.agenda.locality === 'Todas' && state.agenda.category === 'Todas' && state.agenda.date === 'Esta semana' ? '<span class="font-label-sm text-outline">Ninguno</span>' : ''}
           </div>
           
-          <!-- Event cards grid -->
           ${currentEvents.length === 0 ? `
-            <div class="bg-white border border-slate-100 rounded-2xl p-12 text-center shadow-sm">
-              <span class="material-symbols-outlined text-slate-300 text-5xl mb-3">event_busy</span>
-              <h3 class="font-display font-bold text-slate-900 text-lg mb-1">Sin eventos programados</h3>
-              <p class="text-slate-500 text-sm max-w-sm mx-auto mb-6">No encontramos actividades que coincidan con los filtros aplicados en este momento.</p>
-              <button onclick="resetAgendaFilters()" class="bg-primary text-white font-semibold px-4 py-2 rounded-lg text-sm hover:bg-primary-container transition-colors">
+            <div class="bg-surface border border-outline-variant/30 rounded-xl p-xl text-center ambient-shadow">
+              <span class="material-symbols-outlined text-outline-variant text-[48px] mb-sm">event_busy</span>
+              <h3 class="font-title-sm text-primary mb-xs">Sin eventos programados</h3>
+              <p class="font-body-md text-on-surface-variant max-w-sm mx-auto mb-md">No encontramos actividades que coincidan con los filtros aplicados en este momento.</p>
+              <button onclick="resetAgendaFilters()" class="bg-primary text-white font-button px-md py-sm rounded-lg hover:bg-primary-container transition-colors">
                 Restablecer Filtros
               </button>
             </div>
           ` : `
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-md">
               ${currentEvents.map(e => eventCard(e)).join('')}
             </div>
           `}
@@ -703,7 +716,6 @@ function renderAgenda() {
   
   document.getElementById('app').innerHTML = shell(content, 'agenda');
 
-  // Bind change events to rerender page
   document.getElementById('agenda-filter-locality').addEventListener('change', function(e) {
     state.agenda.locality = e.target.value;
     renderAgenda();
@@ -738,15 +750,16 @@ window.resetAgendaFilters = function() {
   renderAgenda();
 };
 
+
 function renderEventDetail(id) {
   const ev = baseEvents.find(e => e.id === id);
   if (!ev) {
     document.getElementById('app').innerHTML = shell(`
-      <div class="max-w-md mx-auto text-center py-20 px-4">
-        <span class="material-symbols-outlined text-error text-5xl mb-3">warning</span>
-        <h2 class="font-display font-bold text-xl mb-1">Evento no encontrado</h2>
-        <p class="text-slate-500 text-sm mb-6">El evento al que intentás acceder no existe o fue reprogramado.</p>
-        <a href="#/agenda" class="bg-primary text-white font-semibold px-4 py-2 rounded-lg text-sm">Ir a la Agenda</a>
+      <div class="max-w-md mx-auto text-center py-xl px-container-margin">
+        <span class="material-symbols-outlined text-error text-[48px] mb-sm">warning</span>
+        <h2 class="font-headline-md text-primary mb-xs">Evento no encontrado</h2>
+        <p class="font-body-md text-on-surface-variant mb-md">El evento al que intentás acceder no existe o fue reprogramado.</p>
+        <a href="#/agenda" class="bg-primary text-white font-button px-md py-sm rounded-lg hover:bg-primary-container transition-colors inline-block">Ir a la Agenda</a>
       </div>
     `, 'agenda');
     return;
@@ -755,92 +768,88 @@ function renderEventDetail(id) {
   const related = baseEvents.filter(e => e.id !== ev.id && e.locality === ev.locality).slice(0, 3);
 
   const content = `
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-      <!-- Back button -->
-      <a href="#/agenda" class="inline-flex items-center gap-1 text-xs font-bold text-slate-500 hover:text-primary mb-6 transition-colors">
-        <span class="material-symbols-outlined text-sm">arrow_back</span> Volver a la Agenda
+    <div class="max-w-7xl mx-auto px-container-margin py-xl">
+      <a href="#/agenda" class="inline-flex items-center gap-1 font-button text-outline hover:text-primary mb-md transition-colors">
+        <span class="material-symbols-outlined text-[18px]">arrow_back</span> Volver a la Agenda
       </a>
       
-      <!-- Event layout -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-lg items-start">
         <!-- Main Column (Img & Info) -->
-        <div class="lg:col-span-8 bg-white border border-slate-100 rounded-3xl overflow-hidden shadow-sm">
-          <div class="relative h-64 sm:h-96 w-full bg-slate-100">
+        <div class="lg:col-span-8 bg-surface border border-outline-variant/30 rounded-2xl overflow-hidden ambient-shadow">
+          <div class="relative h-64 sm:h-96 w-full bg-surface-container">
             <img src="${ev.image}" alt="${ev.title}" class="w-full h-full object-cover">
-            <div class="absolute bottom-4 left-4 bg-primary text-white text-xs font-semibold px-2.5 py-1 rounded">
+            <div class="absolute bottom-md left-md bg-primary text-white font-label-sm uppercase px-3 py-1.5 rounded-lg">
               ${ev.category}
             </div>
           </div>
           
-          <div class="p-6 sm:p-8">
-            <h2 class="font-display font-black text-2xl sm:text-3xl text-slate-900 leading-tight mb-4">${ev.title}</h2>
-            <div class="prose max-w-none text-slate-700 text-sm leading-relaxed mb-6">
+          <div class="p-lg">
+            <h2 class="font-display-lg text-[28px] md:text-[32px] text-primary leading-tight mb-md">${ev.title}</h2>
+            <div class="font-body-md text-on-surface-variant leading-relaxed mb-lg space-y-4">
               <p>${ev.description}</p>
-              <p class="mt-4">Participá de esta gran propuesta local para conectar con la cultura y las costumbres regionales. Se aconseja llegar con anticipación para asegurar su lugar ya que el espacio cuenta con cupo limitado.</p>
+              <p>Participá de esta gran propuesta local para conectar con la cultura y las costumbres regionales. Se aconseja llegar con anticipación para asegurar su lugar ya que el espacio cuenta con cupo limitado.</p>
             </div>
             
-            <div class="pt-6 border-t border-slate-100 flex items-center justify-between">
-              <div class="text-[11px] text-slate-400">Publicado por el organizador · Moderado por Agenda Santa Cruz</div>
-              <button onclick="showToast('¡Gracias por reportar! El evento está verificado.')" class="text-xs text-outline hover:text-error flex items-center gap-0.5">
-                <span class="material-symbols-outlined text-base leading-none">flag</span> Reportar error
+            <div class="pt-md border-t border-outline-variant/30 flex flex-col md:flex-row items-center justify-between gap-sm">
+              <div class="font-label-sm text-outline">Publicado por el organizador · Moderado por Agenda Santa Cruz</div>
+              <button onclick="showToast('¡Gracias por reportar! El evento está verificado.')" class="font-label-sm text-outline hover:text-error flex items-center gap-1 transition-colors">
+                <span class="material-symbols-outlined text-[16px] leading-none">flag</span> Reportar error
               </button>
             </div>
           </div>
         </div>
         
         <!-- Sidebar Column (Details & Contacts) -->
-        <div class="lg:col-span-4 flex flex-col gap-6">
-          <!-- Details Card -->
-          <div class="bg-white border border-slate-100 p-6 rounded-2xl shadow-sm">
-            <h3 class="font-display font-bold text-slate-900 text-base mb-5 pb-2 border-b border-slate-100">Detalles clave</h3>
+        <div class="lg:col-span-4 flex flex-col gap-md">
+          <div class="bg-surface border border-outline-variant/30 p-md rounded-2xl ambient-shadow">
+            <h3 class="font-title-sm text-primary mb-md pb-xs border-b border-outline-variant/30">Detalles clave</h3>
             
-            <div class="flex flex-col gap-4">
+            <div class="flex flex-col gap-md">
               <div class="flex gap-3">
-                <span class="material-symbols-outlined text-secondary">calendar_today</span>
+                <span class="material-symbols-outlined text-secondary text-[24px]">calendar_today</span>
                 <div>
-                  <h4 class="text-xs font-bold text-slate-500 uppercase">Fecha</h4>
-                  <p class="text-sm font-semibold text-slate-800">${ev.day} de ${ev.month === 'JUL' ? 'Julio' : ev.month}</p>
+                  <h4 class="font-label-sm text-outline uppercase">Fecha</h4>
+                  <p class="font-body-md text-on-background font-medium">${ev.day} de ${ev.month === 'JUL' ? 'Julio' : ev.month}</p>
                 </div>
               </div>
               <div class="flex gap-3">
-                <span class="material-symbols-outlined text-secondary">schedule</span>
+                <span class="material-symbols-outlined text-secondary text-[24px]">schedule</span>
                 <div>
-                  <h4 class="text-xs font-bold text-slate-500 uppercase">Horario</h4>
-                  <p class="text-sm font-semibold text-slate-800">${ev.time} hs</p>
+                  <h4 class="font-label-sm text-outline uppercase">Horario</h4>
+                  <p class="font-body-md text-on-background font-medium">${ev.time} hs</p>
                 </div>
               </div>
               <div class="flex gap-3">
-                <span class="material-symbols-outlined text-secondary">pin_drop</span>
+                <span class="material-symbols-outlined text-secondary text-[24px]">pin_drop</span>
                 <div>
-                  <h4 class="text-xs font-bold text-slate-500 uppercase">Lugar</h4>
-                  <p class="text-sm font-semibold text-slate-800">${ev.place}, ${ev.locality}</p>
+                  <h4 class="font-label-sm text-outline uppercase">Lugar</h4>
+                  <p class="font-body-md text-on-background font-medium">${ev.place}, ${ev.locality}</p>
                 </div>
               </div>
               <div class="flex gap-3">
-                <span class="material-symbols-outlined text-secondary">monetization_on</span>
+                <span class="material-symbols-outlined text-secondary text-[24px]">monetization_on</span>
                 <div>
-                  <h4 class="text-xs font-bold text-slate-500 uppercase">Entrada</h4>
-                  <p class="text-sm font-semibold text-slate-800">Libre y gratuita</p>
+                  <h4 class="font-label-sm text-outline uppercase">Entrada</h4>
+                  <p class="font-body-md text-on-background font-medium">Libre y gratuita</p>
                 </div>
               </div>
             </div>
             
-            <div class="mt-6 pt-6 border-t border-slate-100">
-              <a href="https://wa.me/5492974000000?text=Hola! Quería consultar sobre el evento '${ev.title}' del ${ev.day} de ${ev.month}." target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-lg text-sm flex items-center justify-center gap-1.5 transition-colors">
-                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M20.5 3.5A11.8 11.8 0 0 0 12.1 0C5.6 0 .3 5.3.3 11.8c0 2.1.5 4.1 1.6 5.9L.2 24l6.5-1.7a11.8 11.8 0 0 0 5.4 1.4h.1c6.5 0 11.8-5.3 11.8-11.8 0-3.1-1.2-6.1-3.5-8.4Zm-8.3 18.2h-.1a9.8 9.8 0 0 1-5-1.4l-.4-.2-3.8 1 1-3.7-.2-.4a9.8 9.8 0 1 1 8.5 4.7Zm5.4-7.4c-.3-.1-1.8-.9-2.1-1-.3-.1-.5-.1-.7.2l-1 1.2c-.2.2-.4.2-.7.1-1.9-.9-3.2-1.7-4.5-3.9-.3-.5.3-.5.9-1.7.1-.2 0-.4 0-.6l-.9-2.2c-.2-.5-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.2-1.2 2.9 0 1.7 1.3 3.4 1.4 3.6.2.2 2.5 3.8 6 5.3.8.4 1.5.6 2 .7.8.3 1.6.2 2.2.1.7-.1 1.8-.7 2.1-1.5.3-.7.3-1.4.2-1.5-.1-.2-.3-.3-.6-.4Z"/></svg>
+            <div class="mt-lg pt-md border-t border-outline-variant/30">
+              <a href="https://wa.me/5492974000000?text=Hola! Quería consultar sobre el evento '${ev.title}' del ${ev.day} de ${ev.month}." target="_blank" class="w-full bg-[#25D366] hover:bg-[#128C7E] text-white font-button py-2.5 rounded-lg flex items-center justify-center gap-2 transition-colors">
+                <span class="material-symbols-outlined text-[20px]">chat</span>
                 Consultar por WhatsApp
               </a>
             </div>
           </div>
           
-          <!-- Map Mock -->
-          <div class="bg-white border border-slate-100 p-4 rounded-2xl shadow-sm">
-            <h4 class="text-xs font-bold text-slate-500 uppercase mb-2">Ubicación</h4>
-            <div class="bg-slate-100 rounded-lg h-36 flex items-center justify-center border border-slate-200 relative overflow-hidden">
+          <div class="bg-surface border border-outline-variant/30 p-sm rounded-2xl ambient-shadow">
+            <h4 class="font-label-sm text-outline uppercase mb-sm px-xs">Ubicación</h4>
+            <div class="bg-surface-container rounded-lg h-36 flex items-center justify-center relative overflow-hidden">
               <div class="absolute inset-0 bg-cover bg-center opacity-70" style="background-image: url('${images.coast}')"></div>
               <div class="absolute inset-0 bg-primary/20"></div>
-              <div class="relative bg-white p-2 rounded-lg shadow-sm flex items-center gap-1.5 text-xs text-slate-800 font-semibold max-w-[200px]">
-                <span class="material-symbols-outlined text-error text-base">pin_drop</span>
+              <div class="relative bg-surface p-2 rounded-lg ambient-shadow flex items-center gap-1.5 font-label-sm text-primary max-w-[200px]">
+                <span class="material-symbols-outlined text-error text-[18px]">pin_drop</span>
                 <span class="truncate">${ev.place}</span>
               </div>
             </div>
@@ -848,180 +857,186 @@ function renderEventDetail(id) {
         </div>
       </div>
 
-      <!-- Related Section -->
       ${related.length > 0 ? `
-        <div class="mt-12 pt-12 border-t border-slate-100">
-          <h3 class="font-display font-bold text-xl text-slate-900 mb-6">Otros eventos en ${ev.locality}</h3>
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="mt-xl pt-lg border-t border-outline-variant/30">
+          <h3 class="font-headline-md text-primary mb-md">Otros eventos en ${ev.locality}</h3>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-md">
             ${related.map(r => eventCard(r)).join('')}
           </div>
         </div>
       ` : ''}
     </div>
   `;
-
+  
   document.getElementById('app').innerHTML = shell(content, 'agenda');
 }
 
 function renderDestinations() {
-  const content = `
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-      <div class="mb-8">
-        <h2 class="font-display font-black text-3xl text-slate-900 leading-tight">Destinos Turísticos</h2>
-        <p class="text-slate-500 text-sm mt-1">Explorá localidades de Santa Cruz y planificá tu viaje con información del lugar.</p>
-      </div>
+  const filterLocality = () => {
+    const q = state.destinationSearch.toLowerCase();
+    return localities.filter(l => l.toLowerCase().includes(q) || localityDescriptions[l]?.toLowerCase().includes(q) || regionFor(l).toLowerCase().includes(q));
+  };
+  
+  const results = filterLocality();
 
-      <div class="flex flex-col sm:flex-row gap-4 justify-between items-center mb-8 bg-white border border-slate-100 p-4 rounded-2xl shadow-sm">
-        <div class="relative w-full sm:w-80">
-          <span class="material-symbols-outlined absolute left-3 top-2.5 text-slate-400 text-lg">search</span>
-          <input type="text" id="dest-search" placeholder="Buscar localidad..." class="w-full pl-9 py-1.5 border-slate-200 rounded-lg text-sm focus:ring-secondary focus:border-secondary">
+  const content = `
+    <div class="bg-primary pt-xl pb-32 mt-[-16px] md:mt-0 relative overflow-hidden">
+      <div class="absolute inset-0 bg-cover bg-center opacity-20" style="background-image: url('${images.deseado}')"></div>
+      <div class="absolute inset-0 bg-gradient-to-t from-primary to-transparent"></div>
+      <div class="relative max-w-7xl mx-auto px-container-margin z-10">
+        <h1 class="font-display-lg text-[36px] md:text-[48px] text-white leading-tight mb-xs">Destinos de Santa Cruz</h1>
+        <p class="font-body-md text-surface-container-highest max-w-2xl mb-lg">Explorá cada rincón de la provincia. Encontrá guías turísticas locales, atracciones, cómo llegar y prestadores de servicios por cada ciudad.</p>
+        
+        <div class="max-w-2xl bg-surface/95 backdrop-blur-md rounded-xl p-xs ambient-shadow flex">
+          <span class="material-symbols-outlined text-on-surface-variant flex items-center pl-sm">search</span>
+          <input id="dest-search" type="text" value="${state.destinationSearch}" placeholder="Buscar localidad o región..." class="w-full bg-transparent border-none focus:ring-0 font-body-md text-on-background px-sm py-2 outline-none">
+          <button onclick="document.getElementById('dest-search-form').dispatchEvent(new Event('submit'))" class="bg-secondary text-primary font-button px-md py-1.5 rounded-lg hover:bg-secondary-container transition-colors">Buscar</button>
         </div>
-        <div class="flex flex-wrap gap-2 w-full sm:w-auto" id="region-filters">
-          ${['Todos', 'Costa atlántica', 'Cordillera y lagos', 'Cuenca carbonífera'].map(r => `
-            <button class="px-4 py-1.5 rounded-full text-xs font-semibold border transition-all ${r === 'Todos' ? 'bg-secondary text-primary border-secondary shadow-sm' : 'bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100'}" data-region="${r}">
+        <form id="dest-search-form" class="hidden"></form>
+        
+        <!-- Region pills -->
+        <div class="flex flex-wrap gap-2 mt-md">
+          ${['Costa atlántica', 'Cordillera y lagos', 'Cuenca carbonífera', 'Estepa santacruceña'].map(r => `
+            <button onclick="setDestSearch('${r}')" class="bg-surface-container/20 hover:bg-surface-container/40 text-surface-bright font-label-sm border border-surface-container/50 px-3 py-1 rounded-full transition-colors backdrop-blur-sm">
               ${r}
             </button>
           `).join('')}
+          ${state.destinationSearch ? `
+            <button onclick="setDestSearch('')" class="bg-error/80 hover:bg-error text-white font-label-sm border border-error px-3 py-1 rounded-full flex items-center gap-1 transition-colors">
+              Limpiar <span class="material-symbols-outlined text-[14px]">close</span>
+            </button>
+          ` : ''}
         </div>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="dest-grid">
-        ${localities.map(name => localityCard(name)).join('')}
       </div>
     </div>
-  `;
-
-  document.getElementById('app').innerHTML = shell(content, 'destinos');
-
-  // Interactive filtering of destinations
-  const searchInput = document.getElementById('dest-search');
-  const regionButtons = document.querySelectorAll('#region-filters button');
-  let selectedRegion = 'Todos';
-
-  const filterDestinations = () => {
-    const q = searchInput.value.toLowerCase();
-    const filtered = localities.filter(name => {
-      const matchSearch = name.toLowerCase().includes(q);
-      const matchRegion = selectedRegion === 'Todos' || regionFor(name) === selectedRegion;
-      return matchSearch && matchRegion;
-    });
-
-    const grid = document.getElementById('dest-grid');
-    if (filtered.length === 0) {
-      grid.innerHTML = `
-        <div class="col-span-full bg-white border border-slate-100 rounded-2xl p-12 text-center">
-          <span class="material-symbols-outlined text-slate-300 text-5xl mb-2">map</span>
-          <h3 class="font-display font-bold text-slate-900 text-base mb-1">No se encontraron destinos</h3>
-          <p class="text-slate-500 text-xs">Probá cambiando el texto de búsqueda o el filtro de región.</p>
+    
+    <div class="max-w-7xl mx-auto px-container-margin -mt-20 relative z-20 mb-xl">
+      ${results.length === 0 ? `
+        <div class="bg-surface border border-outline-variant/30 rounded-xl p-xl text-center ambient-shadow">
+          <span class="material-symbols-outlined text-outline-variant text-[48px] mb-sm">map</span>
+          <h3 class="font-title-sm text-primary mb-xs">Destino no encontrado</h3>
+          <p class="font-body-md text-on-surface-variant max-w-sm mx-auto">No tenemos información turística que coincida con "${state.destinationSearch}".</p>
         </div>
-      `;
-    } else {
-      grid.innerHTML = filtered.map(name => localityCard(name)).join('');
-    }
-  };
-
-  searchInput.addEventListener('keyup', filterDestinations);
-
-  regionButtons.forEach(btn => {
-    btn.addEventListener('click', function() {
-      regionButtons.forEach(b => {
-        b.className = 'px-4 py-1.5 rounded-full text-xs font-semibold border bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100';
-      });
-      this.className = 'px-4 py-1.5 rounded-full text-xs font-semibold border bg-secondary text-primary border-secondary shadow-sm';
-      selectedRegion = this.getAttribute('data-region');
-      filterDestinations();
-    });
+      ` : `
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-md">
+          ${results.map(l => localityCard(l)).join('')}
+        </div>
+      `}
+    </div>
+  `;
+  
+  document.getElementById('app').innerHTML = shell(content, 'destinos');
+  
+  document.getElementById('dest-search-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    state.destinationSearch = document.getElementById('dest-search').value;
+    renderDestinations();
+  });
+  
+  document.getElementById('dest-search').addEventListener('input', function(e) {
+    state.destinationSearch = e.target.value;
+    renderDestinations();
   });
 }
+
+window.setDestSearch = function(val) {
+  state.destinationSearch = val;
+  renderDestinations();
+};
+
 
 function renderLocality(slugName) {
   const name = localityFromSlug(slugName);
-  const img = name === 'Puerto Deseado' ? images.deseado : name === '28 de Noviembre' ? images.noviembre : name === 'El Calafate' ? images.calafate : images.coast;
-  const desc = localityDescriptions[name] || localityDescriptions.default;
   const region = regionFor(name);
-
-  const localEvents = baseEvents.filter(e => e.locality === name);
-  const localServices = services.filter(s => s.locality === name);
-
+  const locImg = name === 'Puerto Deseado' ? images.deseado : name === '28 de Noviembre' ? images.noviembre : name === 'El Calafate' ? images.calafate : images.coast;
+  const desc = localityDescriptions[name] || localityDescriptions.default;
+  
+  const locEvents = baseEvents.filter(e => e.locality === name);
+  const locServices = services.filter(s => s.locality === name).slice(0, 4);
+  
   const content = `
-    <!-- Destination Header -->
-    <div class="relative bg-primary text-white py-16 px-4">
-      <div class="absolute inset-0 opacity-30 bg-cover bg-center" style="background-image: url('${img}')"></div>
-      <div class="absolute inset-0 bg-gradient-to-r from-primary via-primary/70 to-transparent"></div>
-      <div class="relative max-w-7xl mx-auto">
-        <a href="#/destinos" class="inline-flex items-center gap-1 text-xs font-semibold text-secondary hover:text-white mb-4 transition-colors">
-          <span class="material-symbols-outlined text-sm leading-none">arrow_back</span> Todos los Destinos
-        </a>
-        <span class="text-xs uppercase tracking-widest text-secondary font-bold block mb-1">${region}</span>
-        <h2 class="font-display font-black text-3xl sm:text-4xl mb-3">${name}</h2>
-        <p class="text-slate-200 text-sm sm:text-base max-w-xl leading-relaxed">${desc}</p>
+    <!-- Locality Hero -->
+    <div class="relative w-full h-[500px] mt-[-16px] md:mt-0 mb-xl">
+      <img src="${locImg}" alt="${name}" class="absolute inset-0 w-full h-full object-cover">
+      <div class="absolute inset-0 bg-gradient-to-t from-primary via-primary/60 to-transparent"></div>
+      <div class="absolute bottom-0 w-full pb-xl">
+        <div class="max-w-7xl mx-auto px-container-margin">
+          <a href="#/destinos" class="inline-flex items-center gap-1 font-button text-surface-container hover:text-white mb-md transition-colors opacity-80 hover:opacity-100">
+            <span class="material-symbols-outlined text-[18px]">arrow_back</span> Volver a Destinos
+          </a>
+          <span class="block font-label-sm uppercase tracking-widest text-secondary mb-2">${region}</span>
+          <h1 class="font-display-lg text-[48px] md:text-[56px] text-white leading-tight drop-shadow-md">${name}</h1>
+        </div>
       </div>
     </div>
-
-    <!-- Locality Content Tabs -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-      <div class="flex gap-4 border-b border-slate-200 mb-8" id="locality-tabs">
-        <button class="pb-3 text-sm font-bold border-b-2 border-secondary text-secondary" data-tab="agenda">
-          Agenda Local (${localEvents.length})
-        </button>
-        <button class="pb-3 text-sm font-bold text-slate-500 hover:text-primary" data-tab="servicios">
-          Servicios Turísticos (${localServices.length})
-        </button>
-      </div>
-
-      <!-- Tab Content: Agenda -->
-      <div id="tab-content-agenda" class="tab-content">
-        ${localEvents.length === 0 ? `
-          <div class="bg-white border border-slate-100 rounded-2xl p-12 text-center max-w-md mx-auto shadow-sm">
-            <span class="material-symbols-outlined text-slate-300 text-4xl mb-2">event_busy</span>
-            <h3 class="font-display font-bold text-slate-900 text-base mb-1">Sin eventos próximos</h3>
-            <p class="text-slate-500 text-xs">No hay eventos agendados para esta localidad. ¡Podés sumar el tuyo!</p>
+    
+    <div class="max-w-7xl mx-auto px-container-margin grid grid-cols-1 lg:grid-cols-12 gap-xl mb-xl">
+      <!-- Main Content -->
+      <div class="lg:col-span-8">
+        <h2 class="font-headline-md text-primary mb-md pb-xs border-b border-outline-variant/30">Acerca de la ciudad</h2>
+        <div class="font-body-md text-on-surface-variant leading-relaxed mb-xl space-y-4">
+          <p>${desc}</p>
+          <p>Un lugar ideal para desconectar, disfrutar de la gastronomía patagónica y recorrer atractivos únicos que combinan naturaleza e historia.</p>
+        </div>
+        
+        <h2 class="font-headline-md text-primary mb-md pb-xs border-b border-outline-variant/30 flex justify-between items-end">
+          Próximos Eventos
+          ${locEvents.length > 0 ? `<a href="#/agenda" onclick="state.agenda.locality='${name}'" class="font-button text-secondary text-sm hover:underline flex items-center">Ver todos <span class="material-symbols-outlined text-[16px]">arrow_forward</span></a>` : ''}
+        </h2>
+        
+        ${locEvents.length > 0 ? `
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-md mb-xl">
+            ${locEvents.slice(0, 4).map(e => eventCard(e)).join('')}
           </div>
         ` : `
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            ${localEvents.map(e => eventCard(e)).join('')}
+          <div class="bg-surface border border-outline-variant/30 rounded-xl p-md text-center ambient-shadow mb-xl">
+            <p class="font-body-md text-on-surface-variant">No hay eventos próximos registrados para esta localidad.</p>
           </div>
         `}
       </div>
-
-      <!-- Tab Content: Servicios -->
-      <div id="tab-content-servicios" class="tab-content hidden">
-        ${localServices.length === 0 ? `
-          <div class="bg-white border border-slate-100 rounded-2xl p-12 text-center max-w-md mx-auto shadow-sm">
-            <span class="material-symbols-outlined text-slate-300 text-4xl mb-2">business_center</span>
-            <h3 class="font-display font-bold text-slate-900 text-base mb-1">Sin servicios registrados</h3>
-            <p class="text-slate-500 text-xs">No encontramos prestadores registrados en esta área todavía.</p>
+      
+      <!-- Sidebar Services -->
+      <div class="lg:col-span-4 flex flex-col gap-md">
+        <div class="bg-surface border border-outline-variant/30 p-md rounded-2xl ambient-shadow">
+          <div class="flex justify-between items-center mb-md pb-xs border-b border-outline-variant/30">
+            <h3 class="font-title-sm text-primary">Servicios Turísticos</h3>
+            <a href="#/servicios" onclick="state.services.locality='${name}'" class="font-button text-secondary text-sm hover:underline">Ver directorio</a>
           </div>
-        ` : `
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            ${localServices.map(s => serviceCard(s)).join('')}
+          
+          ${locServices.length > 0 ? `
+            <div class="flex flex-col gap-sm">
+              ${locServices.map(s => `
+                <a href="https://wa.me/5492974000000" target="_blank" class="block p-3 rounded-lg border border-outline-variant/30 hover:border-secondary hover:bg-surface-container-low transition-colors group">
+                  <div class="flex justify-between items-start mb-1">
+                    <span class="font-label-sm text-[10px] uppercase text-primary-container bg-surface-container px-2 py-0.5 rounded">${s.rubric}</span>
+                    <span class="material-symbols-outlined text-[#25D366] text-[16px]">chat</span>
+                  </div>
+                  <h4 class="font-title-sm text-primary group-hover:text-secondary line-clamp-1">${s.name}</h4>
+                  <p class="font-label-sm text-on-surface-variant line-clamp-1">${s.description}</p>
+                </a>
+              `).join('')}
+            </div>
+          ` : `
+            <p class="font-body-md text-outline italic text-center py-sm">No hay servicios destacados registrados.</p>
+          `}
+          
+          <div class="mt-md pt-sm border-t border-outline-variant/30">
+            <a href="#/publicar/servicio" class="w-full bg-surface-container-high hover:bg-surface-container-highest text-primary font-button py-2 rounded-lg flex items-center justify-center gap-1 transition-colors">
+              <span class="material-symbols-outlined text-[18px]">add_business</span>
+              Ofrecé un servicio acá
+            </a>
           </div>
-        `}
+        </div>
       </div>
     </div>
   `;
-
+  
   document.getElementById('app').innerHTML = shell(content, 'destinos');
-
-  // Tab switching binding
-  const tabButtons = document.querySelectorAll('#locality-tabs button');
-  tabButtons.forEach(btn => {
-    btn.addEventListener('click', function() {
-      tabButtons.forEach(b => {
-        b.className = 'pb-3 text-sm font-bold text-slate-500 hover:text-primary';
-      });
-      this.className = 'pb-3 text-sm font-bold border-b-2 border-secondary text-secondary';
-      
-      const tabId = this.getAttribute('data-tab');
-      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-      document.getElementById(`tab-content-${tabId}`).classList.remove('hidden');
-    });
-  });
 }
 
 function renderServices() {
-  const rubricsList = ['Todos', 'Alojamiento', 'Gastronomía', 'Excursiones/Actividades', 'Transporte', 'Agencias'];
   const localitiesList = ['Todas', ...localities];
+  const rubricsList = ['Todos', 'Alojamiento', 'Gastronomía', 'Excursiones/Actividades', 'Transporte', 'Agencias'];
 
   const filterServices = () => {
     return services.filter(s => {
@@ -1029,9 +1044,7 @@ function renderServices() {
       if (state.services.rubric !== 'Todos' && s.rubric !== state.services.rubric) return false;
       if (state.services.query) {
         const q = state.services.query.toLowerCase();
-        const matchesName = s.name.toLowerCase().includes(q);
-        const matchesDesc = s.description.toLowerCase().includes(q);
-        if (!matchesName && !matchesDesc) return false;
+        return s.name.toLowerCase().includes(q) || s.description.toLowerCase().includes(q);
       }
       return true;
     });
@@ -1040,158 +1053,141 @@ function renderServices() {
   const currentServices = filterServices();
 
   const content = `
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-      <div class="mb-8">
-        <h2 class="font-display font-black text-3xl text-slate-900 leading-tight">Servicios Turísticos</h2>
-        <p class="text-slate-500 text-sm mt-1">Directorio de prestadores locales con contacto directo por WhatsApp.</p>
+    <div class="max-w-7xl mx-auto px-container-margin py-xl">
+      <div class="mb-lg border-b border-outline-variant/30 pb-sm flex flex-col md:flex-row md:justify-between md:items-end gap-md">
+        <div>
+          <h1 class="font-display-lg text-primary mb-xs">Directorio de Servicios</h1>
+          <p class="font-body-md text-on-surface-variant">Conectá directamente con prestadores turísticos por WhatsApp.</p>
+        </div>
+        <a href="#/publicar/servicio" class="bg-secondary text-primary font-button px-md py-2 rounded-lg hover:bg-secondary-container transition-colors flex items-center gap-1 w-fit">
+          <span class="material-symbols-outlined text-[18px]">add_business</span> Ofrecer mi servicio
+        </a>
       </div>
-
-      <div class="flex flex-col lg:flex-row gap-8">
-        <!-- Sidebar Filters -->
-        <aside class="w-full lg:w-64 flex-shrink-0 bg-white border border-slate-100 p-5 rounded-2xl shadow-sm h-fit">
-          <h3 class="font-display font-bold text-slate-900 text-sm mb-4 pb-2 border-b border-slate-100 flex items-center gap-1.5">
-            <span class="material-symbols-outlined text-base">filter_alt</span> Filtrar Directorio
-          </h3>
-
-          <!-- Search Input -->
-          <div class="mb-5">
-            <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Buscar</label>
+      
+      <div class="bg-surface border border-outline-variant/30 p-md rounded-xl ambient-shadow mb-xl">
+        <form id="services-search-form" class="grid grid-cols-1 md:grid-cols-12 gap-md items-end">
+          <div class="md:col-span-5">
+            <label class="font-label-sm text-on-surface-variant mb-xs block">Buscar</label>
             <div class="relative">
-              <span class="material-symbols-outlined absolute left-2.5 top-2 text-slate-400 text-base">search</span>
-              <input type="text" id="service-search-input" value="${state.services.query}" placeholder="Hotel, restaurante..." class="w-full pl-8 py-1.5 text-xs border-slate-200 rounded-lg focus:ring-secondary focus:border-secondary">
+              <span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">search</span>
+              <input id="srv-search" type="text" value="${state.services.query}" class="w-full bg-surface-bright border border-outline-variant rounded-lg pl-10 pr-sm py-2.5 focus:border-primary outline-none font-body-md text-on-background" placeholder="Ej. Cabañas, Pizzería...">
             </div>
           </div>
-
-          <!-- Locality Selector -->
-          <div class="mb-5">
-            <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Localidad</label>
-            <select id="service-locality" class="w-full text-xs border-slate-200 rounded-lg focus:ring-secondary focus:border-secondary">
+          <div class="md:col-span-3">
+            <label class="font-label-sm text-on-surface-variant mb-xs block">Localidad</label>
+            <select id="srv-locality" class="w-full bg-surface-bright border border-outline-variant rounded-lg px-sm py-2.5 focus:border-primary outline-none font-body-md text-on-background">
               ${localitiesList.map(l => `<option value="${l}" ${state.services.locality === l ? 'selected' : ''}>${l === 'Todas' ? 'Toda la provincia' : l}</option>`).join('')}
             </select>
           </div>
-
-          <!-- Rubric Selector -->
-          <div class="mb-2">
-            <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Rubro</label>
-            <div class="flex flex-col gap-2">
-              ${rubricsList.map(r => `
-                <label class="flex items-center gap-2.5 text-xs text-slate-700 cursor-pointer">
-                  <input type="radio" name="service-rubric" value="${r}" ${state.services.rubric === r ? 'checked' : ''} class="text-secondary focus:ring-secondary border-slate-300">
-                  <span>${r}</span>
-                </label>
-              `).join('')}
-            </div>
+          <div class="md:col-span-3">
+            <label class="font-label-sm text-on-surface-variant mb-xs block">Rubro</label>
+            <select id="srv-rubric" class="w-full bg-surface-bright border border-outline-variant rounded-lg px-sm py-2.5 focus:border-primary outline-none font-body-md text-on-background">
+              ${rubricsList.map(r => `<option value="${r}" ${state.services.rubric === r ? 'selected' : ''}>${r}</option>`).join('')}
+            </select>
           </div>
-        </aside>
-
-        <!-- Results Grid -->
-        <div class="flex-grow">
-          <!-- Active filter indicators -->
-          <div class="flex flex-wrap items-center gap-2 mb-6 text-xs">
-            <span class="text-slate-500">Filtros aplicados:</span>
-            ${state.services.locality !== 'Todas' ? `<span class="bg-secondary/15 text-secondary border border-secondary/20 font-semibold px-2.5 py-1 rounded-full flex items-center gap-1">Localidad: ${state.services.locality} <button onclick="clearServiceFilter('locality')" class="hover:text-primary"><span class="material-symbols-outlined text-xs leading-none">close</span></button></span>` : ''}
-            ${state.services.rubric !== 'Todos' ? `<span class="bg-secondary/15 text-secondary border border-secondary/20 font-semibold px-2.5 py-1 rounded-full flex items-center gap-1">Rubro: ${state.services.rubric} <button onclick="clearServiceFilter('rubric')" class="hover:text-primary"><span class="material-symbols-outlined text-xs leading-none">close</span></button></span>` : ''}
-            ${state.services.query ? `<span class="bg-secondary/15 text-secondary border border-secondary/20 font-semibold px-2.5 py-1 rounded-full flex items-center gap-1">Texto: "${state.services.query}" <button onclick="clearServiceFilter('query')" class="hover:text-primary"><span class="material-symbols-outlined text-xs leading-none">close</span></button></span>` : ''}
-            ${state.services.locality === 'Todas' && state.services.rubric === 'Todos' && !state.services.query ? '<span class="text-slate-400 font-medium">Todos los prestadores turísticos</span>' : ''}
+          <div class="md:col-span-1">
+            <button type="submit" class="w-full bg-primary-container text-on-primary font-button py-2.5 rounded-lg hover:bg-primary transition-colors flex items-center justify-center">
+              <span class="material-symbols-outlined text-[20px]">filter_list</span>
+            </button>
           </div>
-
-          ${currentServices.length === 0 ? `
-            <div class="bg-white border border-slate-100 rounded-2xl p-12 text-center shadow-sm">
-              <span class="material-symbols-outlined text-slate-300 text-5xl mb-3">business_center</span>
-              <h3 class="font-display font-bold text-slate-900 text-lg mb-1">Sin prestadores encontrados</h3>
-              <p class="text-slate-500 text-sm max-w-sm mx-auto mb-6">No encontramos servicios que coincidan con la búsqueda actual.</p>
-              <button onclick="resetServiceFilters()" class="bg-primary text-white font-semibold px-4 py-2 rounded-lg text-sm hover:bg-primary-container transition-colors">
-                Restablecer Filtros
-              </button>
-            </div>
-          ` : `
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              ${currentServices.map(s => serviceCard(s)).join('')}
-            </div>
-          `}
-        </div>
+        </form>
       </div>
+      
+      <div class="flex flex-wrap items-center gap-2 mb-md">
+        <span class="font-label-sm text-outline">Filtros:</span>
+        ${state.services.query ? `<span class="bg-secondary/15 text-secondary border border-secondary/20 font-label-sm px-3 py-1 rounded-full flex items-center gap-1">Búsqueda: "${state.services.query}" <button onclick="clearSrvFilter('query')" class="hover:text-primary"><span class="material-symbols-outlined text-[14px]">close</span></button></span>` : ''}
+        ${state.services.locality !== 'Todas' ? `<span class="bg-secondary/15 text-secondary border border-secondary/20 font-label-sm px-3 py-1 rounded-full flex items-center gap-1">Localidad: ${state.services.locality} <button onclick="clearSrvFilter('locality')" class="hover:text-primary"><span class="material-symbols-outlined text-[14px]">close</span></button></span>` : ''}
+        ${state.services.rubric !== 'Todos' ? `<span class="bg-secondary/15 text-secondary border border-secondary/20 font-label-sm px-3 py-1 rounded-full flex items-center gap-1">Rubro: ${state.services.rubric} <button onclick="clearSrvFilter('rubric')" class="hover:text-primary"><span class="material-symbols-outlined text-[14px]">close</span></button></span>` : ''}
+      </div>
+
+      ${currentServices.length === 0 ? `
+        <div class="bg-surface border border-outline-variant/30 rounded-xl p-xl text-center ambient-shadow">
+          <span class="material-symbols-outlined text-outline-variant text-[48px] mb-sm">storefront</span>
+          <h3 class="font-title-sm text-primary mb-xs">No hay resultados</h3>
+          <p class="font-body-md text-on-surface-variant max-w-sm mx-auto mb-md">Intenta ampliar tu búsqueda o cambiar de localidad.</p>
+          <button onclick="resetSrvFilters()" class="bg-primary text-white font-button px-md py-sm rounded-lg hover:bg-primary-container transition-colors">
+            Ver todos los servicios
+          </button>
+        </div>
+      ` : `
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-md">
+          ${currentServices.map(s => serviceCard(s)).join('')}
+        </div>
+      `}
     </div>
   `;
-
+  
   document.getElementById('app').innerHTML = shell(content, 'servicios');
 
-  // Event bindings
-  const searchInput = document.getElementById('service-search-input');
-  searchInput.addEventListener('keyup', function(e) {
-    state.services.query = e.target.value;
-    // We don't full rerender on every keystroke to keep focus, but filter results in grid directly or use keyup delay
-  });
-  searchInput.addEventListener('change', function(e) {
-    state.services.query = e.target.value;
+  document.getElementById('services-search-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    state.services.query = document.getElementById('srv-search').value;
+    state.services.locality = document.getElementById('srv-locality').value;
+    state.services.rubric = document.getElementById('srv-rubric').value;
     renderServices();
-  });
-
-  document.getElementById('service-locality').addEventListener('change', function(e) {
-    state.services.locality = e.target.value;
-    renderServices();
-  });
-
-  document.querySelectorAll('input[name="service-rubric"]').forEach(radio => {
-    radio.addEventListener('change', function(e) {
-      state.services.rubric = e.target.value;
-      renderServices();
-    });
   });
 }
 
-window.clearServiceFilter = function(filter) {
+window.clearSrvFilter = function(filter) {
+  if (filter === 'query') state.services.query = '';
   if (filter === 'locality') state.services.locality = 'Todas';
   if (filter === 'rubric') state.services.rubric = 'Todos';
-  if (filter === 'query') state.services.query = '';
   renderServices();
 };
 
-window.resetServiceFilters = function() {
+window.resetSrvFilters = function() {
+  state.services.query = '';
   state.services.locality = 'Todas';
   state.services.rubric = 'Todos';
-  state.services.query = '';
   renderServices();
 };
 
-// Publish Form View
+
 function renderPublish(kind = 'event') {
+  const isEvent = kind === 'event';
+  
   const content = `
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-      <div class="mb-8">
-        <h2 class="font-display font-black text-3xl text-slate-900 leading-tight">Publicar en el Portal</h2>
-        <p class="text-slate-500 text-sm mt-1">Colaborá sumando información verificada sobre eventos o servicios de tu localidad.</p>
+    <div class="max-w-7xl mx-auto px-container-margin py-xl">
+      <div class="mb-lg border-b border-outline-variant/30 pb-sm">
+        <h1 class="font-display-lg text-[32px] md:text-[36px] text-primary mb-xs">
+          Sugerir un nuevo ${isEvent ? 'Evento' : 'Servicio Turístico'}
+        </h1>
+        <p class="font-body-md text-on-surface-variant max-w-2xl">
+          Completá el formulario para que nuestro equipo lo revise y lo publique en el portal.
+          Es gratuito y nos ayuda a promover tu ciudad.
+        </p>
       </div>
-
-      <!-- Tab selection -->
-      <div class="flex gap-4 border-b border-slate-200 mb-8">
-        <a href="#/publicar/evento" class="pb-3 text-sm font-bold border-b-2 ${kind === 'event' ? 'border-secondary text-secondary' : 'border-transparent text-slate-500'}" id="publish-tab-event">
-          Nuevo Evento
+      
+      <div class="flex gap-4 mb-xl font-label-sm uppercase">
+        <a href="#/publicar/evento" class="flex-1 py-3 text-center rounded-xl border ${isEvent ? 'border-primary bg-primary text-white shadow-md' : 'border-outline-variant/50 text-on-surface-variant hover:bg-surface-container-low'} transition-all">
+          <span class="material-symbols-outlined text-[20px] block mb-1">event</span>
+          Evento Público
         </a>
-        <a href="#/publicar/servicio" class="pb-3 text-sm font-bold border-b-2 ${kind === 'service' ? 'border-secondary text-secondary' : 'border-transparent text-slate-500'}" id="publish-tab-service">
-          Sugerir Servicio Turístico
+        <a href="#/publicar/servicio" class="flex-1 py-3 text-center rounded-xl border ${!isEvent ? 'border-primary bg-primary text-white shadow-md' : 'border-outline-variant/50 text-on-surface-variant hover:bg-surface-container-low'} transition-all">
+          <span class="material-symbols-outlined text-[20px] block mb-1">business_center</span>
+          Servicio Privado
         </a>
       </div>
-
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        <!-- Form -->
-        <form id="publish-form" class="lg:col-span-8 bg-white border border-slate-100 p-6 sm:p-8 rounded-2xl shadow-sm flex flex-col gap-5">
+      
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-xl">
+        <!-- Form Column -->
+        <form id="publish-form" class="lg:col-span-8 bg-surface border border-outline-variant/30 p-lg md:p-xl rounded-2xl ambient-shadow flex flex-col gap-md">
           <div>
-            <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Título / Nombre</label>
-            <input type="text" required class="w-full text-sm border-slate-200 rounded-lg focus:ring-secondary focus:border-secondary" placeholder="${kind === 'event' ? 'Ej. Peña Folclórica Nocturna' : 'Ej. Alquiler de Cabañas Las Nubes'}">
+            <label class="font-label-sm text-outline block mb-xs">Título / Nombre</label>
+            <input type="text" required class="w-full bg-surface-bright border border-outline-variant rounded-lg px-sm py-2.5 focus:border-primary outline-none font-body-md text-on-background" placeholder="${isEvent ? 'Ej. Peña Folclórica Nocturna' : 'Ej. Alquiler de Cabañas Las Nubes'}">
           </div>
           
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-md">
             <div>
-              <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Localidad</label>
-              <select required class="w-full text-sm border-slate-200 rounded-lg focus:ring-secondary focus:border-secondary">
+              <label class="font-label-sm text-outline block mb-xs">Localidad</label>
+              <select required class="w-full bg-surface-bright border border-outline-variant rounded-lg px-sm py-2.5 focus:border-primary outline-none font-body-md text-on-background">
                 ${localities.map(l => `<option value="${l}">${l}</option>`).join('')}
               </select>
             </div>
             <div>
-              <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Categoría / Rubro</label>
-              <select required class="w-full text-sm border-slate-200 rounded-lg focus:ring-secondary focus:border-secondary">
-                ${kind === 'event' 
+              <label class="font-label-sm text-outline block mb-xs">Categoría / Rubro</label>
+              <select required class="w-full bg-surface-bright border border-outline-variant rounded-lg px-sm py-2.5 focus:border-primary outline-none font-body-md text-on-background">
+                ${isEvent 
                   ? ['Cultural', 'Deportivo', 'Gastronómico', 'Institucional'].map(c => `<option value="${c}">${c}</option>`).join('')
                   : ['Alojamiento', 'Gastronomía', 'Excursiones/Actividades', 'Transporte', 'Agencias'].map(r => `<option value="${r}">${r}</option>`).join('')
                 }
@@ -1199,69 +1195,76 @@ function renderPublish(kind = 'event') {
             </div>
           </div>
 
-          ${kind === 'event' ? `
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          ${isEvent ? `
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-md">
               <div>
-                <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Fecha</label>
-                <input type="date" required class="w-full text-sm border-slate-200 rounded-lg focus:ring-secondary focus:border-secondary">
+                <label class="font-label-sm text-outline block mb-xs">Fecha</label>
+                <input type="date" required class="w-full bg-surface-bright border border-outline-variant rounded-lg px-sm py-2.5 focus:border-primary outline-none font-body-md text-on-background">
               </div>
               <div>
-                <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Horario de Inicio</label>
-                <input type="time" required class="w-full text-sm border-slate-200 rounded-lg focus:ring-secondary focus:border-secondary">
+                <label class="font-label-sm text-outline block mb-xs">Horario de Inicio</label>
+                <input type="time" required class="w-full bg-surface-bright border border-outline-variant rounded-lg px-sm py-2.5 focus:border-primary outline-none font-body-md text-on-background">
               </div>
             </div>
             <div>
-              <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Lugar / Dirección del Evento</label>
-              <input type="text" required class="w-full text-sm border-slate-200 rounded-lg focus:ring-secondary focus:border-secondary" placeholder="Ej. Gimnasio Municipal, Calle San Martín 150">
+              <label class="font-label-sm text-outline block mb-xs">Lugar / Dirección del Evento</label>
+              <input type="text" required class="w-full bg-surface-bright border border-outline-variant rounded-lg px-sm py-2.5 focus:border-primary outline-none font-body-md text-on-background" placeholder="Ej. Gimnasio Municipal, Calle San Martín 150">
             </div>
           ` : ''}
 
           <div>
-            <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Descripción</label>
-            <textarea required rows="4" class="w-full text-sm border-slate-200 rounded-lg focus:ring-secondary focus:border-secondary" placeholder="Brindá información útil para los visitantes (duración, costos, características)..."></textarea>
+            <label class="font-label-sm text-outline block mb-xs">Descripción</label>
+            <textarea required rows="4" class="w-full bg-surface-bright border border-outline-variant rounded-lg px-sm py-2.5 focus:border-primary outline-none font-body-md text-on-background resize-y" placeholder="Brindá información útil para los visitantes (duración, costos, características)..."></textarea>
           </div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-md">
             <div>
-              <label class="block text-xs font-bold text-slate-500 uppercase mb-2">WhatsApp de Contacto</label>
-              <input type="tel" required class="w-full text-sm border-slate-200 rounded-lg focus:ring-secondary focus:border-secondary" placeholder="Ej. 2974123456">
+              <label class="font-label-sm text-outline block mb-xs">WhatsApp de Contacto</label>
+              <div class="relative">
+                <span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">phone</span>
+                <input type="tel" required class="w-full bg-surface-bright border border-outline-variant rounded-lg pl-9 pr-sm py-2.5 focus:border-primary outline-none font-body-md text-on-background" placeholder="Ej. 2974123456">
+              </div>
             </div>
             <div>
-              <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Foto ilustrativa</label>
-              <div class="border border-dashed border-slate-200 rounded-lg p-3 text-center text-xs text-slate-400 flex items-center justify-center gap-1.5 cursor-pointer hover:bg-slate-50">
-                <span class="material-symbols-outlined text-lg">add_photo_alternate</span> Seleccionar archivo (Simulación)
+              <label class="font-label-sm text-outline block mb-xs">Foto ilustrativa</label>
+              <div class="border border-dashed border-outline-variant/80 rounded-lg p-2.5 text-center flex items-center justify-center gap-1.5 cursor-pointer hover:bg-surface-container-low transition-colors text-primary font-body-md">
+                <span class="material-symbols-outlined text-[20px]">add_photo_alternate</span> 
+                <span>Subir archivo...</span>
               </div>
             </div>
           </div>
 
-          <button type="submit" class="w-full bg-secondary text-primary font-bold py-3 rounded-lg text-sm hover:bg-secondary-container transition-colors shadow-md mt-4">
-            Enviar para Moderación
-          </button>
+          <div class="mt-md">
+            <button type="submit" class="w-full bg-secondary text-primary font-button py-3.5 rounded-lg hover:bg-secondary-container transition-colors shadow-sm flex items-center justify-center gap-2">
+              <span class="material-symbols-outlined text-[20px]">send</span>
+              Enviar para Moderación
+            </button>
+          </div>
         </form>
 
         <!-- Rules Sidebar -->
-        <aside class="lg:col-span-4 bg-white border border-slate-100 p-6 rounded-2xl shadow-sm text-sm">
-          <h3 class="font-display font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100">Proceso de verificación</h3>
-          <ul class="flex flex-col gap-4">
+        <aside class="lg:col-span-4 bg-surface-container-low border border-outline-variant/30 p-lg rounded-2xl h-fit">
+          <h3 class="font-headline-md text-primary mb-md pb-xs border-b border-outline-variant/30">Proceso de verificación</h3>
+          <ul class="flex flex-col gap-md">
             <li class="flex gap-3">
-              <span class="w-6 h-6 rounded-full bg-secondary/15 text-secondary font-bold text-xs flex items-center justify-center flex-shrink-0">1</span>
+              <span class="w-8 h-8 rounded-full bg-primary text-white font-button flex items-center justify-center flex-shrink-0">1</span>
               <div>
-                <h4 class="font-semibold text-slate-800">Completar formulario</h4>
-                <p class="text-slate-500 text-xs">Llená todos los campos requeridos con información fidedigna.</p>
+                <h4 class="font-title-sm text-on-surface">Completar formulario</h4>
+                <p class="font-body-md text-on-surface-variant mt-1">Llená todos los campos requeridos con información fidedigna.</p>
               </div>
             </li>
             <li class="flex gap-3">
-              <span class="w-6 h-6 rounded-full bg-secondary/15 text-secondary font-bold text-xs flex items-center justify-center flex-shrink-0">2</span>
+              <span class="w-8 h-8 rounded-full bg-primary/20 text-primary font-button flex items-center justify-center flex-shrink-0">2</span>
               <div>
-                <h4 class="font-semibold text-slate-800">Revisión manual</h4>
-                <p class="text-slate-500 text-xs">Nuestro equipo comprueba los datos y se comunica si hay dudas.</p>
+                <h4 class="font-title-sm text-on-surface">Revisión manual</h4>
+                <p class="font-body-md text-on-surface-variant mt-1">Nuestro equipo comprueba los datos y se comunica si hay dudas.</p>
               </div>
             </li>
             <li class="flex gap-3">
-              <span class="w-6 h-6 rounded-full bg-secondary/15 text-secondary font-bold text-xs flex items-center justify-center flex-shrink-0">3</span>
+              <span class="w-8 h-8 rounded-full bg-primary/20 text-primary font-button flex items-center justify-center flex-shrink-0">3</span>
               <div>
-                <h4 class="font-semibold text-slate-800">Publicación en vivo</h4>
-                <p class="text-slate-500 text-xs">El evento o servicio aparecerá en el listado oficial en menos de 24 horas.</p>
+                <h4 class="font-title-sm text-on-surface">Publicación en vivo</h4>
+                <p class="font-body-md text-on-surface-variant mt-1">El evento o servicio aparecerá en el listado oficial en menos de 24 horas.</p>
               </div>
             </li>
           </ul>
@@ -1270,9 +1273,8 @@ function renderPublish(kind = 'event') {
     </div>
   `;
 
-  document.getElementById('app').innerHTML = shell(content, 'publicar');
+  document.getElementById('app').innerHTML = shell(content, 'publicar', { footer: false });
 
-  // Submit binding
   document.getElementById('publish-form').addEventListener('submit', function(e) {
     e.preventDefault();
     route(`#/confirmacion/${kind === 'service' ? 'servicio' : 'evento'}`);
@@ -1281,27 +1283,27 @@ function renderPublish(kind = 'event') {
 
 function renderConfirmation(kind = 'event') {
   const content = `
-    <div class="max-w-md mx-auto text-center py-20 px-4">
-      <div class="w-16 h-16 bg-secondary-container bg-opacity-40 rounded-full flex items-center justify-center mx-auto mb-6 text-secondary border border-secondary/20">
-        <span class="material-symbols-outlined text-3xl leading-none">check_circle</span>
+    <div class="max-w-md mx-auto text-center py-24 px-container-margin">
+      <div class="w-20 h-20 bg-secondary/20 rounded-full flex items-center justify-center mx-auto mb-lg text-secondary border-2 border-secondary/30">
+        <span class="material-symbols-outlined text-[40px] leading-none">check</span>
       </div>
-      <h2 class="font-display font-black text-2xl text-slate-900 leading-tight mb-2">¡Sugerencia recibida!</h2>
-      <p class="text-slate-500 text-sm mb-8 leading-relaxed">
+      <h2 class="font-display-lg text-[32px] text-primary mb-xs">¡Propuesta recibida!</h2>
+      <p class="font-body-md text-on-surface-variant mb-xl leading-relaxed">
         El formulario de publicación de ${kind === 'service' ? 'servicio' : 'evento'} se envió correctamente. 
         Nuestro equipo lo revisará en las próximas horas para verificar la información.
       </p>
-      <div class="flex flex-col gap-3">
-        <a href="#/" class="bg-primary text-white font-bold py-2.5 rounded-lg text-sm hover:bg-primary-container transition-colors shadow-md">
+      <div class="flex flex-col gap-3 max-w-[250px] mx-auto">
+        <a href="#/" class="bg-primary text-white font-button py-3 rounded-lg hover:bg-primary-container transition-colors shadow-sm">
           Volver al Inicio
         </a>
-        <a href="#/publicar/${kind === 'service' ? 'servicio' : 'evento'}" class="text-secondary font-semibold text-sm hover:underline">
+        <a href="#/publicar/${kind === 'service' ? 'servicio' : 'evento'}" class="text-secondary font-button py-2 hover:underline">
           Enviar otra propuesta
         </a>
       </div>
     </div>
   `;
 
-  document.getElementById('app').innerHTML = shell(content, 'publicar');
+  document.getElementById('app').innerHTML = shell(content, 'publicar', { footer: false });
 }
 
 // Router trigger
@@ -1310,11 +1312,6 @@ function navigate() {
   state.route = current.route;
   state.params = current.params;
   
-  // Close any overlay
-  const overlay = document.getElementById('overlay-root');
-  if (overlay) overlay.innerHTML = '';
-  
-  // Scroll to top
   window.scrollTo(0, 0);
   
   if (state.route === 'home') renderHome();
@@ -1330,6 +1327,7 @@ function navigate() {
 
 window.addEventListener('hashchange', navigate);
 window.onload = navigate;
-</script>
+
+  </script>
 </body>
 </html>
