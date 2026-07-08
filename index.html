@@ -576,47 +576,83 @@ function renderHome() {
   
   const content = `
     <!-- Hero Section -->
-    <section class="relative w-full h-[600px] flex items-center justify-center bg-surface-container-low mb-xl mt-[-16px] md:mt-0">
-      <div class="absolute inset-0 bg-cover bg-center w-full h-full opacity-40" style="background-image: url('${images.calafate}')"></div>
-      <img src="${images.calafate}" fetchpriority="high" class="hidden" alt="Hero background preload">
-      <div class="absolute inset-0 bg-gradient-to-b from-transparent to-surface-container-low"></div>
+    <section class="relative w-full h-[620px] flex items-center justify-center bg-gradient-to-br from-[#001e2c] via-[#002f43] to-[#00141e] mb-12 mt-[-16px] md:mt-0 overflow-hidden bg-blend-overlay" style="background-image: url('${images.calafate}'); background-size: cover; background-position: center;">
+      <div class="absolute inset-0 bg-gradient-to-b from-[#001e2c]/30 via-primary/80 to-background z-0"></div>
+      
       <div class="relative z-10 max-w-4xl mx-auto px-container-margin text-center w-full">
-        <h1 class="font-display-lg md:text-[48px] text-[36px] md:leading-[56px] leading-tight text-primary mb-2 drop-shadow-sm font-bold">Qué hacer en Santa Cruz</h1>
-        <p class="font-body-lg text-primary mb-lg drop-shadow-sm">Agenda + destinos + servicios en un solo portal para toda la provincia.</p>
+        <span class="font-label-sm uppercase tracking-widest text-secondary-fixed bg-secondary-fixed/10 border border-secondary-fixed/20 px-3 py-1 rounded-full backdrop-blur-md mb-4 inline-block font-semibold">
+          Agenda Santa Cruz
+        </span>
+        <h1 class="font-display-lg md:text-[54px] text-[36px] md:leading-[64px] leading-tight text-white mb-3 font-bold tracking-tight drop-shadow-md">
+          Qué hacer en <span class="text-secondary-fixed">Santa Cruz</span>
+        </h1>
+        <p class="font-body-lg text-surface-container-low max-w-2xl mx-auto mb-lg leading-relaxed text-[18px]">
+          Agenda + destinos + servicios en un solo portal para toda la provincia.
+        </p>
         
-        <!-- Search Bar Container -->
-        <div class="bg-surface/90 rounded-xl p-md ambient-shadow flex flex-col md:flex-row gap-md items-end border border-outline-variant/50 backdrop-blur-md mb-xs">
-          <form id="home-search-form" class="w-full flex flex-col md:flex-row gap-md">
+        <!-- Search Bar Container (Glassmorphism) -->
+        <div class="bg-white/10 backdrop-blur-xl rounded-2xl p-6 shadow-[0_20px_50px_rgba(0,106,96,0.25)] border border-white/20 max-w-3xl mx-auto text-left mb-6">
+          <form id="home-search-form" class="w-full flex flex-col md:flex-row gap-4 items-end">
             <div class="flex-1 w-full text-left">
-              <label class="font-label-sm text-on-surface-variant mb-xs block">Localidad</label>
+              <label class="font-label-sm text-white/80 mb-xs block font-semibold">Localidad</label>
               <div class="relative">
-                <span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">location_on</span>
-                <select id="hero-locality" class="w-full bg-surface-bright border border-outline-variant rounded-lg pl-10 pr-sm py-2.5 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-body-md text-on-background appearance-none">
-                  <option value="Todas">Toda la provincia</option>
-                  ${localities.map(l => `<option value="${l}">${l}</option>`).join('')}
+                <span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-white/80 text-[20px]">location_on</span>
+                <select id="hero-locality" class="w-full bg-white/15 border border-white/20 rounded-xl pl-10 pr-sm py-3 focus:border-secondary-fixed focus:ring-2 focus:ring-secondary-fixed/30 outline-none transition-all font-body-md text-white appearance-none cursor-pointer">
+                  <option class="text-primary" value="Todas">Toda la provincia</option>
+                  ${localities.map(l => `<option class="text-primary" value="${l}">${l}</option>`).join('')}
                 </select>
-                <span class="material-symbols-outlined absolute right-sm top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none text-[20px]">expand_more</span>
+                <span class="material-symbols-outlined absolute right-sm top-1/2 -translate-y-1/2 text-white/80 pointer-events-none text-[20px]">expand_more</span>
               </div>
             </div>
             <div class="flex-1 w-full text-left">
-              <label class="font-label-sm text-on-surface-variant mb-xs block">Búsqueda libre</label>
+              <label class="font-label-sm text-white/80 mb-xs block font-semibold">Búsqueda libre</label>
               <div class="relative">
-                <span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">search</span>
-                <input id="hero-search" type="text" class="w-full bg-surface-bright border border-outline-variant rounded-lg pl-10 pr-sm py-2.5 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-body-md text-on-background" placeholder="Ej: pingüinos, trekking...">
+                <span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-white/80 text-[20px]">search</span>
+                <input id="hero-search" type="text" class="w-full bg-white/15 border border-white/20 rounded-xl pl-10 pr-sm py-3 focus:border-secondary-fixed focus:ring-2 focus:ring-secondary-fixed/30 outline-none transition-all font-body-md text-white placeholder-white/60" placeholder="Ej: trekking, cabañas...">
               </div>
             </div>
-            <button type="submit" class="bg-primary-container text-on-primary font-button text-button px-xl py-2.5 rounded-lg hover:bg-primary transition-colors duration-200 flex items-center justify-center gap-xs w-full md:w-auto mt-auto">
+            <button type="submit" class="bg-secondary text-primary font-button text-button px-xl py-3 rounded-xl hover:bg-secondary-fixed transition-colors duration-200 flex items-center justify-center gap-xs w-full md:w-auto mt-auto font-bold shadow-md shadow-secondary/20 h-[48px]">
               <span class="material-symbols-outlined text-[20px]">search</span>
               Buscar
             </button>
           </form>
         </div>
-        <p class="text-xs text-on-surface-variant font-medium mt-2">Publicá tu evento gratis. Municipios e instituciones: micrositios y difusión.</p>
+        
+        <!-- Suggestions & Microcopy -->
+        <div class="flex flex-wrap gap-2 justify-center items-center text-white/80 text-xs mb-4">
+          <span class="font-semibold">Buscar por:</span>
+          <button onclick="setHomeTag('trekking')" class="bg-white/10 hover:bg-white/20 border border-white/10 rounded-full px-3 py-1 transition-colors">#Trekking</button>
+          <button onclick="setHomeTag('gastronomia')" class="bg-white/10 hover:bg-white/20 border border-white/10 rounded-full px-3 py-1 transition-colors">#Gastronomía</button>
+          <button onclick="setHomeTag('alojamiento')" class="bg-white/10 hover:bg-white/20 border border-white/10 rounded-full px-3 py-1 transition-colors">#Alojamiento</button>
+        </div>
+        
+        <p class="text-xs text-white/60 font-medium">Publicá tu evento gratis. Municipios e instituciones: micrositios y difusión.</p>
+      </div>
+    </section>
+
+    <!-- Stats Strip -->
+    <section class="max-w-7xl mx-auto px-container-margin -mt-20 relative z-20 mb-16">
+      <div class="bg-surface border border-outline-variant/40 rounded-2xl p-6 md:p-8 shadow-lg grid grid-cols-1 md:grid-cols-3 gap-6 divide-y md:divide-y-0 md:divide-x divide-outline-variant/30 text-center">
+        <div class="flex flex-col items-center justify-center p-2">
+          <span class="material-symbols-outlined text-secondary text-[36px] mb-2">map</span>
+          <h4 class="font-headline-md text-primary leading-none mb-1 font-bold">15+ Localidades</h4>
+          <p class="font-body-md text-on-surface-variant text-sm">Guías de viaje y mapas locales.</p>
+        </div>
+        <div class="flex flex-col items-center justify-center p-2 md:pl-6">
+          <span class="material-symbols-outlined text-secondary text-[36px] mb-2">calendar_month</span>
+          <h4 class="font-headline-md text-primary leading-none mb-1 font-bold">+200 Eventos</h4>
+          <p class="font-body-md text-on-surface-variant text-sm">Actividades culturales y deportivas.</p>
+        </div>
+        <div class="flex flex-col items-center justify-center p-2 md:pl-6">
+          <span class="material-symbols-outlined text-secondary text-[36px] mb-2">verified_user</span>
+          <h4 class="font-headline-md text-primary leading-none mb-1 font-bold">100% Verificado</h4>
+          <p class="font-body-md text-on-surface-variant text-sm">Moderación manual en menos de 24 hs.</p>
+        </div>
       </div>
     </section>
 
     <!-- Próximos eventos -->
-    <section class="max-w-7xl mx-auto px-container-margin mb-xl">
+    <section class="max-w-7xl mx-auto px-container-margin mb-16">
       <div class="flex justify-between items-end mb-lg border-b border-outline-variant/30 pb-sm">
         <div>
           <h2 class="font-headline-md text-primary mb-xs">Próximos Eventos</h2>
@@ -632,7 +668,7 @@ function renderHome() {
     </section>
 
     <!-- Destinos (Bento Grid) -->
-    <section class="bg-surface-container-low py-xl border-y border-outline-variant/30">
+    <section class="bg-surface-container-low py-16 border-y border-outline-variant/30">
       <div class="max-w-7xl mx-auto px-container-margin">
         <div class="flex justify-between items-end mb-lg border-b border-outline-variant/30 pb-sm">
           <div>
@@ -675,6 +711,14 @@ function renderHome() {
     }
   });
 }
+
+window.setHomeTag = function(tag) {
+  const searchInput = document.getElementById('hero-search');
+  if (searchInput) {
+    searchInput.value = tag;
+    document.getElementById('home-search-form').dispatchEvent(new Event('submit'));
+  }
+};
 
 function renderMunicipios() {
   const content = `
