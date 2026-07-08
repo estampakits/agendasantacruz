@@ -213,6 +213,8 @@ function makeServices(locality, density='full'){
 const services=[...makeServices('Puerto Deseado','full'),...makeServices('28 de Noviembre','full'),...makeServices('El Calafate','lite'),...['Río Gallegos','Caleta Olivia','El Chaltén','Puerto San Julián','Los Antiguos','Perito Moreno'].flatMap((l,idx)=>makeServices(l,'lite').slice(0,5+idx%2))];
 
 
+console.log("PATCH1 running, protocol:", window.location.protocol);
+console.log("PATCH1 running, protocol:", window.location.protocol);
 const state = {
   route: 'home',
   params: {},
@@ -492,7 +494,7 @@ function eventCard(e, compact = false) {
   }
   
   return `
-    <div class="bg-surface rounded-xl border border-outline-variant/50 overflow-hidden hover:ambient-shadow transition-shadow duration-300 flex flex-col group cursor-pointer" onclick="route('/agenda/' + e.id)">
+    <div class="bg-surface rounded-xl border border-outline-variant/50 overflow-hidden hover:ambient-shadow transition-shadow duration-300 flex flex-col group cursor-pointer" onclick="route('/evento/' + e.id)">
       <div class="h-48 relative overflow-hidden">
         <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" src="${e.image}" alt="${e.title}" />
         <div class="absolute top-sm right-sm bg-surface/90 backdrop-blur-sm rounded-lg px-sm py-xs text-center border border-outline-variant/30">
@@ -936,6 +938,7 @@ function renderAgenda() {
   `;
   
   document.getElementById('app').innerHTML = shell(content, 'agenda');
+  document.title = 'Agenda de Eventos en Santa Cruz | Agenda Santa Cruz';
 
   document.getElementById('agenda-filter-locality').addEventListener('change', function(e) {
     state.agenda.locality = e.target.value;
@@ -1027,7 +1030,7 @@ function renderEventDetail(id) {
             
             <!-- Link to Locality (Internal linking) -->
             <div class="mb-4">
-              <a href="#/destinos/${slug(ev.locality)}" class="inline-flex items-center gap-1 text-secondary hover:underline font-title-sm text-sm font-bold">
+              <a href="#/localidad/${slug(ev.locality)}" class="inline-flex items-center gap-1 text-secondary hover:underline font-title-sm text-sm font-bold">
                 <span class="material-symbols-outlined text-[16px]">location_on</span>
                 Ver guía y servicios de ${ev.locality}
               </a>
@@ -1404,7 +1407,7 @@ function renderLocality(slugName) {
                   </h3>
                   <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     ${catServices.map(s => `
-                      <div class="bg-surface border border-outline-variant/30 rounded-xl p-4 flex flex-col justify-between group cursor-pointer" onclick="if(!event.target.closest('a')) route('/servicios/' + s.id)">
+                      <div class="bg-surface border border-outline-variant/30 rounded-xl p-4 flex flex-col justify-between group cursor-pointer" onclick="if(!event.target.closest('a')) route('/prestador/' + s.id)">
                         <div>
                           <h4 class="font-title-sm text-primary font-bold text-sm group-hover:text-secondary transition-colors truncate">${s.name}</h4>
                           <p class="font-body-md text-on-surface-variant text-xs mt-1 line-clamp-2">${s.description}</p>
@@ -1414,7 +1417,7 @@ function renderLocality(slugName) {
                             <span class="material-symbols-outlined text-[16px]">chat</span>
                             WhatsApp de Reservas
                           </a>
-                          <a href="#/servicios/${s.id}" class="text-on-surface-variant hover:text-primary font-button py-1 text-center text-xs transition-colors hover:underline">
+                          <a href="#/prestador/${s.id}" class="text-on-surface-variant hover:text-primary font-button py-1 text-center text-xs transition-colors hover:underline">
                             Ver Detalles y Ubicación
                           </a>
                         </div>
@@ -1651,7 +1654,7 @@ function renderProvider(id) {
           <span class="font-label-sm text-xs font-bold text-primary-container bg-surface-container px-3 py-1 rounded-full uppercase tracking-wider">
             ${s.rubric}
           </span>
-          <a href="#/destinos/${slug(s.locality)}" class="text-on-surface-variant hover:text-primary font-label-sm text-xs flex items-center gap-1 font-bold">
+          <a href="#/localidad/${slug(s.locality)}" class="text-on-surface-variant hover:text-primary font-label-sm text-xs flex items-center gap-1 font-bold">
             <span class="material-symbols-outlined text-[14px]">location_on</span>
             ${s.locality}
           </a>
