@@ -50,16 +50,16 @@ window.addEventListener("load", async () => {
   if(slugify) {
     localities.forEach(loc => {
       const slug = slugify(loc);
-      routes.push(`/destinos/${slug}`);
+      routes.push(`/localidad/${slug}`);
     });
   }
 
   baseEvents.forEach(ev => {
-    if(ev.id) routes.push(`/agenda/${ev.id}`);
+    if(ev.id) routes.push(`/evento/${ev.id}`);
   });
 
   services.forEach(svc => {
-    if(svc.id) routes.push(`/servicios/${svc.id}`);
+    if(svc.id) routes.push(`/prestador/${svc.id}`);
   });
 
   console.log(`Found ${routes.length} routes to generate.`);

@@ -253,9 +253,9 @@ function parseRoute() {
   }
   const parts = raw.split('/').filter(Boolean);
   if (!parts.length) return { route: 'home', params: {} };
-  if (parts[0] === 'agenda' && parts[1]) return { route: 'event', params: { id: parts[1] } };
-  if (parts[0] === 'destinos' && parts[1]) return { route: 'locality', params: { slug: parts[1] } };
-  if (parts[0] === 'servicios' && parts[1]) return { route: 'provider', params: { id: parts[1] } };
+  if ((parts[0] === 'agenda' || parts[0] === 'evento') && parts[1]) return { route: 'event', params: { id: parts[1] } };
+  if ((parts[0] === 'destinos' || parts[0] === 'localidad') && parts[1]) return { route: 'locality', params: { slug: parts[1] } };
+  if ((parts[0] === 'servicios' || parts[0] === 'prestador') && parts[1]) return { route: 'provider', params: { id: parts[1] } };
   if (parts[0] === 'publicar') return { route: 'publish', params: { kind: parts[1] === 'servicio' ? 'service' : 'event' } };
   if (parts[0] === 'confirmacion') return { route: 'confirmation', params: { kind: parts[1] === 'servicio' ? 'service' : 'event' } };
   if (parts[0] === 'municipios') return { route: 'municipios', params: {} };
@@ -427,7 +427,7 @@ function getLocalityImage(name) {
 
 function serviceCard(s) {
   return `
-    <article class="bg-surface rounded-xl border border-outline-variant/50 p-md hover:ambient-shadow transition-shadow flex flex-col justify-between group cursor-pointer" onclick="if(!event.target.closest('a')) route('/servicios/' + s.id)">
+    <article class="bg-surface rounded-xl border border-outline-variant/50 p-md hover:ambient-shadow transition-shadow flex flex-col justify-between group cursor-pointer" onclick="if(!event.target.closest('a')) route('/prestador/' + s.id)">
       <div>
         <div class="flex items-center justify-between gap-2 mb-3">
           <span class="font-label-sm text-[10px] font-bold text-primary-container bg-surface-container px-2 py-1 rounded uppercase">
@@ -448,7 +448,7 @@ function serviceCard(s) {
           WhatsApp de Reservas
         </a>
         <!-- Ver detalles as Secondary (discrete text link) -->
-        <a href="#/servicios/${s.id}" class="text-on-surface-variant hover:text-primary font-button py-1 text-center text-xs transition-colors hover:underline">
+        <a href="#/prestador/${s.id}" class="text-on-surface-variant hover:text-primary font-button py-1 text-center text-xs transition-colors hover:underline">
           Ver Detalles y Ubicación
         </a>
       </div>
@@ -462,7 +462,7 @@ function eventCard(e, compact = false) {
 
   if (compact) {
     return `
-      <article class="bg-surface rounded-xl shadow-sm border border-outline-variant/50 overflow-hidden hover:ambient-shadow transition-shadow cursor-pointer flex gap-4 p-3 group" onclick="route('/agenda/' + e.id)">
+      <article class="bg-surface rounded-xl shadow-sm border border-outline-variant/50 overflow-hidden hover:ambient-shadow transition-shadow cursor-pointer flex gap-4 p-3 group" onclick="route('/evento/' + e.id)">
         <div class="relative w-24 h-24 rounded-lg overflow-hidden flex-shrink-0">
           <img src="${e.image}" loading="lazy" alt="${e.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
           <div class="absolute top-1.5 left-1.5 bg-surface/90 backdrop-blur shadow-sm rounded-md px-1.5 py-0.5 text-center leading-none border border-outline-variant/30">
@@ -540,7 +540,7 @@ function localityCard(name, context = 'grid', activeRegion = 'Todas') {
 
   if (context === 'hero') {
     return `
-      <article class="relative rounded-2xl overflow-hidden ambient-shadow group cursor-pointer h-72 flex flex-col justify-end" onclick="route('/destinos/' + slug(name))">
+      <article class="relative rounded-2xl overflow-hidden ambient-shadow group cursor-pointer h-72 flex flex-col justify-end" onclick="route('/localidad/' + slug(name))">
         <img src="${img}" loading="lazy" alt="${name}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
         <div class="absolute inset-0 bg-gradient-to-t from-primary via-primary/60 to-transparent"></div>
         <div class="relative p-md flex flex-col justify-end z-10 h-full">
@@ -559,7 +559,7 @@ function localityCard(name, context = 'grid', activeRegion = 'Todas') {
   }
   
   return `
-    <article class="bg-surface rounded-xl border border-outline-variant/50 overflow-hidden hover:ambient-shadow transition-shadow duration-300 cursor-pointer flex flex-col group" onclick="route('/destinos/' + slug(name))">
+    <article class="bg-surface rounded-xl border border-outline-variant/50 overflow-hidden hover:ambient-shadow transition-shadow duration-300 cursor-pointer flex flex-col group" onclick="route('/localidad/' + slug(name))">
       <div class="relative h-32 overflow-hidden bg-surface-container">
         <img src="${img}" loading="lazy" alt="${name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
         ${showBadge ? `
