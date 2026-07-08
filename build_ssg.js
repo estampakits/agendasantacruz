@@ -14,10 +14,11 @@ let htmlTemplate = fs.readFileSync(indexFile, 'utf-8');
 // Copy original index.html to dist/index.html (fallback)
 fs.copyFileSync(indexFile, path.join(distDir, 'index.html'));
 
-// Remove Tailwind CDN to prevent MutationObserver crashes in JSDOM
-// We keep the classes in HTML, which is all we need for SSG.
+// Replace Tailwind CDN with a placeholder during JSDOM render to prevent MutationObserver crash.
+// We preserve the exact position to avoid breaking script order (ReferenceError on tailwind.config).
 const tailwindRegex = /<script src="https:\/\/cdn\.tailwindcss\.com[^>]*><\/script>/g;
-let jsdomHtmlTemplate = htmlTemplate.replace(tailwindRegex, '');
+const placeholder = '<!-- TAILWIND_CDN_PLACEHOLDER -->';
+let jsdomHtmlTemplate = htmlTemplate.replace(tailwindRegex, placeholder);
 
 // Inject script to expose consts to window
 jsdomHtmlTemplate = jsdomHtmlTemplate.replace('</body>', '<script>window.exp_localities = typeof localities !== "undefined" ? localities : []; window.exp_events = typeof baseEvents !== "undefined" ? baseEvents : []; window.exp_services = typeof services !== "undefined" ? services : []; window.exp_slugify = typeof slugify !== "undefined" ? slugify : null;</script></body>');
@@ -101,10 +102,10 @@ async function renderRoute(route, template) {
           head.appendChild(metaDesc);
         }
 
-        // We must re-inject the Tailwind script so the real users get styling!
+        // Restore Tailwind CDN in its original position
         const finalHtml = document.documentElement.outerHTML.replace(
-          '</head>', 
-          '  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>\n</head>'
+          placeholder,
+          '<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>'
         );
         const htmlContent = "<!DOCTYPE html>\n" + finalHtml;
         
