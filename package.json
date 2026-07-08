@@ -1,0 +1,21 @@
+{
+  "name": "agenda-santa-cruz",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "python C:/Users/texie/.gemini/antigravity/brain/41df9873-761e-4b81-b0ed-3ff33cfe94b3/scratch/refactor.py && node build_ssg.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/estampakits/agendasantacruz.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "jsdom": "^24.1.1"
+  }
+}
