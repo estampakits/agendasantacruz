@@ -292,7 +292,7 @@ function header(active = '') {
     <nav class="bg-surface/95 dark:bg-on-background/95 fixed top-0 w-full z-50 border-b border-outline-variant/30 backdrop-blur-md shadow-sm hidden md:block">
       <div class="flex justify-between items-center px-container-margin h-16 max-w-7xl mx-auto">
         <a href="#/" class="font-display-lg text-[22px] font-bold text-primary flex items-center gap-2 hover:opacity-90 transition-opacity">
-          <div class="bg-secondary text-primary p-1.5 rounded-lg flex items-center justify-center">
+          <div class="bg-secondary-fixed text-primary p-1.5 rounded-lg flex items-center justify-center">
             <span class="material-symbols-outlined text-lg leading-none">explore</span>
           </div>
           Agenda Santa Cruz
@@ -349,7 +349,7 @@ function footer() {
             <span class="font-display-lg text-[20px] font-bold text-primary">Agenda Santa Cruz</span>
           </div>
           <p class="font-body-md text-on-surface-variant mb-4 leading-relaxed">Encontrá qué hacer y cómo organizar tu visita en Santa Cruz, por localidad, con acceso rápido a WhatsApp.</p>
-          <div class="text-[11px] text-outline font-label-sm leading-normal">
+          <div class="text-[11px] text-on-surface-variant font-label-sm leading-normal">
             Proyecto digital independiente de difusión turística. No es un sitio gubernamental oficial.
           </div>
         </div>
@@ -432,7 +432,7 @@ function serviceCard(s) {
         <p class="font-body-md text-on-surface-variant line-clamp-3 mb-4 text-sm">${s.description}</p>
       </div>
       <div class="pt-4 border-t border-outline-variant/30 flex items-center gap-2">
-        <a href="https://wa.me/5492974000000?text=Hola! Te contacto desde Agenda Santa Cruz." target="_blank" class="flex-grow bg-[#25D366] text-white font-button py-2 px-3 rounded-lg flex items-center justify-center gap-2 hover:bg-[#128C7E] transition-colors">
+        <a href="https://wa.me/5492974000000?text=Hola! Te contacto desde Agenda Santa Cruz." target="_blank" class="flex-grow bg-[#075e54] text-white font-button py-2 px-3 rounded-lg flex items-center justify-center gap-2 hover:bg-[#128C7E] transition-colors">
           <span class="material-symbols-outlined text-[18px]">chat</span>
           WhatsApp
         </a>
@@ -462,10 +462,10 @@ function eventCard(e, compact = false) {
               <span class="text-on-surface-variant font-label-sm truncate flex items-center"><span class="material-symbols-outlined text-[12px] mr-[2px]">pin_drop</span>${e.locality}</span>
             </div>
             <h3 class="font-title-sm text-primary leading-snug line-clamp-2 group-hover:text-secondary transition-colors">${e.title}</h3>
-            ${e.place ? `<p class="font-label-sm text-outline truncate mt-0.5">${e.place}</p>` : ''}
+            ${e.place ? `<p class="font-label-sm text-on-surface-variant truncate mt-0.5">${e.place}</p>` : ''}
           </div>
           <div class="flex items-center justify-between mt-1">
-            <p class="text-outline font-label-sm flex items-center gap-1">
+            <p class="text-on-surface-variant font-label-sm flex items-center gap-1">
               <span class="material-symbols-outlined text-[14px] leading-none">schedule</span>
               <span>${e.time}</span>
             </p>
@@ -492,11 +492,11 @@ function eventCard(e, compact = false) {
           <span class="text-on-surface-variant font-label-sm flex items-center gap-[2px] truncate"><span class="material-symbols-outlined text-[14px]">location_on</span> ${e.locality}</span>
         </div>
         <h3 class="font-title-sm text-primary mb-0.5 line-clamp-2 group-hover:text-secondary transition-colors">${e.title}</h3>
-        ${e.place ? `<p class="font-label-sm text-outline truncate mb-sm">${e.place}</p>` : ''}
+        ${e.place ? `<p class="font-label-sm text-on-surface-variant truncate mb-sm">${e.place}</p>` : ''}
         
         <p class="font-body-md text-on-surface-variant mb-md line-clamp-2 flex-grow">${e.description}</p>
         <div class="pt-3 border-t border-outline-variant/30 flex justify-between items-center">
-           <span class="text-outline font-label-sm flex items-center gap-1">
+           <span class="text-on-surface-variant font-label-sm flex items-center gap-1">
             <span class="material-symbols-outlined text-[14px] leading-none">schedule</span>
             <span>${e.time}</span>
           </span>
@@ -529,12 +529,12 @@ function localityCard(name, context = 'grid', activeRegion = 'Todas') {
         <img src="${img}" loading="lazy" alt="${name}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
         <div class="absolute inset-0 bg-gradient-to-t from-primary via-primary/60 to-transparent"></div>
         <div class="relative p-lg flex flex-col justify-end z-10 h-full">
-          ${showBadge ? `<span class="font-label-sm uppercase tracking-widest text-secondary mb-1">${region}</span>` : ''}
+          ${showBadge ? `<span class="font-label-sm uppercase tracking-widest text-secondary-fixed mb-1">${region}</span>` : ''}
           <h3 class="font-display-lg text-[28px] text-white mb-2 leading-tight">${name}</h3>
           <p class="font-body-md text-surface-variant max-w-lg mb-4 line-clamp-2">${desc}</p>
           <div class="flex items-center justify-between mt-auto">
-            ${microText ? `<span class="text-secondary text-sm font-medium bg-surface/20 px-2 py-1 rounded backdrop-blur-md">${microText}</span>` : '<div></div>'}
-            <span class="bg-secondary text-primary font-button px-md py-sm rounded-lg flex items-center gap-1 group-hover:bg-secondary-container transition-colors">
+            ${microText ? `<span class="text-secondary text-sm font-medium bg-white/20 text-white text-sm font-medium px-2 py-1 rounded backdrop-blur-md">${microText}</span>` : '<div></div>'}
+            <span class="bg-secondary-fixed text-primary font-button px-md py-sm rounded-lg flex items-center gap-1 hover:bg-white transition-colors">
               Explorar <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
             </span>
           </div>
@@ -557,7 +557,7 @@ function localityCard(name, context = 'grid', activeRegion = 'Todas') {
         <h3 class="font-title-sm text-primary mb-1 group-hover:text-secondary transition-colors line-clamp-1">${name}</h3>
         <p class="font-body-md text-on-surface-variant line-clamp-2 mb-3 text-sm">${desc}</p>
         <div class="mt-auto flex items-center justify-between border-t border-outline-variant/30 pt-3">
-           <span class="text-[11px] font-medium text-outline">${microText}</span>
+           <span class="text-[11px] font-medium text-on-surface-variant">${microText}</span>
            <span class="text-secondary font-button text-xs hover:underline flex items-center gap-0.5">
             Ver gu\xeda <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
           </span>
@@ -611,7 +611,7 @@ function renderHome() {
                 <input id="hero-search" type="text" class="w-full bg-white/15 border border-white/20 rounded-xl pl-10 pr-sm py-3 focus:border-secondary-fixed focus:ring-2 focus:ring-secondary-fixed/30 outline-none transition-all font-body-md text-white placeholder-white/60" placeholder="Ej: trekking, cabañas...">
               </div>
             </div>
-            <button type="submit" class="bg-secondary text-primary font-button text-button px-xl py-3 rounded-xl hover:bg-secondary-fixed transition-colors duration-200 flex items-center justify-center gap-xs w-full md:w-auto mt-auto font-bold shadow-md shadow-secondary/20 h-[48px]">
+            <button type="submit" class="bg-secondary-fixed text-primary font-button text-button px-xl py-3 rounded-xl hover:bg-white transition-colors duration-200 flex items-center justify-center gap-xs w-full md:w-auto mt-auto font-bold shadow-md shadow-secondary/20 h-[48px]">
               <span class="material-symbols-outlined text-[20px]">search</span>
               Buscar
             </button>
@@ -1067,17 +1067,17 @@ function renderDestinations() {
         <div class="max-w-2xl bg-surface/95 backdrop-blur-md rounded-xl p-xs ambient-shadow flex">
           <span class="material-symbols-outlined text-on-surface-variant flex items-center pl-sm">search</span>
           <input id="dest-search" type="text" value="${state.destinationSearch}" placeholder="Buscar localidad o región..." class="w-full bg-transparent border-none focus:ring-0 font-body-md text-on-background px-sm py-2 outline-none">
-          <button onclick="document.getElementById('dest-search-form').dispatchEvent(new Event('submit'))" class="bg-secondary text-primary font-button px-md py-1.5 rounded-lg hover:bg-secondary-container transition-colors">Buscar</button>
+          <button onclick="document.getElementById('dest-search-form').dispatchEvent(new Event('submit'))" class="bg-secondary-fixed text-primary font-button px-md py-1.5 rounded-lg hover:bg-white transition-colors">Buscar</button>
         </div>
         <form id="dest-search-form" class="hidden"></form>
         
         <!-- Region pills -->
         <div class="flex flex-wrap gap-2 mt-md">
-          <button onclick="setDestRegion('Todas')" class="${state.destinationRegion === 'Todas' ? 'bg-secondary text-primary font-bold' : 'bg-surface-container/20 hover:bg-surface-container/40 text-surface-bright'} font-label-sm border border-surface-container/50 px-3 py-1 rounded-full transition-colors backdrop-blur-sm">
+          <button onclick="setDestRegion('Todas')" class="${state.destinationRegion === 'Todas' ? 'bg-secondary-fixed text-primary font-bold' : 'bg-surface-container/20 hover:bg-surface-container/40 text-surface-bright'} font-label-sm border border-surface-container/50 px-3 py-1 rounded-full transition-colors backdrop-blur-sm">
             Todas
           </button>
           ${['Costa atlántica', 'Cordillera y lagos', 'Cuenca carbonífera', 'Estepa santacruceña'].map(r => `
-            <button onclick="setDestRegion('${r}')" class="${state.destinationRegion === r ? 'bg-secondary text-primary font-bold' : 'bg-surface-container/20 hover:bg-surface-container/40 text-surface-bright'} font-label-sm border border-surface-container/50 px-3 py-1 rounded-full transition-colors backdrop-blur-sm">
+            <button onclick="setDestRegion('${r}')" class="${state.destinationRegion === r ? 'bg-secondary-fixed text-primary font-bold' : 'bg-surface-container/20 hover:bg-surface-container/40 text-surface-bright'} font-label-sm border border-surface-container/50 px-3 py-1 rounded-full transition-colors backdrop-blur-sm">
               ${r}
             </button>
           `).join('')}
@@ -1191,7 +1191,7 @@ function renderLocality(slugName) {
             <span class="material-symbols-outlined text-outline-variant text-[40px] mb-xs">event</span>
             <h3 class="font-title-sm text-primary mb-2">No hay eventos próximos registrados</h3>
             <p class="font-body-md text-on-surface-variant mb-md max-w-md mx-auto">Sé el primero en difundir una actividad en ${name}. Publicá tu evento de forma 100% gratuita.</p>
-            <button onclick="state.prefilledLocality='${name}'; route('#/publicar/evento');" class="bg-secondary text-primary font-button px-md py-2.5 rounded-lg hover:bg-secondary-container transition-colors inline-flex items-center gap-2">
+            <button onclick="state.prefilledLocality='${name}'; route('#/publicar/evento');" class="bg-secondary-fixed text-primary font-button px-md py-2.5 rounded-lg hover:bg-white transition-colors inline-flex items-center gap-2">
               <span class="material-symbols-outlined text-[18px]">add_circle</span>
               Publicar el primer evento en esta localidad
             </button>
@@ -1274,7 +1274,7 @@ function renderServices() {
           <h1 class="font-display-lg text-primary mb-xs">Directorio de Servicios</h1>
           <p class="font-body-md text-on-surface-variant">Conectá directamente con prestadores turísticos por WhatsApp.</p>
         </div>
-        <a href="#/publicar/servicio" class="bg-secondary text-primary font-button px-md py-2 rounded-lg hover:bg-secondary-container transition-colors flex items-center gap-1 w-fit">
+        <a href="#/publicar/servicio" class="bg-secondary-fixed text-primary font-button px-md py-2 rounded-lg hover:bg-white transition-colors flex items-center gap-1 w-fit">
           <span class="material-symbols-outlined text-[18px]">add_business</span> Ofrecer mi servicio
         </a>
       </div>
@@ -1399,20 +1399,20 @@ function renderPublish(kind = 'event') {
           </div>
           
           <div>
-            <label class="font-label-sm text-outline block mb-xs">Título / Nombre *</label>
+            <label class="font-label-sm text-on-surface-variant block mb-xs">Título / Nombre *</label>
             <input type="text" id="pub-title" required class="w-full bg-surface-bright border border-outline-variant rounded-lg px-sm py-2.5 focus:border-primary outline-none font-body-md text-on-background peer invalid:[&:not(:placeholder-shown)]:border-error" placeholder="${isEvent ? 'Ej. Peña Folclórica Nocturna' : 'Ej. Alquiler de Cabañas Las Nubes'}">
             <span class="hidden peer-invalid:[&:not(:placeholder-shown)]:block text-error text-[11px] mt-1">Este campo es obligatorio.</span>
           </div>
           
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-md">
             <div>
-              <label class="font-label-sm text-outline block mb-xs">Localidad *</label>
+              <label class="font-label-sm text-on-surface-variant block mb-xs">Localidad *</label>
               <select id="pub-locality" required class="w-full bg-surface-bright border border-outline-variant rounded-lg px-sm py-2.5 focus:border-primary outline-none font-body-md text-on-background">
                 ${localities.map(l => `<option value="${l}" ${l === prefLoc ? 'selected' : ''}>${l}</option>`).join('')}
               </select>
             </div>
             <div>
-              <label class="font-label-sm text-outline block mb-xs">Categoría / Rubro *</label>
+              <label class="font-label-sm text-on-surface-variant block mb-xs">Categoría / Rubro *</label>
               <select id="pub-category" required class="w-full bg-surface-bright border border-outline-variant rounded-lg px-sm py-2.5 focus:border-primary outline-none font-body-md text-on-background">
                 ${isEvent 
                   ? ['Cultural', 'Deportivo', 'Gastronómico', 'Institucional'].map(c => `<option value="${c}">${c}</option>`).join('')
@@ -1425,21 +1425,21 @@ function renderPublish(kind = 'event') {
           ${isEvent ? `
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-md">
               <div>
-                <label class="font-label-sm text-outline block mb-xs">Fecha *</label>
+                <label class="font-label-sm text-on-surface-variant block mb-xs">Fecha *</label>
                 <input type="date" id="pub-date" required class="w-full bg-surface-bright border border-outline-variant rounded-lg px-sm py-2.5 focus:border-primary outline-none font-body-md text-on-background peer invalid:[&:not(:placeholder-shown)]:border-error">
               </div>
               <div>
-                <label class="font-label-sm text-outline block mb-xs">Horario de Inicio *</label>
+                <label class="font-label-sm text-on-surface-variant block mb-xs">Horario de Inicio *</label>
                 <input type="time" id="pub-time" required class="w-full bg-surface-bright border border-outline-variant rounded-lg px-sm py-2.5 focus:border-primary outline-none font-body-md text-on-background peer invalid:[&:not(:placeholder-shown)]:border-error">
               </div>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-md">
               <div>
-                <label class="font-label-sm text-outline block mb-xs">Lugar / Dirección del Evento *</label>
+                <label class="font-label-sm text-on-surface-variant block mb-xs">Lugar / Dirección del Evento *</label>
                 <input type="text" id="pub-place" required class="w-full bg-surface-bright border border-outline-variant rounded-lg px-sm py-2.5 focus:border-primary outline-none font-body-md text-on-background peer invalid:[&:not(:placeholder-shown)]:border-error" placeholder="Ej. Gimnasio Municipal">
               </div>
               <div>
-                <label class="font-label-sm text-outline block mb-xs">Tipo de Entrada *</label>
+                <label class="font-label-sm text-on-surface-variant block mb-xs">Tipo de Entrada *</label>
                 <select id="pub-ticket" required class="w-full bg-surface-bright border border-outline-variant rounded-lg px-sm py-2.5 focus:border-primary outline-none font-body-md text-on-background">
                   <option value="Gratis">Gratis</option>
                   <option value="Con entrada">Con entrada</option>
@@ -1451,14 +1451,14 @@ function renderPublish(kind = 'event') {
           ` : ''}
 
           <div>
-            <label class="font-label-sm text-outline block mb-xs">Descripción *</label>
+            <label class="font-label-sm text-on-surface-variant block mb-xs">Descripción *</label>
             <textarea id="pub-desc" required rows="4" class="w-full bg-surface-bright border border-outline-variant rounded-lg px-sm py-2.5 focus:border-primary outline-none font-body-md text-on-background resize-y peer invalid:[&:not(:placeholder-shown)]:border-error" placeholder="Brindá información útil para los visitantes (duración, costos, características)..."></textarea>
             <span class="hidden peer-invalid:[&:not(:placeholder-shown)]:block text-error text-[11px] mt-1">Este campo es obligatorio.</span>
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-md">
             <div>
-              <label class="font-label-sm text-outline block mb-xs">WhatsApp de Contacto *</label>
+              <label class="font-label-sm text-on-surface-variant block mb-xs">WhatsApp de Contacto *</label>
               <div class="relative">
                 <span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">phone</span>
                 <input type="tel" id="pub-phone" required pattern="^\\+?549?\\d{10}$" class="w-full bg-surface-bright border border-outline-variant rounded-lg pl-9 pr-sm py-2.5 focus:border-primary outline-none font-body-md text-on-background peer invalid:[&:not(:placeholder-shown)]:border-error" placeholder="+54 9 297 4123456">
@@ -1466,7 +1466,7 @@ function renderPublish(kind = 'event') {
               <span class="hidden peer-invalid:[&:not(:placeholder-shown)]:block text-error text-[11px] mt-1">Ingresá un número válido con código de área (ej: +549...).</span>
             </div>
             <div>
-              <label class="font-label-sm text-outline block mb-xs">Foto ilustrativa</label>
+              <label class="font-label-sm text-on-surface-variant block mb-xs">Foto ilustrativa</label>
               <div class="border border-dashed border-outline-variant/80 rounded-lg p-2.5 text-center flex items-center justify-center gap-1.5 cursor-pointer hover:bg-surface-container-low transition-colors text-primary font-body-md">
                 <span class="material-symbols-outlined text-[20px]">add_photo_alternate</span> 
                 <span>Subir archivo...</span>
@@ -1475,7 +1475,7 @@ function renderPublish(kind = 'event') {
           </div>
 
           <div class="mt-md">
-            <button type="submit" class="w-full bg-secondary text-primary font-button py-3.5 rounded-lg hover:bg-secondary-container transition-colors shadow-sm flex items-center justify-center gap-2">
+            <button type="submit" class="w-full bg-secondary-fixed text-primary font-button py-3.5 rounded-lg hover:bg-white transition-colors shadow-sm flex items-center justify-center gap-2">
               <span class="material-symbols-outlined text-[20px]">send</span>
               Enviar (publicación en menos de 24 hs)
             </button>
