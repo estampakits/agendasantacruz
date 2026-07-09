@@ -258,7 +258,7 @@
               </a>
             </div>
             
-            <div class="font-body-md text-on-surface-variant leading-relaxed mb-lg space-y-4 text-sm md:text-base">
+            <div class="font-body-md text-on-surface-variant leading-relaxed mb-lg space-y-4 text-sm md:text-base max-w-2xl">
               <p>Una propuesta abierta para residentes y visitantes, con cupos sujetos a disponibilidad. Actividad pensada para disfrutar la identidad local y conectar con la comunidad.</p>
               <p>Participá de esta gran propuesta local para conectar con la cultura y las costumbres regionales. Se aconseja llegar con anticipación para asegurar su lugar ya que el espacio cuenta con cupo limitado.</p>
             </div>
@@ -282,14 +282,14 @@
                 <span class="material-symbols-outlined text-secondary text-[24px]">calendar_today</span>
                 <div>
                   <h4 class="font-label-sm text-on-surface-variant uppercase text-xs font-semibold">Fecha</h4>
-                  <p class="font-body-md text-on-background font-bold text-sm">24 de Julio</p>
+                  <p class="font-body-md text-on-background font-bold text-sm tabular-nums">24 de Julio</p>
                 </div>
               </div>
               <div class="flex gap-3">
                 <span class="material-symbols-outlined text-secondary text-[24px]">schedule</span>
                 <div>
                   <h4 class="font-label-sm text-on-surface-variant uppercase text-xs font-semibold">Horario</h4>
-                  <p class="font-body-md text-on-background font-bold text-sm">18:30 hs</p>
+                  <p class="font-body-md text-on-background font-bold text-sm tabular-nums">18:30 hs</p>
                 </div>
               </div>
               <div class="flex gap-3">
@@ -578,6 +578,7 @@ console.log("PATCH1 running, protocol:", window.location.protocol);
 console.log("PATCH1 running, protocol:", window.location.protocol);
 console.log("PATCH1 running, protocol:", window.location.protocol);
 console.log("PATCH1 running, protocol:", window.location.protocol);
+console.log("PATCH1 running, protocol:", window.location.protocol);
 const state = {
   route: 'home',
   params: {},
@@ -620,6 +621,42 @@ function getRubricIcon(rubric) {
   return 'storefront';
 }
 
+function getUrlParams() {
+  if (typeof window === 'undefined') return new URLSearchParams();
+  let search = '';
+  if (window.location.protocol === 'file:') {
+    const hash = window.location.hash || '';
+    const qIndex = hash.indexOf('?');
+    if (qIndex !== -1) {
+      search = hash.substring(qIndex);
+    }
+  } else {
+    search = window.location.search;
+  }
+  return new URLSearchParams(search);
+}
+
+function updateUrlParams(paramsObj) {
+  if (typeof window === 'undefined') return;
+  const searchParams = new URLSearchParams();
+  for (const [k, v] of Object.entries(paramsObj)) {
+    if (v && v !== 'Todas' && v !== 'Todos' && k !== 'limit') {
+      searchParams.set(k, v);
+    }
+  }
+  const searchStr = searchParams.toString();
+  const suffix = searchStr ? '?' + searchStr : '';
+  
+  if (window.location.protocol === 'file:') {
+    let cleanPath = (window.location.hash || '#/').split('?')[0];
+    if (!cleanPath.startsWith('#/')) cleanPath = '#/' + cleanPath.replace(/^#/, '');
+    window.history.replaceState(null, '', cleanPath + suffix);
+  } else {
+    let cleanPath = '/' + window.location.pathname.replace(/^\//, '');
+    window.history.replaceState(null, '', cleanPath + suffix);
+  }
+}
+
 function route(path) {
   if (window.location.protocol === 'file:') {
     window.location.hash = '#' + path;
@@ -632,7 +669,7 @@ function route(path) {
 function parseRoute() {
   let raw = '';
   if (window.location.protocol === 'file:') {
-    raw = (window.location.hash || '#/').replace(/^#\/?/, '');
+    raw = (window.location.hash || '#/').replace(/^#\/?/, '').split('?')[0];
   } else {
     raw = window.location.pathname.replace(/^\//, '');
   }
@@ -1674,12 +1711,14 @@ function renderAgenda() {
 
   document.getElementById('agenda-filter-locality').addEventListener('change', function(e) {
     state.agenda.locality = e.target.value;
+    updateUrlParams(state.agenda);
     renderAgenda();
   });
   
   document.querySelectorAll('input[name="agenda-date"]').forEach(radio => {
     radio.addEventListener('change', function(e) {
       state.agenda.date = e.target.value;
+      updateUrlParams(state.agenda);
       renderAgenda();
     });
   });
@@ -1687,6 +1726,7 @@ function renderAgenda() {
   document.querySelectorAll('input[name="agenda-category"]').forEach(radio => {
     radio.addEventListener('change', function(e) {
       state.agenda.category = e.target.value;
+      updateUrlParams(state.agenda);
       renderAgenda();
     });
   });
@@ -1694,6 +1734,7 @@ function renderAgenda() {
 
 window.setAgendaQuickFilter = function(val) {
   state.agenda.quick = val;
+  updateUrlParams(state.agenda);
   renderAgenda();
 };
 
@@ -1702,6 +1743,7 @@ window.clearAgendaFilter = function(filter) {
   if (filter === 'category') state.agenda.category = 'Todas';
   if (filter === 'date') state.agenda.date = 'Esta semana';
   if (filter === 'quick') state.agenda.quick = 'Todos';
+  updateUrlParams(state.agenda);
   renderAgenda();
 };
 
@@ -1710,6 +1752,7 @@ window.resetAgendaFilters = function() {
   state.agenda.category = 'Todas';
   state.agenda.date = 'Esta semana';
   state.agenda.quick = 'Todos';
+  updateUrlParams(state.agenda);
   renderAgenda();
 };
 
@@ -1780,7 +1823,7 @@ function renderEventDetail(id) {
               </a>
             </div>
             
-            <div class="font-body-md text-on-surface-variant leading-relaxed mb-lg space-y-4 text-sm md:text-base">
+            <div class="font-body-md text-on-surface-variant leading-relaxed mb-lg space-y-4 text-sm md:text-base max-w-2xl">
               <p>${ev.description}</p>
               <p>Participá de esta gran propuesta local para conectar con la cultura y las costumbres regionales. Se aconseja llegar con anticipación para asegurar su lugar ya que el espacio cuenta con cupo limitado.</p>
             </div>
@@ -1804,14 +1847,14 @@ function renderEventDetail(id) {
                 <span class="material-symbols-outlined text-secondary text-[24px]">calendar_today</span>
                 <div>
                   <h4 class="font-label-sm text-on-surface-variant uppercase text-xs font-semibold">Fecha</h4>
-                  <p class="font-body-md text-on-background font-bold text-sm">${ev.day} de ${ev.month === 'JUL' ? 'Julio' : ev.month}</p>
+                  <p class="font-body-md text-on-background font-bold text-sm tabular-nums">${ev.day} de ${ev.month === 'JUL' ? 'Julio' : ev.month}</p>
                 </div>
               </div>
               <div class="flex gap-3">
                 <span class="material-symbols-outlined text-secondary text-[24px]">schedule</span>
                 <div>
                   <h4 class="font-label-sm text-on-surface-variant uppercase text-xs font-semibold">Horario</h4>
-                  <p class="font-body-md text-on-background font-bold text-sm">${ev.time} hs</p>
+                  <p class="font-body-md text-on-background font-bold text-sm tabular-nums">${ev.time} hs</p>
                 </div>
               </div>
               <div class="flex gap-3">
@@ -2666,6 +2709,7 @@ function renderServices() {
     state.services.query = document.getElementById('srv-search').value;
     state.services.locality = document.getElementById('srv-locality').value;
     state.services.limit = 8;
+    updateUrlParams(state.services);
     renderServices();
   });
 }
@@ -2673,6 +2717,7 @@ function renderServices() {
 window.setSrvRubric = function(val) {
   state.services.rubric = val;
   state.services.limit = 8;
+  updateUrlParams(state.services);
   renderServices();
 };
 
@@ -2686,6 +2731,7 @@ window.clearSrvFilter = function(filter) {
   if (filter === 'locality') state.services.locality = 'Todas';
   if (filter === 'rubric') state.services.rubric = 'Todos';
   state.services.limit = 8;
+  updateUrlParams(state.services);
   renderServices();
 };
 
@@ -2694,6 +2740,7 @@ window.resetSrvFilters = function() {
   state.services.locality = 'Todas';
   state.services.rubric = 'Todos';
   state.services.limit = 8;
+  updateUrlParams(state.services);
   renderServices();
 };
 
@@ -2753,7 +2800,7 @@ function renderProvider(id) {
           </a>
         </div>
 
-        <div class="font-body-md text-on-surface-variant leading-relaxed text-sm md:text-base space-y-4 mb-8">
+        <div class="font-body-md text-on-surface-variant leading-relaxed text-sm md:text-base space-y-4 mb-8 max-w-2xl">
           <p>${s.description}</p>
           <p>
             Prestador turístico verificado de la localidad de ${s.locality}. Ofrecemos una atención cálida y personalizada para que disfrutes de tu estadía al máximo. Consultanos por disponibilidad, tarifas y promociones vigentes.
@@ -3014,6 +3061,19 @@ function navigate() {
   const current = parseRoute();
   state.route = current.route;
   state.params = current.params;
+  
+  const urlParams = getUrlParams();
+  if (state.route === 'servicios') {
+    state.services.locality = urlParams.get('locality') || 'Todas';
+    state.services.rubric = urlParams.get('rubric') || 'Todos';
+    state.services.query = urlParams.get('query') || '';
+    state.services.limit = 8;
+  } else if (state.route === 'agenda') {
+    state.agenda.locality = urlParams.get('locality') || 'Todas';
+    state.agenda.category = urlParams.get('category') || 'Todas';
+    state.agenda.date = urlParams.get('date') || 'Esta semana';
+    state.agenda.quick = urlParams.get('quick') || 'Todos';
+  }
   
   try {
     window.scrollTo(0, 0);
