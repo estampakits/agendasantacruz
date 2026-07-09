@@ -448,6 +448,7 @@ console.log("PATCH1 running, protocol:", window.location.protocol);
 console.log("PATCH1 running, protocol:", window.location.protocol);
 console.log("PATCH1 running, protocol:", window.location.protocol);
 console.log("PATCH1 running, protocol:", window.location.protocol);
+console.log("PATCH1 running, protocol:", window.location.protocol);
 const state = {
   route: 'home',
   params: {},
@@ -479,6 +480,15 @@ function setMeta(title, description) {
     document.head.appendChild(meta);
   }
   meta.setAttribute('content', description);
+}
+
+function getRubricIcon(rubric) {
+  if (rubric === 'Alojamiento') return 'bed';
+  if (rubric === 'Gastronomía') return 'restaurant';
+  if (rubric === 'Excursiones/Actividades') return 'hiking';
+  if (rubric === 'Transporte') return 'directions_bus';
+  if (rubric === 'Agencias') return 'work';
+  return 'storefront';
 }
 
 function route(path) {
@@ -672,29 +682,44 @@ function getLocalityImage(name) {
 }
 
 function serviceCard(s) {
+  const icon = getRubricIcon(s.rubric);
+  const isRec = s.id === 'puerto-deseado-alojamiento-0';
   return `
-    <article class="bg-surface rounded-xl border border-outline-variant/50 p-md hover:ambient-shadow transition-shadow flex flex-col justify-between group cursor-pointer" onclick="if(!event.target.closest('a')) route('/prestador/${s.id}')">
+    <article class="bg-surface rounded-xl border border-outline-variant/50 p-md hover:ambient-shadow transition-shadow flex flex-col justify-between group cursor-pointer relative" onclick="if(!event.target.closest('a')) route('/prestador/${s.id}')">
+      ${isRec ? `
+        <div class="absolute top-2 right-2 bg-secondary/15 text-secondary text-[8px] uppercase font-bold px-2 py-0.5 rounded tracking-wider border border-secondary/25 font-semibold">
+          Recomendado
+        </div>
+      ` : ''}
       <div>
-        <div class="flex items-center justify-between gap-2 mb-3">
-          <span class="font-label-sm text-[10px] font-bold text-primary-container bg-surface-container px-2 py-1 rounded uppercase">
+        <!-- Fila de atributos CRO optimizada -->
+        <div class="flex flex-wrap gap-2 mb-3 text-[10px] text-on-surface-variant font-semibold items-center">
+          <span class="flex items-center gap-0.5 bg-surface-container px-2 py-0.5 rounded text-primary">
+            <span class="material-symbols-outlined text-[12px]">${icon}</span>
             ${s.rubric}
           </span>
-          <span class="text-on-surface-variant font-label-sm flex items-center gap-[2px] truncate">
-            <span class="material-symbols-outlined text-[14px] leading-none">pin_drop</span>
+          <span class="flex items-center gap-0.5">
+            <span class="material-symbols-outlined text-[12px] text-secondary">location_on</span>
             ${s.locality}
           </span>
+          <span class="flex items-center gap-0.5 text-secondary/90">
+            <span class="material-symbols-outlined text-[12px]">verified</span>
+            Verificado
+          </span>
         </div>
-        <h3 class="font-title-sm text-primary mb-2 line-clamp-1 group-hover:text-secondary transition-colors font-bold">${s.name}</h3>
-        <p class="font-body-md text-on-surface-variant line-clamp-3 mb-4 text-xs">${s.description}</p>
+        
+        <h3 class="font-title-sm text-primary mb-1 line-clamp-1 group-hover:text-secondary transition-colors font-bold text-sm md:text-base">${s.name}</h3>
+        <p class="font-body-md text-on-surface-variant line-clamp-2 mb-4 text-xs leading-relaxed">${s.description}</p>
       </div>
-      <div class="pt-4 border-t border-outline-variant/30 flex flex-col gap-2">
+      
+      <div class="pt-3 border-t border-outline-variant/20 flex flex-col gap-2">
         <!-- WhatsApp as Primary (prominent) -->
-        <a href="https://wa.me/5492974000000?text=Hola! Te contacto desde Agenda Santa Cruz por tu servicio de ${s.rubric} (${s.name})." target="_blank" class="w-full bg-[#075e54] text-white font-button py-2.5 px-3 rounded-lg flex items-center justify-center gap-1.5 hover:bg-[#053e2a] transition-colors text-xs font-bold shadow-sm">
+        <a href="https://wa.me/5492974000000?text=Hola! Te contacto desde Agenda Santa Cruz por tu servicio de ${s.rubric} (${s.name})." target="_blank" class="w-full bg-[#075e54] text-white font-button py-2 px-3 rounded-lg flex items-center justify-center gap-1.5 hover:bg-[#053e2a] transition-colors text-xs font-bold shadow-sm">
           <span class="material-symbols-outlined text-[16px]">chat</span>
           WhatsApp de Reservas
         </a>
         <!-- Ver detalles as Secondary (discrete text link) -->
-        <a href="#/prestador/${s.id}" class="text-on-surface-variant hover:text-primary font-button py-1 text-center text-xs transition-colors hover:underline">
+        <a href="#/prestador/${s.id}" class="text-on-surface-variant hover:text-primary font-button py-1 text-center text-xs transition-colors hover:underline font-bold">
           Ver Detalles y Ubicación
         </a>
       </div>
@@ -762,7 +787,7 @@ function eventCard(e, compact = false) {
             <span>${e.time}</span>
           </span>
           <span class="text-secondary font-button text-button hover:underline flex items-center gap-0.5">
-            Ver m\xe1s <span class="material-symbols-outlined text-[16px] leading-none">arrow_forward</span>
+            Ver más <span class="material-symbols-outlined text-[16px] leading-none">arrow_forward</span>
           </span>
         </div>
       </div>
@@ -775,6 +800,7 @@ function localityCard(name, context = 'grid', activeRegion = 'Todas') {
   const desc = localityDescriptions[name] || localityDescriptions.default;
   const region = regionFor(name);
   const showBadge = region !== activeRegion;
+  const isSponsored = ['Puerto Deseado', '28 de Noviembre', 'El Calafate'].includes(name);
   
   const eCount = baseEvents.filter(e => e.locality === name).length;
   const sCount = services.filter(s => s.locality === name).length;
@@ -789,6 +815,14 @@ function localityCard(name, context = 'grid', activeRegion = 'Todas') {
       <article class="relative rounded-2xl overflow-hidden ambient-shadow group cursor-pointer h-72 flex flex-col justify-end" onclick="route('/localidad/${slug(name)}')">
         <img src="${img}" loading="lazy" alt="${name}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
         <div class="absolute inset-0 bg-gradient-to-t from-primary via-primary/60 to-transparent"></div>
+        
+        ${isSponsored ? `
+          <div class="absolute top-3 right-3 bg-secondary text-white font-label-sm text-[9px] uppercase px-2 py-0.5 rounded-md border border-secondary/30 z-10 font-bold tracking-wider shadow-sm flex items-center gap-1">
+            <span class="material-symbols-outlined text-[12px]">workspace_premium</span>
+            Auspiciado
+          </div>
+        ` : ''}
+
         <div class="relative p-md flex flex-col justify-end z-10 h-full">
           ${showBadge ? `<span class="font-label-sm uppercase tracking-widest text-secondary-fixed mb-1 text-xs">${region}</span>` : ''}
           <h3 class="font-display-lg text-[22px] text-white mb-2 leading-tight font-bold">${name}</h3>
@@ -805,7 +839,13 @@ function localityCard(name, context = 'grid', activeRegion = 'Todas') {
   }
   
   return `
-    <article class="bg-surface rounded-xl border border-outline-variant/50 overflow-hidden hover:ambient-shadow transition-shadow duration-300 cursor-pointer flex flex-col group" onclick="route('/localidad/${slug(name)}')">
+    <article class="bg-surface rounded-xl border border-outline-variant/50 overflow-hidden hover:ambient-shadow transition-shadow duration-300 cursor-pointer flex flex-col group relative" onclick="route('/localidad/${slug(name)}')">
+      ${isSponsored ? `
+        <div class="absolute top-2 right-2 bg-secondary text-white font-label-sm text-[8px] uppercase px-1.5 py-0.5 rounded border border-secondary/35 z-10 font-bold tracking-wider shadow-sm flex items-center gap-0.5">
+          <span class="material-symbols-outlined text-[10px]">workspace_premium</span>
+          Auspiciado
+        </div>
+      ` : ''}
       <div class="relative h-32 overflow-hidden bg-surface-container">
         <img src="${img}" loading="lazy" alt="${name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
         ${showBadge ? `
@@ -820,7 +860,7 @@ function localityCard(name, context = 'grid', activeRegion = 'Todas') {
         <div class="mt-auto flex items-center justify-between border-t border-outline-variant/30 pt-3">
            <span class="text-[11px] font-medium text-on-surface-variant">${microText}</span>
            <span class="text-secondary font-button text-xs hover:underline flex items-center gap-0.5 font-bold">
-            Ver gu\xeda <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+            Ver guía <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
           </span>
         </div>
       </div>
@@ -833,6 +873,7 @@ function localityCard(name, context = 'grid', activeRegion = 'Todas') {
 function renderHome() {
   const featuredEvent = baseEvents[0];
   const upcomingEvents = baseEvents.slice(0, 3);
+  const todayEvents = baseEvents.filter(e => parseInt(e.day) === 12).slice(0, 3);
   
   const content = `
     <!-- Hero Section -->
@@ -879,10 +920,10 @@ function renderHome() {
             </div>
             <!-- Búsqueda libre -->
             <div class="md:col-span-3 text-left">
-              <label class="font-label-sm text-white/80 mb-xs block font-semibold text-xs">Búsqueda libre</label>
+              <label class="font-label-sm text-white/80 mb-xs block font-semibold text-xs">Palabra clave (opcional)</label>
               <div class="relative">
                 <span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-white/80 text-[20px]">search</span>
-                <input id="hero-search" type="text" class="w-full bg-white/15 border border-white/20 rounded-xl pl-10 pr-sm py-3 focus:border-secondary-fixed focus:ring-2 focus:ring-secondary-fixed/30 outline-none transition-all font-body-md text-white placeholder-white/60 text-sm" placeholder="Ej: trekking, cabañas...">
+                <input id="hero-search" type="text" class="w-full bg-white/15 border border-white/20 rounded-xl pl-10 pr-sm py-3 focus:border-secondary-fixed focus:ring-2 focus:ring-secondary-fixed/30 outline-none transition-all font-body-md text-white placeholder-white/50 text-sm" placeholder="Ej: cabañas, fiesta...">
               </div>
             </div>
             <!-- Submit -->
@@ -941,11 +982,80 @@ function renderHome() {
       </div>
     </section>
 
+    <!-- Planificá tu viaje -->
+    <section class="max-w-7xl mx-auto px-container-margin mb-16 text-left">
+      <h2 class="font-headline-md text-primary mb-6 font-bold text-lg flex items-center gap-2 border-b border-outline-variant/30 pb-sm">
+        <span class="w-1.5 h-6 bg-secondary rounded-full"></span>
+        Planificá tu viaje
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-md">
+        <!-- Dormir -->
+        <a href="#/servicios" onclick="state.services.locality='Todas'; state.services.rubric='Alojamiento'; state.services.query='';" class="bg-surface border border-outline-variant/40 rounded-2xl p-6 shadow-sm hover:ambient-shadow transition-shadow flex items-start gap-4 group cursor-pointer">
+          <div class="bg-secondary/10 text-secondary p-3 rounded-xl group-hover:bg-secondary group-hover:text-white transition-colors">
+            <span class="material-symbols-outlined text-[24px]">bed</span>
+          </div>
+          <div>
+            <h3 class="font-title-sm text-primary font-bold text-sm group-hover:text-secondary transition-colors">Dónde Dormir</h3>
+            <p class="font-body-md text-on-surface-variant text-xs mt-1">Encontrá hoteles, cabañas, hosterías y aparts verificados.</p>
+          </div>
+        </a>
+        <!-- Comer -->
+        <a href="#/servicios" onclick="state.services.locality='Todas'; state.services.rubric='Gastronomía'; state.services.query='';" class="bg-surface border border-outline-variant/40 rounded-2xl p-6 shadow-sm hover:ambient-shadow transition-shadow flex items-start gap-4 group cursor-pointer">
+          <div class="bg-secondary/10 text-secondary p-3 rounded-xl group-hover:bg-secondary group-hover:text-white transition-colors">
+            <span class="material-symbols-outlined text-[24px]">restaurant</span>
+          </div>
+          <div>
+            <h3 class="font-title-sm text-primary font-bold text-sm group-hover:text-secondary transition-colors">Dónde Comer</h3>
+            <p class="font-body-md text-on-surface-variant text-xs mt-1">Explorá restaurantes, cafeterías, pizzerías y cervecerías locales.</p>
+          </div>
+        </a>
+        <!-- Excursiones -->
+        <a href="#/servicios" onclick="state.services.locality='Todas'; state.services.rubric='Excursiones/Actividades'; state.services.query='';" class="bg-surface border border-outline-variant/40 rounded-2xl p-6 shadow-sm hover:ambient-shadow transition-shadow flex items-start gap-4 group cursor-pointer">
+          <div class="bg-secondary/10 text-secondary p-3 rounded-xl group-hover:bg-secondary group-hover:text-white transition-colors">
+            <span class="material-symbols-outlined text-[24px]">hiking</span>
+          </div>
+          <div>
+            <h3 class="font-title-sm text-primary font-bold text-sm group-hover:text-secondary transition-colors">Qué Hacer</h3>
+            <p class="font-body-md text-on-surface-variant text-xs mt-1">Excursiones guiadas, navegación, turismo aventura y paseos.</p>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- Hoy en Santa Cruz -->
+    <section class="max-w-7xl mx-auto px-container-margin mb-16 text-left">
+      <div class="flex justify-between items-end mb-6 border-b border-outline-variant/30 pb-sm">
+        <div>
+          <h2 class="font-headline-md text-primary mb-xs font-bold text-lg flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-secondary rounded-full"></span>
+            Hoy en Santa Cruz
+          </h2>
+          <p class="font-body-md text-on-surface-variant text-xs">Actividades y eventos programados para el día de hoy.</p>
+        </div>
+        <a href="#/agenda" onclick="state.agenda.date='Hoy';" class="font-button text-secondary flex items-center gap-xs hover:underline whitespace-nowrap text-xs font-bold">
+          Ver eventos de hoy <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+        </a>
+      </div>
+      
+      ${todayEvents.length === 0 ? `
+        <div class="bg-surface border border-outline-variant/30 rounded-xl p-md text-center shadow-sm text-on-surface-variant text-sm py-8">
+          No hay eventos programados para hoy en este momento.
+        </div>
+      ` : `
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-md">
+          ${todayEvents.map(e => eventCard(e, true)).join('')}
+        </div>
+      `}
+    </section>
+
     <!-- Próximos eventos -->
     <section class="max-w-7xl mx-auto px-container-margin mb-16">
       <div class="flex justify-between items-end mb-6 border-b border-outline-variant/30 pb-sm">
         <div>
-          <h2 class="font-headline-md text-primary mb-xs font-bold text-lg">Próximos Eventos Destacados</h2>
+          <h2 class="font-headline-md text-primary mb-xs font-bold text-lg flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-secondary rounded-full"></span>
+            Próximos Eventos Destacados
+          </h2>
           <p class="font-body-md text-on-surface-variant text-xs">Descubrí lo que está pasando en la provincia en las próximas fechas.</p>
         </div>
         <a href="#/agenda" class="font-button text-secondary flex items-center gap-xs hover:underline whitespace-nowrap text-xs font-bold">
@@ -1512,9 +1622,22 @@ function renderDestinations() {
   
   const results = filterLocality();
   
+  const isSponsored = name => ['Puerto Deseado', '28 de Noviembre', 'El Calafate'].includes(name);
+  
   const topFeatured = ['El Calafate', 'Río Gallegos', 'El Chaltén', 'Los Antiguos', 'Puerto Deseado', 'Puerto San Julián'];
   const resultsFeatured = results.filter(l => topFeatured.includes(l));
+  resultsFeatured.sort((a, b) => {
+    const aSp = isSponsored(a) ? 1 : 0;
+    const bSp = isSponsored(b) ? 1 : 0;
+    return bSp - aSp;
+  });
+  
   const resultsRest = results.filter(l => !topFeatured.includes(l));
+  resultsRest.sort((a, b) => {
+    const aSp = isSponsored(a) ? 1 : 0;
+    const bSp = isSponsored(b) ? 1 : 0;
+    return bSp - aSp;
+  });
 
   const content = `
     <!-- Minimal, Elegant Hero Banner -->
@@ -1658,7 +1781,7 @@ function renderLocality(slugName) {
 
   let content = `
     <!-- Locality Hero -->
-    <div class="relative w-full h-[380px] md:h-[450px] mt-[-16px] md:mt-0 mb-8 overflow-hidden">
+    <div class="relative w-full h-[380px] md:h-[450px] mt-[-16px] md:mt-0 mb-8 overflow-hidden bg-blend-overlay">
       <img src="${locImg}" alt="${name}" fetchpriority="high" class="absolute inset-0 w-full h-full object-cover">
       <div class="absolute inset-0 bg-gradient-to-t from-primary via-primary/60 to-transparent"></div>
       <div class="absolute bottom-0 w-full pb-8">
@@ -1672,6 +1795,36 @@ function renderLocality(slugName) {
       </div>
     </div>
     
+    <!-- Acciones Rápidas (CRO) -->
+    <div class="max-w-7xl mx-auto px-container-margin mb-8">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-md">
+        <button onclick="state.agenda.locality='${name}'; route('/agenda');" class="bg-surface border border-outline-variant/40 rounded-xl p-4 shadow-sm hover:ambient-shadow transition-shadow flex items-center gap-3 group text-left cursor-pointer">
+          <div class="bg-secondary/15 text-secondary p-2 rounded-lg group-hover:bg-secondary group-hover:text-white transition-colors flex-shrink-0">
+            <span class="material-symbols-outlined text-[20px]">calendar_month</span>
+          </div>
+          <span class="font-title-sm text-primary font-bold text-xs group-hover:text-secondary transition-colors">Ver Agenda</span>
+        </button>
+        <button onclick="state.services.locality='${name}'; state.services.rubric='Alojamiento'; state.services.query=''; route('/servicios');" class="bg-surface border border-outline-variant/40 rounded-xl p-4 shadow-sm hover:ambient-shadow transition-shadow flex items-center gap-3 group text-left cursor-pointer">
+          <div class="bg-secondary/15 text-secondary p-2 rounded-lg group-hover:bg-secondary group-hover:text-white transition-colors flex-shrink-0">
+            <span class="material-symbols-outlined text-[20px]">bed</span>
+          </div>
+          <span class="font-title-sm text-primary font-bold text-xs group-hover:text-secondary transition-colors">Dónde Dormir</span>
+        </button>
+        <button onclick="state.services.locality='${name}'; state.services.rubric='Gastronomía'; state.services.query=''; route('/servicios');" class="bg-surface border border-outline-variant/40 rounded-xl p-4 shadow-sm hover:ambient-shadow transition-shadow flex items-center gap-3 group text-left cursor-pointer">
+          <div class="bg-secondary/15 text-secondary p-2 rounded-lg group-hover:bg-secondary group-hover:text-white transition-colors flex-shrink-0">
+            <span class="material-symbols-outlined text-[20px]">restaurant</span>
+          </div>
+          <span class="font-title-sm text-primary font-bold text-xs group-hover:text-secondary transition-colors">Dónde Comer</span>
+        </button>
+        <button onclick="state.services.locality='${name}'; state.services.rubric='Excursiones/Actividades'; state.services.query=''; route('/servicios');" class="bg-surface border border-outline-variant/40 rounded-xl p-4 shadow-sm hover:ambient-shadow transition-shadow flex items-center gap-3 group text-left cursor-pointer">
+          <div class="bg-secondary/15 text-secondary p-2 rounded-lg group-hover:bg-secondary group-hover:text-white transition-colors flex-shrink-0">
+            <span class="material-symbols-outlined text-[20px]">hiking</span>
+          </div>
+          <span class="font-title-sm text-primary font-bold text-xs group-hover:text-secondary transition-colors">Qué Hacer</span>
+        </button>
+      </div>
+    </div>
+
     <div class="max-w-7xl mx-auto px-container-margin grid grid-cols-1 lg:grid-cols-12 gap-8 mb-12">
       <!-- Main Content -->
       <div class="lg:col-span-8">
@@ -1683,19 +1836,6 @@ function renderLocality(slugName) {
             <p>
               Explorar esta localidad te permite conectar con las raíces y la inmensidad de la Patagonia santacruceña. Desde atractivos locales, museos históricos y excursiones guiadas, cada rincón ofrece una experiencia inigualable.
             </p>
-          </div>
-          
-          <!-- Enlaces directos de navegación contextual (Localidad) -->
-          <div class="flex flex-wrap gap-3 mt-6 border-t border-outline-variant/20 pt-4">
-            <button onclick="state.agenda.locality='${name}'; route('/agenda');" class="inline-flex items-center gap-1.5 text-secondary hover:underline font-title-sm text-sm font-bold">
-              <span class="material-symbols-outlined text-[18px]">calendar_month</span>
-              Ver agenda de ${name}
-            </button>
-            <span class="text-outline-variant hidden sm:inline">|</span>
-            <button onclick="state.services.locality='${name}'; state.services.rubric='Todos'; state.services.query=''; route('/servicios');" class="inline-flex items-center gap-1.5 text-secondary hover:underline font-title-sm text-sm font-bold">
-              <span class="material-symbols-outlined text-[18px]">storefront</span>
-              Ver servicios de ${name}
-            </button>
           </div>
         </section>
   `;
@@ -1770,37 +1910,30 @@ function renderLocality(slugName) {
       
       content += `
         <!-- Servicios por Rubro -->
-        <section class="mb-8 bg-surface border border-outline-variant/30 rounded-2xl p-6 md:p-8 shadow-sm">
-          <h2 class="font-headline-md text-primary mb-4 font-bold text-lg">Servicios Turísticos Recomendados</h2>
+        <section class="mb-8 bg-surface border border-outline-variant/30 rounded-2xl p-6 md:p-8 shadow-sm text-left">
+          <h2 class="font-headline-md text-primary mb-6 font-bold text-lg flex items-center gap-2 border-b border-outline-variant/30 pb-sm">
+            <span class="w-1.5 h-6 bg-secondary rounded-full"></span>
+            Servicios Turísticos Recomendados
+          </h2>
           
-          <div class="space-y-6">
+          <div class="space-y-8">
             ${categories.map(cat => {
               const catServices = locServices.filter(s => s.rubric === cat).slice(0, 3);
               if (catServices.length === 0) return '';
+              const iconName = getRubricIcon(cat);
               return `
                 <div>
-                  <h3 class="font-title-sm text-primary font-bold text-sm mb-3 border-b border-outline-variant/20 pb-1.5 flex items-center gap-1.5">
-                    <span class="w-1 h-3.5 bg-secondary rounded-full"></span>
-                    ${cat}
-                  </h3>
-                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    ${catServices.map(s => `
-                      <div class="bg-surface border border-outline-variant/30 rounded-xl p-4 flex flex-col justify-between group cursor-pointer" onclick="if(!event.target.closest('a')) route('/prestador/${s.id}')">
-                        <div>
-                          <h4 class="font-title-sm text-primary font-bold text-sm group-hover:text-secondary transition-colors truncate">${s.name}</h4>
-                          <p class="font-body-md text-on-surface-variant text-xs mt-1 line-clamp-2">${s.description}</p>
-                        </div>
-                        <div class="mt-4 pt-3 border-t border-outline-variant/20 flex flex-col gap-2">
-                          <a href="https://wa.me/5492974000000?text=Hola! Te escribo desde Agenda Santa Cruz por tu servicio de ${s.rubric} (${s.name})." target="_blank" class="w-full bg-[#075e54] text-white font-button py-2 px-3 rounded-lg flex items-center justify-center gap-2 hover:bg-[#053e2a] transition-colors text-xs font-bold shadow-sm">
-                            <span class="material-symbols-outlined text-[16px]">chat</span>
-                            WhatsApp de Reservas
-                          </a>
-                          <a href="#/prestador/${s.id}" class="text-on-surface-variant hover:text-primary font-button py-1 text-center text-xs transition-colors hover:underline">
-                            Ver Detalles y Ubicación
-                          </a>
-                        </div>
-                      </div>
-                    `).join('')}
+                  <div class="flex justify-between items-center mb-4 border-b border-outline-variant/20 pb-1.5">
+                    <h3 class="font-title-sm text-primary font-bold text-sm flex items-center gap-1.5">
+                      <span class="material-symbols-outlined text-secondary text-[16px]">${iconName}</span>
+                      ${cat}
+                    </h3>
+                    <button onclick="state.services.locality='${name}'; state.services.rubric='${cat}'; state.services.query=''; route('/servicios');" class="text-secondary font-button hover:underline text-xs flex items-center gap-0.5 font-bold">
+                      Ver todos <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+                    </button>
+                  </div>
+                  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    ${catServices.map(s => serviceCard(s)).join('')}
                   </div>
                 </div>
               `;
@@ -1868,21 +2001,41 @@ function renderLocality(slugName) {
         </div>
 
         <!-- Espacio B: Auspicia Localidad -->
-        <div class="bg-surface border border-secondary/20 p-6 rounded-2xl shadow-sm relative text-left mb-6">
-          <div class="absolute top-3 right-3 bg-secondary/15 text-secondary text-[9px] uppercase font-bold px-2 py-0.5 rounded tracking-wider border border-secondary/25 font-semibold">
-            Auspiciado
+        ${isComplete ? `
+          <!-- Espacio B: Auspicia Localidad (Auspiciada) -->
+          <div class="bg-surface border border-secondary/20 p-6 rounded-2xl shadow-sm relative text-left mb-6">
+            <div class="absolute top-3 right-3 bg-secondary/15 text-secondary text-[9px] uppercase font-bold px-2 py-0.5 rounded tracking-wider border border-secondary/25 font-semibold">
+              Auspiciado
+            </div>
+            <h4 class="font-title-sm text-primary font-bold text-sm mb-2 flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-secondary text-[18px]">workspace_premium</span>
+              Auspicia ${name}
+            </h4>
+            <p class="font-body-md text-on-surface-variant text-xs leading-relaxed mb-4">
+              <strong>Beneficios Oficiales:</strong> Guía de viaje recomendada, calendario verificado del mes y destacados turísticos locales.
+            </p>
+            <a href="mailto:hola@agendasantacruz.ar?subject=Auspicio Municipio: ${name}" class="w-full bg-primary text-white hover:bg-primary-container font-button py-2 rounded-lg text-xs font-bold transition-colors text-center block shadow-sm">
+              Sitio Oficial del Municipio
+            </a>
           </div>
-          <h4 class="font-title-sm text-primary font-bold text-sm mb-2 flex items-center gap-1.5">
-            <span class="material-symbols-outlined text-secondary text-[18px]">workspace_premium</span>
-            Auspicia ${name}
-          </h4>
-          <p class="font-body-md text-on-surface-variant text-xs leading-relaxed mb-4">
-            Este espacio de destaque está disponible para el Municipio local o prestadores turísticos referentes de ${name}.
-          </p>
-          <a href="mailto:hola@agendasantacruz.ar?subject=Auspicio Localidad: ${name}" class="w-full bg-primary text-white hover:bg-primary-container font-button py-2 rounded-lg text-xs font-bold transition-colors text-center block shadow-sm">
-            Contactar para Auspicio
-          </a>
-        </div>
+        ` : `
+          <!-- Espacio B: Auspicio Localidad Disponible (Sin Auspiciar) -->
+          <div class="bg-surface border border-outline-variant/40 p-6 rounded-2xl shadow-sm relative text-left mb-6">
+            <div class="absolute top-3 right-3 bg-surface-container text-on-surface-variant text-[9px] uppercase font-bold px-2 py-0.5 rounded tracking-wider border border-outline-variant/30 font-semibold">
+              Disponible
+            </div>
+            <h4 class="font-title-sm text-primary font-bold text-sm mb-2 flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-outline text-[18px]">add_circle</span>
+              Auspicio de Destino
+            </h4>
+            <p class="font-body-md text-on-surface-variant text-xs leading-relaxed mb-4">
+              Espacio disponible para promocionar atractivos oficiales o prestadores de la localidad.
+            </p>
+            <a href="mailto:hola@agendasantacruz.ar?subject=Auspicio Localidad: ${name}" class="w-full bg-secondary-fixed text-primary hover:bg-white border border-outline-variant/30 font-button py-2 rounded-lg text-xs font-bold transition-colors text-center block shadow-sm">
+              Contactar para Auspicio
+            </a>
+          </div>
+        `}
 
         <!-- Colaboradores widget -->
         <div class="bg-surface-container-low border border-outline-variant/30 p-6 rounded-2xl shadow-sm">
@@ -1924,14 +2077,14 @@ function recommendedServiceCard() {
           </span>
         </div>
         <h3 class="font-title-sm text-primary mb-2 line-clamp-1 group-hover:text-secondary transition-colors font-bold">Cabañas del Estuario</h3>
-        <p class="font-body-md text-on-surface-variant line-clamp-3 mb-4 text-xs">Alojamiento de primer nivel frente a la ría con todas las comodidades. Calefacción central, Wi-Fi libre y asesoramiento turístico local.</p>
+        <p class="font-body-md text-on-surface-variant line-clamp-3 mb-4 text-xs leading-relaxed">Alojamiento de primer nivel frente a la ría con todas las comodidades. Calefacción central, Wi-Fi libre y asesoramiento turístico local.</p>
       </div>
       <div class="pt-4 border-t border-outline-variant/30 flex flex-col gap-2">
         <a href="https://wa.me/5492974000000?text=Hola! Te contacto desde el espacio destacado de Agenda Santa Cruz por Cabañas del Estuario." target="_blank" class="w-full bg-[#075e54] text-white font-button py-2.5 px-3 rounded-lg flex items-center justify-center gap-1.5 hover:bg-[#053e2a] transition-colors text-xs font-bold shadow-sm">
           <span class="material-symbols-outlined text-[16px]">chat</span>
           WhatsApp de Reservas
         </a>
-        <a href="#/prestador/puerto-deseado-alojamiento-0" class="text-on-surface-variant hover:text-primary font-button py-1 text-center text-xs transition-colors hover:underline">
+        <a href="#/prestador/puerto-deseado-alojamiento-0" class="text-on-surface-variant hover:text-primary font-button py-1 text-center text-xs transition-colors hover:underline font-bold">
           Ver Detalles y Ubicación
         </a>
       </div>
@@ -1941,7 +2094,7 @@ function recommendedServiceCard() {
 
 function renderServices() {
   const localitiesList = ['Todas', ...localities];
-  const rubricsList = ['Todos', 'Alojamiento', 'Gastronomía', 'Excursiones/Actividades', 'Transporte', 'Agencias'];
+  state.services.limit = state.services.limit || 8;
 
   const filterServices = () => {
     return services.filter(s => {
@@ -1978,6 +2131,13 @@ function renderServices() {
     currentServices.push(...mixed);
   }
 
+  // Nivel A: Recomendados para vos (máximo 6 cards)
+  const recommendedList = currentServices.filter(s => s.id.endsWith('-0') || s.id.endsWith('-1')).slice(0, 6);
+
+  // Nivel B: Todos los servicios (Paginados)
+  const pagedList = currentServices.slice(0, state.services.limit);
+  const showLoadMore = currentServices.length > state.services.limit;
+
   const content = `
     <div class="max-w-7xl mx-auto px-container-margin py-xl">
       <div class="mb-lg border-b border-outline-variant/30 pb-sm flex flex-col md:flex-row md:justify-between md:items-end gap-md">
@@ -1985,30 +2145,45 @@ function renderServices() {
           <h1 class="font-display-lg text-primary mb-xs font-bold text-2xl md:text-3xl">Servicios Turísticos en la Provincia</h1>
           <p class="font-body-md text-on-surface-variant">Conectá directamente con prestadores turísticos por WhatsApp.</p>
         </div>
-        <a href="#/publicar/servicio" class="bg-secondary-fixed text-primary font-button px-md py-2 rounded-lg hover:bg-white transition-colors flex items-center gap-1 w-fit font-bold shadow-sm">
+        <a href="#/publicar/servicio" class="bg-secondary-fixed text-primary font-button px-md py-2 rounded-lg hover:bg-white transition-colors flex items-center gap-1 w-fit font-bold shadow-sm text-xs">
           <span class="material-symbols-outlined text-[18px]">add_business</span> Ofrecer mi servicio
         </a>
       </div>
+
+      <!-- Tabs Segmentadas por Rubro (UX / CRO) -->
+      <div class="flex flex-wrap gap-2 mb-md border-b border-outline-variant/20 pb-4">
+        ${[
+          ['Todos', 'Todos', 'storefront'],
+          ['Alojamiento', 'Alojamiento 🛏️', 'bed'],
+          ['Gastronomía', 'Gastronomía 🍴', 'restaurant'],
+          ['Excursiones/Actividades', 'Excursiones ⛰️', 'hiking'],
+          ['Transporte', 'Transporte 🚌', 'directions_bus'],
+          ['Agencias', 'Agencias 💼', 'work']
+        ].map(([val, label, iconName]) => {
+          const active = state.services.rubric === val;
+          return `
+            <button onclick="setSrvRubric('${val}')" class="flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-bold transition-all border ${active ? 'bg-secondary text-white border-secondary shadow-sm' : 'bg-surface border-outline-variant/50 text-on-surface-variant hover:bg-surface-container-low'}">
+              <span class="material-symbols-outlined text-[16px]">${iconName}</span>
+              ${label}
+            </button>
+          `;
+        }).join('')}
+      </div>
       
+      <!-- Buscador y Localidad -->
       <div class="bg-surface border border-outline-variant/30 p-md rounded-xl shadow-sm mb-xl">
         <form id="services-search-form" class="grid grid-cols-1 md:grid-cols-12 gap-md items-end">
-          <div class="md:col-span-5">
+          <div class="md:col-span-6 text-left">
             <label class="font-label-sm text-on-surface-variant mb-xs block text-xs font-semibold">Buscar</label>
             <div class="relative">
               <span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">search</span>
               <input id="srv-search" type="text" value="${state.services.query}" class="w-full bg-surface-bright border border-outline-variant rounded-lg pl-10 pr-sm py-2.5 focus:border-primary outline-none font-body-md text-on-background text-sm" placeholder="Ej. Cabañas, Pizzería...">
             </div>
           </div>
-          <div class="md:col-span-3">
+          <div class="md:col-span-5 text-left">
             <label class="font-label-sm text-on-surface-variant mb-xs block text-xs font-semibold">Localidad</label>
             <select id="srv-locality" class="w-full bg-surface-bright border border-outline-variant rounded-lg px-sm py-2.5 focus:border-primary outline-none font-body-md text-on-background text-sm cursor-pointer">
               ${localitiesList.map(l => `<option value="${l}" ${state.services.locality === l ? 'selected' : ''}>${l === 'Todas' ? 'Toda la provincia' : l}</option>`).join('')}
-            </select>
-          </div>
-          <div class="md:col-span-3">
-            <label class="font-label-sm text-on-surface-variant mb-xs block text-xs font-semibold">Rubro</label>
-            <select id="srv-rubric" class="w-full bg-surface-bright border border-outline-variant rounded-lg px-sm py-2.5 focus:border-primary outline-none font-body-md text-on-background text-sm cursor-pointer">
-              ${rubricsList.map(r => `<option value="${r}" ${state.services.rubric === r ? 'selected' : ''}>${r}</option>`).join('')}
             </select>
           </div>
           <div class="md:col-span-1">
@@ -2019,15 +2194,18 @@ function renderServices() {
         </form>
       </div>
       
-      <div class="flex flex-wrap items-center gap-2 mb-md">
+      <!-- Filtros Activos -->
+      <div class="flex flex-wrap items-center justify-between gap-2 mb-md">
         ${!hasFilters ? `
           <span class="font-label-sm text-on-surface-variant text-xs">Mostrando: Toda la provincia &middot; Todos los rubros</span>
         ` : `
-          <span class="font-label-sm text-on-surface-variant text-xs">Filtros activos:</span>
-          ${state.services.query ? `<button onclick="clearSrvFilter('query')" class="bg-secondary/10 hover:bg-secondary/20 text-secondary border border-secondary/30 font-label-sm px-3 py-1 rounded-full flex items-center gap-1 transition-colors text-xs">Búsqueda: "${state.services.query}" <span class="material-symbols-outlined text-[14px]">close</span></button>` : ''}
-          ${state.services.locality !== 'Todas' ? `<button onclick="clearSrvFilter('locality')" class="bg-secondary/10 hover:bg-secondary/20 text-secondary border border-secondary/30 font-label-sm px-3 py-1 rounded-full flex items-center gap-1 transition-colors text-xs">Localidad: ${state.services.locality} <span class="material-symbols-outlined text-[14px]">close</span></button>` : ''}
-          ${state.services.rubric !== 'Todos' ? `<button onclick="clearSrvFilter('rubric')" class="bg-secondary/10 hover:bg-secondary/20 text-secondary border border-secondary/30 font-label-sm px-3 py-1 rounded-full flex items-center gap-1 transition-colors text-xs">Rubro: ${state.services.rubric} <span class="material-symbols-outlined text-[14px]">close</span></button>` : ''}
-          <button onclick="resetSrvFilters()" class="text-error hover:underline font-label-sm ml-2 text-xs font-semibold">Limpiar filtros</button>
+          <div class="flex flex-wrap items-center gap-1.5">
+            <span class="font-label-sm text-on-surface-variant text-xs">Filtros activos:</span>
+            ${state.services.query ? `<button onclick="clearSrvFilter('query')" class="bg-secondary/10 hover:bg-secondary/20 text-secondary border border-secondary/30 font-label-sm px-2.5 py-0.5 rounded-full flex items-center gap-1 transition-colors text-xs">Búsqueda: "${state.services.query}" <span class="material-symbols-outlined text-[12px] leading-none">close</span></button>` : ''}
+            ${state.services.locality !== 'Todas' ? `<button onclick="clearSrvFilter('locality')" class="bg-secondary/10 hover:bg-secondary/20 text-secondary border border-secondary/30 font-label-sm px-2.5 py-0.5 rounded-full flex items-center gap-1 transition-colors text-xs">Localidad: ${state.services.locality} <span class="material-symbols-outlined text-[12px] leading-none">close</span></button>` : ''}
+            ${state.services.rubric !== 'Todos' ? `<button onclick="clearSrvFilter('rubric')" class="bg-secondary/10 hover:bg-secondary/20 text-secondary border border-secondary/30 font-label-sm px-2.5 py-0.5 rounded-full flex items-center gap-1 transition-colors text-xs">Rubro: ${state.services.rubric} <span class="material-symbols-outlined text-[12px] leading-none">close</span></button>` : ''}
+          </div>
+          <button onclick="resetSrvFilters()" class="text-error hover:underline font-label-sm text-xs font-semibold">Limpiar filtros</button>
         `}
       </div>
 
@@ -2041,17 +2219,37 @@ function renderServices() {
           </button>
         </div>
       ` : `
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-md">
-          ${(() => {
-            let cards = currentServices.map(s => serviceCard(s));
-            // Inyectar Espacio D: Prestador destacado en primera posición
-            if (cards.length > 0) {
-              cards.splice(0, 0, recommendedServiceCard());
-            } else {
-              cards.push(recommendedServiceCard());
-            }
-            return cards.join('');
-          })()}
+        <!-- Nivel A: Recomendados para vos (carrusel / grilla fija) -->
+        ${recommendedList.length > 0 ? `
+          <div class="mb-12">
+            <h2 class="font-headline-md text-primary mb-6 font-bold text-lg flex items-center gap-2 border-b border-outline-variant/20 pb-2">
+              <span class="w-1.5 h-5 bg-secondary rounded-full"></span>
+              Recomendados para vos
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-md">
+              ${recommendedList.map(s => serviceCard(s)).join('')}
+            </div>
+          </div>
+        ` : ''}
+
+        <!-- Nivel B: Todos los servicios -->
+        <div>
+          <h2 class="font-headline-md text-primary mb-6 font-bold text-lg flex items-center gap-2 border-b border-outline-variant/20 pb-2">
+            <span class="w-1.5 h-5 bg-outline rounded-full"></span>
+            Todos los servicios
+          </h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-md mb-8">
+            ${pagedList.map(s => serviceCard(s)).join('')}
+          </div>
+          
+          ${showLoadMore ? `
+            <div class="flex justify-center mt-6">
+              <button onclick="loadMoreServices()" class="bg-primary text-white font-button px-6 py-3 rounded-xl hover:bg-primary-container transition-colors text-xs font-bold shadow-sm flex items-center gap-2">
+                <span class="material-symbols-outlined">expand_more</span>
+                Cargar más servicios
+              </button>
+            </div>
+          ` : ''}
         </div>
       `}
     </div>
@@ -2073,15 +2271,27 @@ function renderServices() {
     e.preventDefault();
     state.services.query = document.getElementById('srv-search').value;
     state.services.locality = document.getElementById('srv-locality').value;
-    state.services.rubric = document.getElementById('srv-rubric').value;
+    state.services.limit = 8;
     renderServices();
   });
 }
+
+window.setSrvRubric = function(val) {
+  state.services.rubric = val;
+  state.services.limit = 8;
+  renderServices();
+};
+
+window.loadMoreServices = function() {
+  state.services.limit = (state.services.limit || 8) + 8;
+  renderServices();
+};
 
 window.clearSrvFilter = function(filter) {
   if (filter === 'query') state.services.query = '';
   if (filter === 'locality') state.services.locality = 'Todas';
   if (filter === 'rubric') state.services.rubric = 'Todos';
+  state.services.limit = 8;
   renderServices();
 };
 
@@ -2089,6 +2299,7 @@ window.resetSrvFilters = function() {
   state.services.query = '';
   state.services.locality = 'Todas';
   state.services.rubric = 'Todos';
+  state.services.limit = 8;
   renderServices();
 };
 
