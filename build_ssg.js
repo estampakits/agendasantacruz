@@ -21,7 +21,7 @@ const placeholder = '<!-- TAILWIND_CDN_PLACEHOLDER -->';
 let jsdomHtmlTemplate = htmlTemplate.replace(tailwindRegex, placeholder);
 
 // Inject script to expose consts to window
-jsdomHtmlTemplate = jsdomHtmlTemplate.replace('</body>', '<script>window.exp_localities = typeof localities !== "undefined" ? localities : []; window.exp_events = typeof baseEvents !== "undefined" ? baseEvents : []; window.exp_services = typeof services !== "undefined" ? services : []; window.exp_slugify = typeof slugify !== "undefined" ? slugify : null;</script></body>');
+jsdomHtmlTemplate = jsdomHtmlTemplate.replace('</body>', '<script>window.exp_localities = typeof localities !== "undefined" ? localities : []; window.exp_events = typeof baseEvents !== "undefined" ? baseEvents : []; window.exp_services = typeof services !== "undefined" ? services : []; window.exp_slugify = typeof slug !== "undefined" ? slug : null;</script></body>');
 
 const jsdom = require("jsdom");
 
@@ -76,7 +76,7 @@ window.addEventListener("load", async () => {
 async function renderRoute(route, template) {
   return new Promise((resolve) => {
     const vc = new jsdom.VirtualConsole();
-    vc.on("error", () => {}); // supress
+    vc.on("error", (err) => { console.error("JSDOM Error:", err.message || err); });
 
     const dom = new JSDOM(template, {
       url: `https://agendasantacruz.vercel.app${route}`,
@@ -91,15 +91,31 @@ async function renderRoute(route, template) {
         
         let head = document.querySelector('head') || document.head;
         if(head) {
+          // Remove existing og:title and og:description if any to prevent duplication
+          const extOgTitle = document.querySelector('meta[property="og:title"]');
+          if (extOgTitle) extOgTitle.remove();
+          const extOgDesc = document.querySelector('meta[property="og:description"]');
+          if (extOgDesc) extOgDesc.remove();
+
           const ogTitle = document.createElement('meta');
           ogTitle.setAttribute('property', 'og:title');
           ogTitle.setAttribute('content', document.title);
           head.appendChild(ogTitle);
 
-          const metaDesc = document.createElement('meta');
-          metaDesc.setAttribute('name', 'description');
-          metaDesc.setAttribute('content', document.title + ' - Todo lo que pasa en Santa Cruz. Eventos, alojamientos, gastronomía y excursiones.');
-          head.appendChild(metaDesc);
+          // Get the dynamic description set by the page JS
+          const descTag = document.querySelector('meta[name="description"]');
+          if (descTag) {
+            const ogDesc = document.createElement('meta');
+            ogDesc.setAttribute('property', 'og:description');
+            ogDesc.setAttribute('content', descTag.getAttribute('content'));
+            head.appendChild(ogDesc);
+          } else {
+            // Fallback description if none is set
+            const metaDesc = document.createElement('meta');
+            metaDesc.setAttribute('name', 'description');
+            metaDesc.setAttribute('content', document.title + ' - Todo lo que pasa en Santa Cruz. Eventos, alojamientos, gastronomía y excursiones.');
+            head.appendChild(metaDesc);
+          }
         }
 
         // Restore Tailwind CDN in its original position
