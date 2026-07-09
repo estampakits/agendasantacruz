@@ -226,6 +226,7 @@ console.log("PATCH1 running, protocol:", window.location.protocol);
 console.log("PATCH1 running, protocol:", window.location.protocol);
 console.log("PATCH1 running, protocol:", window.location.protocol);
 console.log("PATCH1 running, protocol:", window.location.protocol);
+console.log("PATCH1 running, protocol:", window.location.protocol);
 const state = {
   route: 'home',
   params: {},
@@ -235,6 +236,23 @@ const state = {
   prefilledLocality: '',
   destinationRegion: 'Todas'
 };
+
+function getLocalityLevel(name) {
+  if (['Puerto Deseado', '28 de Noviembre'].includes(name)) return 3; // Colaboración institucional
+  if (['El Calafate', 'El Chaltén', 'Río Gallegos', 'Los Antiguos', 'Puerto San Julián'].includes(name)) return 2; // Destacado (editorial)
+  return 1; // Normal
+}
+
+function getEventLevel(e) {
+  if (e.featured) return 2;
+  return 1;
+}
+
+function getServiceLevel(s) {
+  if (s.id.endsWith('-0')) return 3; // Colaboración
+  if (s.id.endsWith('-1')) return 2; // Destacado
+  return 1; // Normal
+}
 
 function slug(s) {
   return s.normalize('NFD')
@@ -573,16 +591,17 @@ if (typeof window !== 'undefined' && !document.getElementById('highlight-glow-st
 
 function serviceCard(s) {
   const icon = getRubricIcon(s.rubric);
-  const isSponsor = s.id.endsWith('-0') || s.id.endsWith('-1');
+  const level = getServiceLevel(s);
   const thumbnail = getRubricImage(s.rubric, s.locality);
   
-  if (isSponsor) {
+  if (level === 3) {
+    // Colaboración institucional (Municipio / Provincia)
     return `
       <article class="bg-secondary/[0.03] rounded-xl border-2 border-secondary p-md hover:ambient-shadow transition-shadow flex flex-col justify-between group cursor-pointer relative shadow-md shadow-secondary/5 h-full" onclick="if(!event.target.closest('a') && !event.target.closest('button')) route('/prestador/${s.id}')">
-        <!-- Ribbon Auspiciado -->
+        <!-- Badge Colaboración Local -->
         <div class="absolute top-2 right-2 bg-secondary text-white text-[9px] uppercase font-bold px-2 py-0.5 rounded shadow-sm flex items-center gap-1 z-10">
-          <span class="material-symbols-outlined text-[10px]">workspace_premium</span>
-          Auspiciado
+          <span class="material-symbols-outlined text-[10px]">handshake</span>
+          Colaboración Local
         </div>
         
         <div>
@@ -603,7 +622,7 @@ function serviceCard(s) {
               <h3 class="font-title-sm text-primary line-clamp-1 group-hover:text-secondary transition-colors font-bold text-sm">${s.name}</h3>
               <p class="text-[10px] text-secondary font-bold flex items-center gap-0.5 mt-0.5">
                 <span class="material-symbols-outlined text-[12px]">verified</span>
-                Servicio Destacado Verificado
+                Servicio Oficial Habilitado
               </p>
             </div>
           </div>
@@ -614,18 +633,15 @@ function serviceCard(s) {
           <div class="bg-secondary/5 border border-secondary/10 rounded-lg p-2 mb-4 text-left">
             <p class="text-[10px] text-secondary font-medium flex items-center gap-1">
               <span class="material-symbols-outlined text-[12px]">check_circle</span>
-              Incluye guía completa + destacados del mes
+              Guía completa + agenda + servicios
             </p>
           </div>
         </div>
-        
         <div class="pt-3 border-t border-outline-variant/20 flex flex-col gap-1.5">
-          <!-- WhatsApp as Primary (prominent) -->
-          <a href="https://wa.me/5492974000000?text=Hola! Te contacto desde el espacio de destaque de Agenda Santa Cruz por tu servicio de ${s.rubric} (${s.name})." target="_blank" class="w-full bg-[#075e54] text-white font-button py-2.5 px-3 rounded-lg flex items-center justify-center gap-1.5 hover:bg-[#053e2a] transition-colors text-xs font-bold shadow-sm">
+          <a href="https://wa.me/5492974000000?text=Hola! Te contacto desde el portal colaborativo de Agenda Santa Cruz por tu servicio de ${s.rubric} (${s.name})." target="_blank" class="w-full bg-[#075e54] text-white font-button py-2.5 px-3 rounded-lg flex items-center justify-center gap-1.5 hover:bg-[#053e2a] transition-colors text-xs font-bold shadow-sm">
             <span class="material-symbols-outlined text-[16px]">chat</span>
-            WhatsApp de Reservas
+            WhatsApp de Consultas
           </a>
-          <!-- Ver detalles as Secondary (discrete text link) -->
           <a href="#/prestador/${s.id}" class="text-on-surface-variant hover:text-primary font-button py-1 text-center text-xs transition-colors hover:underline font-bold">
             Ver Ficha Completa
           </a>
@@ -634,7 +650,58 @@ function serviceCard(s) {
     `;
   }
   
-  // Standard card
+  if (level === 2) {
+    // Destacado (Editorial)
+    return `
+      <article class="bg-surface-container-low rounded-xl border border-secondary/40 p-md hover:ambient-shadow transition-shadow flex flex-col justify-between group cursor-pointer relative shadow-sm h-full" onclick="if(!event.target.closest('a') && !event.target.closest('button')) route('/prestador/${s.id}')">
+        <!-- Badge Recomendado -->
+        <div class="absolute top-2 right-2 bg-secondary/10 text-secondary border border-secondary/20 text-[9px] uppercase font-bold px-2 py-0.5 rounded flex items-center gap-1 z-10">
+          <span class="material-symbols-outlined text-[10px]">star</span>
+          Recomendado
+        </div>
+        
+        <div>
+          <!-- Thumbnail and core details in flex row -->
+          <div class="flex gap-3 mb-3">
+            <img src="${thumbnail}" alt="${s.name}" class="w-14 h-14 object-cover rounded-lg flex-shrink-0 border border-outline-variant/30">
+            <div class="min-w-0 flex-grow text-left">
+              <div class="flex flex-wrap gap-1.5 text-[9px] text-on-surface-variant font-semibold items-center mb-0.5">
+                <span class="flex items-center gap-0.5 bg-secondary/10 text-secondary border border-secondary/20 px-2 py-0.5 rounded text-[10px] font-bold">
+                  <span class="material-symbols-outlined text-[10px]">${icon}</span>
+                  ${s.rubric}
+                </span>
+                <span class="flex items-center gap-0.5">
+                  <span class="material-symbols-outlined text-[10px] text-secondary">location_on</span>
+                  ${s.locality}
+                </span>
+              </div>
+              <h3 class="font-title-sm text-primary line-clamp-1 group-hover:text-secondary transition-colors font-bold text-sm">${s.name}</h3>
+              <p class="text-[10px] text-on-surface-variant/80 flex items-center gap-0.5 mt-0.5">
+                <span class="material-symbols-outlined text-[11px] text-secondary">verified_user</span>
+                Destacado Editorial
+              </p>
+            </div>
+          </div>
+          
+          <p class="font-body-md text-on-surface-variant line-clamp-2 mb-3 text-xs leading-relaxed text-left">${s.description}</p>
+        </div>
+        
+        <div class="pt-3 border-t border-outline-variant/20 flex flex-col gap-1.5">
+          <!-- WhatsApp as Primary -->
+          <a href="https://wa.me/5492974000000?text=Hola! Te contacto desde la guía recomendada de Agenda Santa Cruz por tu servicio de ${s.rubric} (${s.name})." target="_blank" class="w-full bg-[#075e54] text-white font-button py-2 px-3 rounded-lg flex items-center justify-center gap-1.5 hover:bg-[#053e2a] transition-colors text-xs font-bold shadow-sm">
+            <span class="material-symbols-outlined text-[16px]">chat</span>
+            WhatsApp Directo
+          </a>
+          <!-- Ver detalles as Secondary -->
+          <a href="#/prestador/${s.id}" class="text-on-surface-variant hover:text-primary font-button py-1 text-center text-xs transition-colors hover:underline font-bold">
+            Ver Ficha
+          </a>
+        </div>
+      </article>
+    `;
+  }
+  
+  // Standard card (Level 1)
   return `
     <article class="bg-surface rounded-xl border border-outline-variant/50 p-md hover:ambient-shadow transition-shadow flex flex-col justify-between group cursor-pointer relative h-full" onclick="if(!event.target.closest('a') && !event.target.closest('button')) route('/prestador/${s.id}')">
       <div>
@@ -679,16 +746,23 @@ function serviceCard(s) {
 function eventCard(e, compact = false) {
   const badgeCls = ticketBadgeColor(e.ticket || 'A confirmar');
   const tkt = e.ticket || 'A confirmar';
+  const level = getEventLevel(e);
 
   if (compact) {
     return `
-      <article class="bg-surface rounded-xl shadow-sm border border-outline-variant/50 overflow-hidden hover:ambient-shadow transition-shadow cursor-pointer flex gap-4 p-3 group h-full" onclick="route('/evento/${e.id}')">
+      <article class="bg-surface rounded-xl shadow-sm border ${level === 2 ? 'border-secondary/40 bg-secondary/[0.01]' : 'border-outline-variant/50'} overflow-hidden hover:ambient-shadow transition-shadow cursor-pointer flex gap-4 p-3 group h-full" onclick="route('/evento/${e.id}')">
         <div class="relative w-24 h-24 rounded-lg overflow-hidden flex-shrink-0">
           <img src="${e.image}" loading="lazy" alt="${e.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
           <div class="absolute top-1.5 left-1.5 bg-surface/90 backdrop-blur shadow-sm rounded-md px-1.5 py-0.5 text-center leading-none border border-outline-variant/30">
             <span class="block text-[8px] uppercase font-bold text-outline">${e.month}</span>
             <span class="text-xs font-black text-primary">${e.day}</span>
           </div>
+          ${level === 2 ? `
+            <div class="absolute bottom-1 right-1 bg-secondary text-white text-[8px] uppercase font-bold px-1.5 py-0.5 rounded flex items-center gap-0.5 z-10">
+              <span class="material-symbols-outlined text-[8px]">star</span>
+              Recomendado
+            </div>
+          ` : ''}
         </div>
         <div class="flex-grow min-w-0 flex flex-col justify-between">
           <div>
@@ -712,14 +786,21 @@ function eventCard(e, compact = false) {
   }
   
   return `
-    <div class="bg-surface rounded-xl border border-outline-variant/50 overflow-hidden hover:ambient-shadow transition-shadow duration-300 flex flex-col group cursor-pointer h-full" onclick="route('/evento/${e.id}')">
-      <div class="h-48 relative overflow-hidden">
+    <div class="bg-surface rounded-xl border ${level === 2 ? 'border-secondary/40 bg-secondary/[0.01]' : 'border-outline-variant/50'} overflow-hidden hover:ambient-shadow transition-shadow duration-300 flex flex-col group cursor-pointer h-full" onclick="route('/evento/${e.id}')">
+      <div class="h-48 relative overflow-hidden bg-surface-container">
         <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" src="${e.image}" alt="${e.title}" />
-        <div class="absolute top-sm right-sm bg-surface/90 backdrop-blur-sm rounded-lg px-sm py-xs text-center border border-outline-variant/30">
+        <div class="absolute top-sm right-sm bg-surface/90 backdrop-blur-sm rounded-lg px-sm py-xs text-center border border-outline-variant/30 z-10">
           <span class="block font-title-sm text-primary leading-none">${e.day}</span>
           <span class="block font-label-sm text-secondary leading-none uppercase">${e.month}</span>
         </div>
-        <div class="absolute bottom-sm left-sm font-label-sm text-[10px] uppercase px-2 py-1 rounded-md border shadow-sm backdrop-blur-md ${badgeCls}">${tkt}</div>
+        <div class="absolute bottom-sm left-sm font-label-sm text-[10px] uppercase px-2 py-1 rounded-md border shadow-sm backdrop-blur-md z-10 ${badgeCls}">${tkt}</div>
+        
+        ${level === 2 ? `
+          <div class="absolute top-sm left-sm bg-secondary text-white text-[9px] uppercase font-bold px-2 py-1 rounded shadow z-10 flex items-center gap-0.5">
+            <span class="material-symbols-outlined text-[10px]">star</span>
+            Destacado
+          </div>
+        ` : ''}
       </div>
       <div class="p-md flex flex-col flex-grow">
         <div class="flex items-center gap-xs mb-xs">
@@ -730,14 +811,20 @@ function eventCard(e, compact = false) {
         ${e.place ? `<p class="font-label-sm text-on-surface-variant truncate mb-sm">${e.place}</p>` : ''}
         
         <p class="font-body-md text-on-surface-variant mb-md line-clamp-2 flex-grow">${e.description}</p>
-        <div class="pt-3 border-t border-outline-variant/30 flex justify-between items-center">
+        <div class="pt-3 border-t border-outline-variant/30 flex justify-between items-center mt-auto">
            <span class="text-on-surface-variant font-label-sm flex items-center gap-1">
             <span class="material-symbols-outlined text-[14px] leading-none">schedule</span>
             <span>${e.time}</span>
           </span>
-          <span class="text-secondary font-button text-button hover:underline flex items-center gap-0.5">
-            Ver más <span class="material-symbols-outlined text-[16px] leading-none">arrow_forward</span>
-          </span>
+          ${level === 2 ? `
+            <span class="bg-secondary text-white font-button text-xs py-1.5 px-3 rounded-lg flex items-center gap-0.5 shadow-sm">
+              Ver detalle <span class="material-symbols-outlined text-[14px] leading-none">arrow_forward</span>
+            </span>
+          ` : `
+            <span class="text-secondary font-button text-button hover:underline flex items-center gap-0.5 font-bold">
+              Ver más <span class="material-symbols-outlined text-[16px] leading-none">arrow_forward</span>
+            </span>
+          `}
         </div>
       </div>
     </div>
@@ -749,7 +836,7 @@ function localityCard(name, context = 'grid', activeRegion = 'Todas') {
   const desc = localityDescriptions[name] || localityDescriptions.default;
   const region = regionFor(name);
   const showBadge = region !== activeRegion;
-  const isSponsored = ['Puerto Deseado', '28 de Noviembre', 'El Calafate'].includes(name);
+  const level = getLocalityLevel(name);
   
   const eCount = baseEvents.filter(e => e.locality === name).length;
   const sCount = services.filter(s => s.locality === name).length;
@@ -760,56 +847,116 @@ function localityCard(name, context = 'grid', activeRegion = 'Todas') {
   else if (sCount > 0) microText = `${sCount} servicios`;
 
   if (context === 'hero') {
-    return `
-      <article class="relative rounded-2xl overflow-hidden ambient-shadow group cursor-pointer h-72 flex flex-col justify-end ${isSponsored ? 'ring-2 ring-secondary ring-offset-1' : ''}" onclick="if(!event.target.closest('a') && !event.target.closest('button')) route('/localidad/${slug(name)}')">
-        <img src="${img}" loading="lazy" alt="${name}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
-        <!-- Double gradient/shade overlay to solve visual legibility and photo mixing issues -->
-        <div class="absolute inset-0 bg-primary/30 group-hover:bg-primary/25 transition-all duration-300"></div>
-        <div class="absolute inset-0 bg-gradient-to-t from-primary via-primary/85 to-transparent"></div>
+    if (level === 3) {
+      return `
+        <article class="relative rounded-2xl overflow-hidden ambient-shadow group cursor-pointer h-72 flex flex-col justify-end ring-2 ring-secondary ring-offset-1" onclick="if(!event.target.closest('a') && !event.target.closest('button')) route('/localidad/${slug(name)}')">
+          <img src="${img}" loading="lazy" alt="${name}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+          <!-- Double gradient/shade overlay to solve visual legibility and photo mixing issues -->
+          <div class="absolute inset-0 bg-primary/30 group-hover:bg-primary/25 transition-all duration-300"></div>
+          <div class="absolute inset-0 bg-gradient-to-t from-primary via-primary/85 to-transparent"></div>
 
-        ${isSponsored ? `
+          <!-- Ribbon de Colaboración Local -->
           <div class="absolute top-3 left-3 bg-secondary text-white font-label-sm text-[10px] uppercase px-2.5 py-1 rounded-md border border-secondary/35 z-10 font-bold tracking-wider shadow flex items-center gap-1">
-            <span class="material-symbols-outlined text-[12px]">workspace_premium</span>
-            Destino Patrocinado
+            <span class="material-symbols-outlined text-[12px]">handshake</span>
+            Colaboración Local
           </div>
-        ` : ''}
 
-        <div class="relative p-md flex flex-col justify-end z-10 h-full">
-          ${showBadge ? `<span class="font-label-sm uppercase tracking-widest text-secondary-fixed mb-1 text-xs">${region}</span>` : ''}
-          <h3 class="font-display-lg text-[22px] text-white mb-2 leading-tight font-bold">${name}</h3>
-          <p class="font-body-md text-surface-variant max-w-lg mb-4 line-clamp-2 text-sm leading-relaxed">${desc}</p>
-          <div class="flex items-center justify-between mt-auto">
-            ${microText ? `<span class="bg-white/20 text-white text-xs font-medium px-2 py-1 rounded backdrop-blur-md">${microText}</span>` : '<div></div>'}
-            <div class="flex items-center gap-2">
-              ${isSponsored ? `
-                <span class="bg-secondary text-white text-[10px] uppercase px-3 py-1.5 rounded-lg border border-secondary/35 font-bold tracking-wider shadow flex items-center gap-1">
-                  <span class="material-symbols-outlined text-[14px]">workspace_premium</span>
-                  Auspiciado
+          <div class="relative p-md flex flex-col justify-end z-10 h-full">
+            ${showBadge ? `<span class="font-label-sm uppercase tracking-widest text-secondary-fixed mb-1 text-xs">${region}</span>` : ''}
+            <h3 class="font-display-lg text-[22px] text-white mb-1 leading-tight font-bold">${name}</h3>
+            
+            <!-- Benefit Badge / Visible Benefit -->
+            <p class="text-[10px] text-secondary-fixed font-bold flex items-center gap-0.5 mb-2">
+              <span class="material-symbols-outlined text-[12px]">verified</span>
+              Guía oficial: Guía completa + agenda + servicios
+            </p>
+            
+            <p class="font-body-md text-surface-variant max-w-lg mb-4 line-clamp-2 text-sm leading-relaxed">${desc}</p>
+            <div class="flex items-center justify-between mt-auto">
+              ${microText ? `<span class="bg-white/20 text-white text-xs font-medium px-2 py-1 rounded backdrop-blur-md">${microText}</span>` : '<div></div>'}
+              <div class="flex items-center gap-2">
+                <span class="bg-secondary-fixed text-primary font-button px-3 py-1.5 rounded-lg flex items-center gap-1 hover:bg-white transition-colors text-xs font-bold shadow-sm">
+                  Explorar Guía Oficial <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
                 </span>
-              ` : ''}
+              </div>
+            </div>
+          </div>
+        </article>
+      `;
+    } else if (level === 2) {
+      return `
+        <article class="relative rounded-2xl overflow-hidden ambient-shadow group cursor-pointer h-72 flex flex-col justify-end ring-1 ring-secondary/50" onclick="if(!event.target.closest('a') && !event.target.closest('button')) route('/localidad/${slug(name)}')">
+          <img src="${img}" loading="lazy" alt="${name}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+          <div class="absolute inset-0 bg-primary/30 group-hover:bg-primary/25 transition-all duration-300"></div>
+          <div class="absolute inset-0 bg-gradient-to-t from-primary via-primary/85 to-transparent"></div>
+
+          <!-- Ribbon Guía Destacada -->
+          <div class="absolute top-3 left-3 bg-secondary/85 text-white font-label-sm text-[10px] uppercase px-2.5 py-1 rounded-md border border-secondary/20 z-10 font-bold tracking-wider shadow flex items-center gap-1">
+            <span class="material-symbols-outlined text-[12px]">star</span>
+            Guía Destacada
+          </div>
+
+          <div class="relative p-md flex flex-col justify-end z-10 h-full">
+            ${showBadge ? `<span class="font-label-sm uppercase tracking-widest text-secondary-fixed mb-1 text-xs">${region}</span>` : ''}
+            <h3 class="font-display-lg text-[22px] text-white mb-1 leading-tight font-bold">${name}</h3>
+            
+            <p class="text-[10px] text-surface-variant font-bold flex items-center gap-0.5 mb-2">
+              <span class="material-symbols-outlined text-[12px]">verified_user</span>
+              Guía de atractivos y servicios
+            </p>
+            
+            <p class="font-body-md text-surface-variant max-w-lg mb-4 line-clamp-2 text-sm leading-relaxed">${desc}</p>
+            <div class="flex items-center justify-between mt-auto">
+              ${microText ? `<span class="bg-white/20 text-white text-xs font-medium px-2 py-1 rounded backdrop-blur-md">${microText}</span>` : '<div></div>'}
+              <div class="flex items-center gap-2">
+                <span class="bg-secondary-fixed text-primary font-button px-3 py-1.5 rounded-lg flex items-center gap-1 hover:bg-white transition-colors text-xs font-bold shadow-sm">
+                  Explorar Destino <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+                </span>
+              </div>
+            </div>
+          </div>
+        </article>
+      `;
+    } else {
+      return `
+        <article class="relative rounded-2xl overflow-hidden ambient-shadow group cursor-pointer h-72 flex flex-col justify-end" onclick="if(!event.target.closest('a') && !event.target.closest('button')) route('/localidad/${slug(name)}')">
+          <img src="${img}" loading="lazy" alt="${name}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+          <div class="absolute inset-0 bg-primary/30 group-hover:bg-primary/25 transition-all duration-300"></div>
+          <div class="absolute inset-0 bg-gradient-to-t from-primary via-primary/85 to-transparent"></div>
+          <div class="relative p-md flex flex-col justify-end z-10 h-full">
+            ${showBadge ? `<span class="font-label-sm uppercase tracking-widest text-secondary-fixed mb-1 text-xs">${region}</span>` : ''}
+            <h3 class="font-display-lg text-[22px] text-white mb-2 leading-tight font-bold">${name}</h3>
+            <p class="font-body-md text-surface-variant max-w-lg mb-4 line-clamp-2 text-sm leading-relaxed">${desc}</p>
+            <div class="flex items-center justify-between mt-auto">
+              ${microText ? `<span class="bg-white/20 text-white text-xs font-medium px-2 py-1 rounded backdrop-blur-md">${microText}</span>` : '<div></div>'}
               <span class="bg-secondary-fixed text-primary font-button px-3 py-1.5 rounded-lg flex items-center gap-1 hover:bg-white transition-colors text-xs font-bold shadow-sm">
-                Explorar <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+                Ver Guía <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
               </span>
             </div>
           </div>
-        </div>
-      </article>
-    `;
+        </article>
+      `;
+    }
   }
   
   return `
-    <article class="bg-surface rounded-xl border ${isSponsored ? 'border-2 border-secondary bg-secondary/[0.02]' : 'border-outline-variant/50'} overflow-hidden hover:ambient-shadow transition-shadow duration-300 cursor-pointer flex flex-col group relative h-full" onclick="if(!event.target.closest('a') && !event.target.closest('button')) route('/localidad/${slug(name)}')">
+    <article class="bg-surface rounded-xl border ${level === 3 ? 'border-2 border-secondary bg-secondary/[0.02]' : level === 2 ? 'border-secondary/40' : 'border-outline-variant/50'} overflow-hidden hover:ambient-shadow transition-shadow duration-300 cursor-pointer flex flex-col group relative h-full" onclick="if(!event.target.closest('a') && !event.target.closest('button')) route('/localidad/${slug(name)}')">
       <div class="relative h-32 overflow-hidden bg-surface-container">
         <img src="${img}" loading="lazy" alt="${name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
         ${showBadge ? `
-        <span class="absolute top-sm left-sm bg-primary/80 backdrop-blur-sm text-white font-label-sm text-[10px] uppercase px-2 py-1 rounded-md border border-outline-variant/20">
+        <span class="absolute top-sm left-sm bg-primary/80 backdrop-blur-sm text-white font-label-sm text-[10px] uppercase px-2 py-1 rounded-md border border-outline-variant/20 z-10">
           ${region}
         </span>
         ` : ''}
-        ${isSponsored ? `
+        ${level === 3 ? `
           <div class="absolute top-2 right-2 bg-secondary text-white text-[9px] uppercase font-bold px-2 py-0.5 rounded shadow z-10 flex items-center gap-0.5">
-            <span class="material-symbols-outlined text-[10px]">workspace_premium</span>
-            Auspiciado
+            <span class="material-symbols-outlined text-[10px]">handshake</span>
+            Colaboración
+          </div>
+        ` : level === 2 ? `
+          <div class="absolute top-2 right-2 bg-secondary/10 text-secondary border border-secondary/20 text-[9px] uppercase font-bold px-2 py-0.5 rounded shadow z-10 flex items-center gap-0.5">
+            <span class="material-symbols-outlined text-[10px]">star</span>
+            Destacado
           </div>
         ` : ''}
       </div>
@@ -819,12 +966,6 @@ function localityCard(name, context = 'grid', activeRegion = 'Todas') {
         <div class="mt-auto flex items-center justify-between border-t border-outline-variant/30 pt-3">
            <span class="text-[11px] font-medium text-on-surface-variant">${microText}</span>
            <div class="flex items-center gap-2">
-             ${isSponsored ? `
-               <span class="bg-secondary/10 text-secondary text-[9px] uppercase px-2.5 py-1 rounded-md border border-secondary/25 font-bold tracking-wider flex items-center gap-0.5">
-                 <span class="material-symbols-outlined text-[12px]">workspace_premium</span>
-                 Auspiciado
-               </span>
-             ` : ''}
              <span class="text-secondary font-button text-xs hover:underline flex items-center gap-0.5 font-bold">
               Ver guía <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
             </span>
@@ -1034,22 +1175,22 @@ function renderHome() {
       </div>
     </section>
 
-    <!-- Espacio A: Auspicio Home -->
+    <!-- Programa de Colaboración Turística (Home) -->
     <section class="max-w-7xl mx-auto px-container-margin mb-16">
-      <div class="bg-surface-container-low border border-outline-variant/20 rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="bg-surface-container-low border border-outline-variant/30 rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-6">
         <div class="flex items-center gap-4">
-          <div class="bg-secondary/10 text-secondary w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0">
-            <span class="material-symbols-outlined text-[24px]">workspace_premium</span>
+          <div class="bg-primary/10 text-primary w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0">
+            <span class="material-symbols-outlined text-[24px]">assured_workload</span>
           </div>
           <div class="text-left">
-            <span class="text-[10px] uppercase font-bold tracking-wider text-outline block">Auspicio Provincial</span>
-            <h4 class="font-title-sm text-primary font-bold text-sm">Espacio de Auspicio Disponible</h4>
-            <p class="font-body-md text-on-surface-variant text-xs mt-1">Promocioná tu municipio, marca o empresa turística en el portal de mayor crecimiento de la provincia.</p>
+            <span class="text-[10px] uppercase font-bold tracking-wider text-outline block">Promoción Institucional</span>
+            <h4 class="font-title-sm text-primary font-bold text-sm">Programa de Colaboración Turística</h4>
+            <p class="font-body-md text-on-surface-variant text-xs mt-1">¿Formás parte de una Dirección de Turismo Municipal? Sumá la agenda oficial y prestadores habilitados de tu localidad al portal provincial.</p>
           </div>
         </div>
-        <a href="mailto:hola@agendasantacruz.ar?subject=Auspicio Provincial - Agenda Santa Cruz" class="bg-primary text-white hover:bg-primary-container font-button px-5 py-2.5 rounded-lg text-xs font-bold transition-colors shadow-sm inline-flex items-center gap-1.5 whitespace-nowrap">
+        <a href="mailto:hola@agendasantacruz.ar?subject=Colaboración Municipal - Agenda Santa Cruz" class="bg-primary text-white hover:bg-primary-container font-button px-5 py-2.5 rounded-lg text-xs font-bold transition-colors shadow-sm inline-flex items-center gap-1.5 whitespace-nowrap">
           <span class="material-symbols-outlined text-[16px]">mail</span>
-          Quiero auspiciar mi localidad
+          Sumar mi Municipio
         </a>
       </div>
     </section>
@@ -1185,42 +1326,42 @@ function renderMunicipios() {
 
 function sponsoredEventHeaderCard() {
   return `
-    <div class="bg-secondary/[0.04] border-2 border-secondary rounded-2xl overflow-hidden hover:ambient-shadow transition-all duration-300 flex flex-col md:flex-row items-center p-md md:p-lg gap-md md:gap-lg relative shadow-md shadow-secondary/5 mb-6 text-left" onclick="route('/evento/e1')">
-      <!-- Badge Auspiciado -->
-      <div class="absolute top-3 right-3 bg-secondary text-white text-[9px] uppercase font-black tracking-wider px-2.5 py-1 rounded-full shadow-sm flex items-center gap-1 z-10">
-        <span class="material-symbols-outlined text-[11px]">workspace_premium</span>
-        Auspiciado Principal
+    <div class="bg-primary/5 border border-primary/20 rounded-2xl overflow-hidden hover:ambient-shadow transition-all duration-300 flex flex-col md:flex-row items-center p-md md:p-lg gap-md md:gap-lg relative shadow-sm mb-6 text-left">
+      <!-- Badge Colaboración Institucional -->
+      <div class="absolute top-3 right-3 bg-primary text-white text-[9px] uppercase font-bold tracking-wider px-2.5 py-1 rounded-md shadow-sm flex items-center gap-1 z-10">
+        <span class="material-symbols-outlined text-[11px]">handshake</span>
+        Colaboración Provincial
       </div>
       
       <!-- Icon/Thumbnail Section -->
-      <div class="w-16 h-16 md:w-20 md:h-20 bg-secondary/10 text-secondary rounded-xl flex items-center justify-center flex-shrink-0">
+      <div class="w-16 h-16 md:w-20 md:h-20 bg-primary/10 text-primary rounded-xl flex items-center justify-center flex-shrink-0">
         <span class="material-symbols-outlined text-[32px] md:text-[40px]">explore</span>
       </div>
       
       <!-- Info Section -->
       <div class="flex-grow min-w-0">
         <div class="flex items-center gap-2 mb-1.5 flex-wrap">
-          <span class="bg-secondary/15 text-secondary font-label-sm text-[10px] px-2 py-0.5 rounded-full uppercase tracking-wider font-bold">Campaña Provincial</span>
+          <span class="bg-primary/10 text-primary font-label-sm text-[10px] px-2.5 py-0.5 rounded-full uppercase tracking-wider font-bold">Campaña Oficial de Turismo</span>
           <span class="text-on-surface-variant font-label-sm flex items-center gap-[2px] truncate text-[11px]"><span class="material-symbols-outlined text-[13px] leading-none">location_on</span> Toda la Provincia</span>
         </div>
         <h3 class="font-title-md text-primary font-bold text-base md:text-lg mb-1 leading-snug">Guía de Turismo Oficial de Santa Cruz</h3>
-        <p class="font-body-md text-on-surface-variant text-xs md:text-sm leading-relaxed max-w-2xl">Descubrí las bellezas naturales con guías y excursiones autorizadas. Accedé a descuentos exclusivos y contratá prestadores habilitados.</p>
+        <p class="font-body-md text-on-surface-variant text-xs md:text-sm leading-relaxed max-w-2xl">En colaboración con la Secretaría de Estado de Turismo de la Provincia. Accedé a información oficial de destinos, atractivos validados y prestadores de servicios habilitados.</p>
         
         <!-- Key Value Point -->
-        <div class="flex items-center gap-1.5 mt-2 text-secondary font-semibold text-[11px]">
+        <div class="flex items-center gap-1.5 mt-2 text-primary font-semibold text-[11px]">
           <span class="material-symbols-outlined text-[14px]">check_circle</span>
-          <span>Incluye listado completo de prestadores y excursiones habilitadas por la provincia</span>
+          <span>Guía completa + agenda + prestadores habilitados</span>
         </div>
       </div>
       
       <!-- CTA Action Buttons -->
       <div class="flex md:flex-col items-stretch gap-2 w-full md:w-auto flex-shrink-0 pt-3 md:pt-0 border-t md:border-t-0 border-outline-variant/20">
-        <a href="https://wa.me/5492974000000?text=Hola! Quiero consultar por las Guías de Turismo Oficiales de Santa Cruz." target="_blank" onclick="event.stopPropagation();" class="bg-[#075e54] text-white font-button py-2.5 px-4 rounded-xl flex items-center justify-center gap-1.5 hover:bg-[#053e2a] transition-all text-xs font-bold shadow-sm flex-grow md:flex-grow-0 active:scale-[0.97] duration-150">
-          <span class="material-symbols-outlined text-[16px]">chat</span>
-          Conocer campaña
+        <a href="#/servicios" class="bg-primary text-white font-button py-2.5 px-4 rounded-xl flex items-center justify-center gap-1.5 hover:bg-primary-container transition-all text-xs font-bold shadow-sm flex-grow md:flex-grow-0 active:scale-[0.97] duration-150">
+          <span class="material-symbols-outlined text-[16px]">explore</span>
+          Ver prestadores habilitados
         </a>
-        <a href="mailto:hola@agendasantacruz.ar?subject=Consulta Campaña Oficial" onclick="event.stopPropagation();" class="text-on-surface-variant hover:text-primary font-button py-2 px-4 rounded-xl transition-all text-xs font-semibold text-center border border-outline-variant hover:bg-surface-container-low active:scale-[0.97] duration-150">
-          Más información
+        <a href="https://wa.me/5492974000000?text=Hola! Quiero consultar por las Guías de Turismo Oficiales de Santa Cruz." target="_blank" class="text-on-surface-variant hover:text-primary font-button py-2 px-4 rounded-xl transition-all text-xs font-semibold text-center border border-outline-variant hover:bg-surface-container-low active:scale-[0.97] duration-150">
+          Contacto por WhatsApp
         </a>
       </div>
     </div>
@@ -1604,22 +1745,10 @@ function renderDestinations() {
   
   const results = filterLocality();
   
-  const isSponsored = name => ['Puerto Deseado', '28 de Noviembre', 'El Calafate'].includes(name);
+  const resultsFeatured = results.filter(l => getLocalityLevel(l) > 1);
+  resultsFeatured.sort((a, b) => getLocalityLevel(b) - getLocalityLevel(a));
   
-  const topFeatured = ['El Calafate', 'Río Gallegos', 'El Chaltén', 'Los Antiguos', 'Puerto Deseado', 'Puerto San Julián'];
-  const resultsFeatured = results.filter(l => topFeatured.includes(l));
-  resultsFeatured.sort((a, b) => {
-    const aSp = isSponsored(a) ? 1 : 0;
-    const bSp = isSponsored(b) ? 1 : 0;
-    return bSp - aSp;
-  });
-  
-  const resultsRest = results.filter(l => !topFeatured.includes(l));
-  resultsRest.sort((a, b) => {
-    const aSp = isSponsored(a) ? 1 : 0;
-    const bSp = isSponsored(b) ? 1 : 0;
-    return bSp - aSp;
-  });
+  const resultsRest = results.filter(l => getLocalityLevel(l) === 1);
 
   const content = `
     <!-- Minimal, Elegant Hero Banner -->
@@ -2054,37 +2183,43 @@ function renderLocality(slugName) {
 
         <!-- Espacio B: Auspicia Localidad -->
         ${isComplete ? `
-          <!-- Espacio B: Auspicia Localidad (Auspiciada) -->
-          <div class="bg-surface border border-secondary/20 p-6 rounded-2xl shadow-sm relative text-left mb-6">
-            <div class="absolute top-3 right-3 bg-secondary/15 text-secondary text-[9px] uppercase font-bold px-2 py-0.5 rounded tracking-wider border border-secondary/25 font-semibold">
-              Auspiciado
+          <!-- Colaboración Municipal de Level 3 -->
+          <div class="bg-secondary/[0.02] border border-secondary/35 p-6 rounded-2xl shadow-sm relative text-left mb-6">
+            <div class="absolute top-3 right-3 bg-secondary/15 text-secondary text-[9px] uppercase font-bold px-2.5 py-1 rounded tracking-wider border border-secondary/25 font-bold flex items-center gap-0.5">
+              <span class="material-symbols-outlined text-[10px]">handshake</span>
+              Colaboración Local
             </div>
             <h4 class="font-title-sm text-primary font-bold text-sm mb-2 flex items-center gap-1.5">
-              <span class="material-symbols-outlined text-secondary text-[18px]">workspace_premium</span>
-              Auspicia ${name}
+              <span class="material-symbols-outlined text-secondary text-[18px]">assured_workload</span>
+              Guía Oficial de ${name}
             </h4>
             <p class="font-body-md text-on-surface-variant text-xs leading-relaxed mb-4">
-              <strong>Beneficios Oficiales:</strong> Guía de viaje recomendada, calendario verificado del mes y destacados turísticos locales.
+              Esta sección de atractivos, eventos y servicios está verificada en colaboración con el área de turismo local de <strong>${name}</strong> para ofrecer información confiable y habilitada.
             </p>
-            <a href="mailto:hola@agendasantacruz.ar?subject=Auspicio Municipio: ${name}" class="w-full bg-primary text-white hover:bg-primary-container font-button py-2 rounded-lg text-xs font-bold transition-colors text-center block shadow-sm">
-              Sitio Oficial del Municipio
-            </a>
+            <div class="flex flex-col gap-2">
+              <a href="mailto:hola@agendasantacruz.ar?subject=Consulta Sitio Oficial Municipio: ${name}" class="w-full bg-primary text-white hover:bg-primary-container font-button py-2.5 rounded-lg text-xs font-bold transition-colors text-center block shadow-sm">
+                Sitio Oficial de Turismo
+              </a>
+              <a href="mailto:hola@agendasantacruz.ar?subject=Contacto Dirección de Turismo: ${name}" class="w-full border border-outline-variant hover:bg-surface-container-low text-primary font-button py-2 rounded-lg text-xs font-semibold text-center block transition-colors">
+                Contacto Dirección de Turismo
+              </a>
+            </div>
           </div>
         ` : `
-          <!-- Espacio B: Auspicio Localidad Disponible (Sin Auspiciar) -->
+          <!-- Bloque de Propuesta Colaborativa -->
           <div class="bg-surface border border-outline-variant/40 p-6 rounded-2xl shadow-sm relative text-left mb-6">
-            <div class="absolute top-3 right-3 bg-surface-container text-on-surface-variant text-[9px] uppercase font-bold px-2 py-0.5 rounded tracking-wider border border-outline-variant/30 font-semibold">
-              Disponible
+            <div class="absolute top-3 right-3 bg-surface-container text-on-surface-variant text-[9px] uppercase font-bold px-2.5 py-1 rounded tracking-wider border border-outline-variant/35 font-semibold">
+              Proyecto Abierto
             </div>
             <h4 class="font-title-sm text-primary font-bold text-sm mb-2 flex items-center gap-1.5">
               <span class="material-symbols-outlined text-outline text-[18px]">add_circle</span>
-              Auspicio de Destino
+              Colaboración de Destino
             </h4>
             <p class="font-body-md text-on-surface-variant text-xs leading-relaxed mb-4">
-              Espacio disponible para promocionar atractivos oficiales o prestadores de la localidad.
+              ¿Formás parte de la comunidad o de turismo local en <strong>${name}</strong>? Ayudanos a verificar atractivos y prestadores oficiales para completar esta guía.
             </p>
-            <a href="mailto:hola@agendasantacruz.ar?subject=Auspicio Localidad: ${name}" class="w-full bg-secondary-fixed text-primary hover:bg-white border border-outline-variant/30 font-button py-2 rounded-lg text-xs font-bold transition-colors text-center block shadow-sm">
-              Contactar para Auspicio
+            <a href="mailto:hola@agendasantacruz.ar?subject=Colaboración Destino: ${name}" class="w-full bg-secondary-fixed text-primary hover:bg-white border border-outline-variant/35 font-button py-2.5 rounded-lg text-xs font-bold transition-colors text-center block shadow-sm">
+              Colaborar con la guía oficial
             </a>
           </div>
         `}
