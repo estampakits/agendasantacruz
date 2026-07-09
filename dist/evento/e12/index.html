@@ -335,7 +335,7 @@
           <h3 class="font-headline-md text-primary mb-md font-bold text-lg">Otros eventos en El Calafate</h3>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-md">
             
-    <div class="bg-surface rounded-xl border border-outline-variant/50 overflow-hidden hover:ambient-shadow transition-shadow duration-300 flex flex-col group cursor-pointer" onclick="route('/evento/e3')">
+    <div class="bg-surface rounded-xl border border-outline-variant/50 overflow-hidden hover:ambient-shadow transition-shadow duration-300 flex flex-col group cursor-pointer h-full" onclick="route('/evento/e3')">
       <div class="h-48 relative overflow-hidden">
         <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" src="/images/food.jpg" alt="Sabores del sur: cocina abierta">
         <div class="absolute top-sm right-sm bg-surface/90 backdrop-blur-sm rounded-lg px-sm py-xs text-center border border-outline-variant/30">
@@ -346,7 +346,7 @@
       </div>
       <div class="p-md flex flex-col flex-grow">
         <div class="flex items-center gap-xs mb-xs">
-          <span class="bg-surface-container-low text-primary-container font-label-sm text-[10px] px-2 py-1 rounded-full uppercase tracking-wider">Gastronómico</span>
+          <span class="bg-secondary/10 text-secondary border border-secondary/20 px-2.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider">Gastronómico</span>
           <span class="text-on-surface-variant font-label-sm flex items-center gap-[2px] truncate"><span class="material-symbols-outlined text-[14px]">location_on</span> El Calafate</span>
         </div>
         <h3 class="font-title-sm text-primary mb-0.5 line-clamp-2 group-hover:text-secondary transition-colors font-bold">Sabores del sur: cocina abierta</h3>
@@ -365,7 +365,7 @@
       </div>
     </div>
   
-    <div class="bg-surface rounded-xl border border-outline-variant/50 overflow-hidden hover:ambient-shadow transition-shadow duration-300 flex flex-col group cursor-pointer" onclick="route('/evento/e8')">
+    <div class="bg-surface rounded-xl border border-outline-variant/50 overflow-hidden hover:ambient-shadow transition-shadow duration-300 flex flex-col group cursor-pointer h-full" onclick="route('/evento/e8')">
       <div class="h-48 relative overflow-hidden">
         <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" src="/images/food.jpg" alt="Feria gastronómica regional">
         <div class="absolute top-sm right-sm bg-surface/90 backdrop-blur-sm rounded-lg px-sm py-xs text-center border border-outline-variant/30">
@@ -376,7 +376,7 @@
       </div>
       <div class="p-md flex flex-col flex-grow">
         <div class="flex items-center gap-xs mb-xs">
-          <span class="bg-surface-container-low text-primary-container font-label-sm text-[10px] px-2 py-1 rounded-full uppercase tracking-wider">Gastronómico</span>
+          <span class="bg-secondary/10 text-secondary border border-secondary/20 px-2.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider">Gastronómico</span>
           <span class="text-on-surface-variant font-label-sm flex items-center gap-[2px] truncate"><span class="material-symbols-outlined text-[14px]">location_on</span> El Calafate</span>
         </div>
         <h3 class="font-title-sm text-primary mb-0.5 line-clamp-2 group-hover:text-secondary transition-colors font-bold">Feria gastronómica regional</h3>
@@ -569,6 +569,8 @@ function makeServices(locality, density='full'){
 const services=[...makeServices('Puerto Deseado','full'),...makeServices('28 de Noviembre','full'),...makeServices('El Calafate','lite'),...['Río Gallegos','Caleta Olivia','El Chaltén','Puerto San Julián','Los Antiguos','Perito Moreno'].flatMap((l,idx)=>makeServices(l,'lite').slice(0,5+idx%2))];
 
 
+console.log("PATCH1 running, protocol:", window.location.protocol);
+console.log("PATCH1 running, protocol:", window.location.protocol);
 console.log("PATCH1 running, protocol:", window.location.protocol);
 console.log("PATCH1 running, protocol:", window.location.protocol);
 console.log("PATCH1 running, protocol:", window.location.protocol);
@@ -932,7 +934,7 @@ function serviceCard(s) {
   
   if (isSponsor) {
     return `
-      <article class="bg-secondary/[0.03] rounded-xl border-2 border-secondary p-md hover:ambient-shadow transition-shadow flex flex-col justify-between group cursor-pointer relative shadow-md shadow-secondary/5" onclick="if(!event.target.closest('a') && !event.target.closest('button')) route('/prestador/${s.id}')">
+      <article class="bg-secondary/[0.03] rounded-xl border-2 border-secondary p-md hover:ambient-shadow transition-shadow flex flex-col justify-between group cursor-pointer relative shadow-md shadow-secondary/5 h-full" onclick="if(!event.target.closest('a') && !event.target.closest('button')) route('/prestador/${s.id}')">
         <!-- Ribbon Auspiciado -->
         <div class="absolute top-2 right-2 bg-secondary text-white text-[9px] uppercase font-bold px-2 py-0.5 rounded shadow-sm flex items-center gap-1 z-10">
           <span class="material-symbols-outlined text-[10px]">workspace_premium</span>
@@ -945,7 +947,7 @@ function serviceCard(s) {
             <img src="${thumbnail}" alt="${s.name}" class="w-14 h-14 object-cover rounded-lg flex-shrink-0 border border-outline-variant/30">
             <div class="min-w-0 flex-grow text-left">
               <div class="flex flex-wrap gap-1.5 text-[9px] text-on-surface-variant font-semibold items-center mb-0.5">
-                <span class="flex items-center gap-0.5 bg-surface-container px-1.5 py-0.5 rounded text-primary">
+                <span class="flex items-center gap-0.5 bg-secondary/10 text-secondary border border-secondary/20 px-2 py-0.5 rounded text-[10px] font-bold">
                   <span class="material-symbols-outlined text-[10px]">${icon}</span>
                   ${s.rubric}
                 </span>
@@ -990,13 +992,13 @@ function serviceCard(s) {
   
   // Standard card
   return `
-    <article class="bg-surface rounded-xl border border-outline-variant/50 p-md hover:ambient-shadow transition-shadow flex flex-col justify-between group cursor-pointer relative" onclick="if(!event.target.closest('a') && !event.target.closest('button')) route('/prestador/${s.id}')">
+    <article class="bg-surface rounded-xl border border-outline-variant/50 p-md hover:ambient-shadow transition-shadow flex flex-col justify-between group cursor-pointer relative h-full" onclick="if(!event.target.closest('a') && !event.target.closest('button')) route('/prestador/${s.id}')">
       <div>
         <div class="flex gap-3 mb-3">
           <img src="${thumbnail}" alt="${s.name}" class="w-14 h-14 object-cover rounded-lg flex-shrink-0 border border-outline-variant/25">
           <div class="min-w-0 flex-grow text-left">
             <div class="flex flex-wrap gap-1.5 text-[9px] text-on-surface-variant font-semibold items-center mb-0.5">
-              <span class="flex items-center gap-0.5 bg-surface-container px-1.5 py-0.5 rounded text-primary">
+              <span class="flex items-center gap-0.5 bg-secondary/10 text-secondary border border-secondary/20 px-2 py-0.5 rounded text-[10px] font-bold">
                 <span class="material-symbols-outlined text-[10px]">${icon}</span>
                 ${s.rubric}
               </span>
@@ -1036,7 +1038,7 @@ function eventCard(e, compact = false) {
 
   if (compact) {
     return `
-      <article class="bg-surface rounded-xl shadow-sm border border-outline-variant/50 overflow-hidden hover:ambient-shadow transition-shadow cursor-pointer flex gap-4 p-3 group" onclick="route('/evento/${e.id}')">
+      <article class="bg-surface rounded-xl shadow-sm border border-outline-variant/50 overflow-hidden hover:ambient-shadow transition-shadow cursor-pointer flex gap-4 p-3 group h-full" onclick="route('/evento/${e.id}')">
         <div class="relative w-24 h-24 rounded-lg overflow-hidden flex-shrink-0">
           <img src="${e.image}" loading="lazy" alt="${e.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
           <div class="absolute top-1.5 left-1.5 bg-surface/90 backdrop-blur shadow-sm rounded-md px-1.5 py-0.5 text-center leading-none border border-outline-variant/30">
@@ -1047,7 +1049,7 @@ function eventCard(e, compact = false) {
         <div class="flex-grow min-w-0 flex flex-col justify-between">
           <div>
             <div class="flex items-center gap-2 mb-1">
-              <span class="text-[10px] font-bold text-secondary uppercase bg-surface-container-low px-2 py-0.5 rounded">${e.category}</span>
+              <span class="bg-secondary/10 text-secondary border border-secondary/20 px-2.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider">${e.category}</span>
               <span class="text-on-surface-variant font-label-sm truncate flex items-center"><span class="material-symbols-outlined text-[12px] mr-[2px]">pin_drop</span>${e.locality}</span>
             </div>
             <h3 class="font-title-sm text-primary leading-snug line-clamp-2 group-hover:text-secondary transition-colors">${e.title}</h3>
@@ -1066,7 +1068,7 @@ function eventCard(e, compact = false) {
   }
   
   return `
-    <div class="bg-surface rounded-xl border border-outline-variant/50 overflow-hidden hover:ambient-shadow transition-shadow duration-300 flex flex-col group cursor-pointer" onclick="route('/evento/${e.id}')">
+    <div class="bg-surface rounded-xl border border-outline-variant/50 overflow-hidden hover:ambient-shadow transition-shadow duration-300 flex flex-col group cursor-pointer h-full" onclick="route('/evento/${e.id}')">
       <div class="h-48 relative overflow-hidden">
         <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" src="${e.image}" alt="${e.title}" />
         <div class="absolute top-sm right-sm bg-surface/90 backdrop-blur-sm rounded-lg px-sm py-xs text-center border border-outline-variant/30">
@@ -1077,7 +1079,7 @@ function eventCard(e, compact = false) {
       </div>
       <div class="p-md flex flex-col flex-grow">
         <div class="flex items-center gap-xs mb-xs">
-          <span class="bg-surface-container-low text-primary-container font-label-sm text-[10px] px-2 py-1 rounded-full uppercase tracking-wider">${e.category}</span>
+          <span class="bg-secondary/10 text-secondary border border-secondary/20 px-2.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider">${e.category}</span>
           <span class="text-on-surface-variant font-label-sm flex items-center gap-[2px] truncate"><span class="material-symbols-outlined text-[14px]">location_on</span> ${e.locality}</span>
         </div>
         <h3 class="font-title-sm text-primary mb-0.5 line-clamp-2 group-hover:text-secondary transition-colors font-bold">${e.title}</h3>
@@ -1115,9 +1117,18 @@ function localityCard(name, context = 'grid', activeRegion = 'Todas') {
 
   if (context === 'hero') {
     return `
-      <article class="relative rounded-2xl overflow-hidden ambient-shadow group cursor-pointer h-72 flex flex-col justify-end" onclick="if(!event.target.closest('a') && !event.target.closest('button')) route('/localidad/${slug(name)}')">
+      <article class="relative rounded-2xl overflow-hidden ambient-shadow group cursor-pointer h-72 flex flex-col justify-end ${isSponsored ? 'ring-2 ring-secondary ring-offset-1' : ''}" onclick="if(!event.target.closest('a') && !event.target.closest('button')) route('/localidad/${slug(name)}')">
         <img src="${img}" loading="lazy" alt="${name}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
-        <div class="absolute inset-0 bg-gradient-to-t from-primary via-primary/60 to-transparent"></div>
+        <!-- Double gradient/shade overlay to solve visual legibility and photo mixing issues -->
+        <div class="absolute inset-0 bg-primary/30 group-hover:bg-primary/25 transition-all duration-300"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-primary via-primary/85 to-transparent"></div>
+
+        ${isSponsored ? `
+          <div class="absolute top-3 left-3 bg-secondary text-white font-label-sm text-[10px] uppercase px-2.5 py-1 rounded-md border border-secondary/35 z-10 font-bold tracking-wider shadow flex items-center gap-1">
+            <span class="material-symbols-outlined text-[12px]">workspace_premium</span>
+            Destino Patrocinado
+          </div>
+        ` : ''}
 
         <div class="relative p-md flex flex-col justify-end z-10 h-full">
           ${showBadge ? `<span class="font-label-sm uppercase tracking-widest text-secondary-fixed mb-1 text-xs">${region}</span>` : ''}
@@ -1143,13 +1154,19 @@ function localityCard(name, context = 'grid', activeRegion = 'Todas') {
   }
   
   return `
-    <article class="bg-surface rounded-xl border border-outline-variant/50 overflow-hidden hover:ambient-shadow transition-shadow duration-300 cursor-pointer flex flex-col group relative" onclick="if(!event.target.closest('a') && !event.target.closest('button')) route('/localidad/${slug(name)}')">
+    <article class="bg-surface rounded-xl border ${isSponsored ? 'border-2 border-secondary bg-secondary/[0.02]' : 'border-outline-variant/50'} overflow-hidden hover:ambient-shadow transition-shadow duration-300 cursor-pointer flex flex-col group relative h-full" onclick="if(!event.target.closest('a') && !event.target.closest('button')) route('/localidad/${slug(name)}')">
       <div class="relative h-32 overflow-hidden bg-surface-container">
         <img src="${img}" loading="lazy" alt="${name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
         ${showBadge ? `
-        <span class="absolute top-sm left-sm bg-primary/80 backdrop-blur-sm text-white font-label-sm text-[10px] uppercase px-2 py-1 rounded-md border border-outline-variant/20 transition-opacity group-hover:opacity-0">
+        <span class="absolute top-sm left-sm bg-primary/80 backdrop-blur-sm text-white font-label-sm text-[10px] uppercase px-2 py-1 rounded-md border border-outline-variant/20">
           ${region}
         </span>
+        ` : ''}
+        ${isSponsored ? `
+          <div class="absolute top-2 right-2 bg-secondary text-white text-[9px] uppercase font-bold px-2 py-0.5 rounded shadow z-10 flex items-center gap-0.5">
+            <span class="material-symbols-outlined text-[10px]">workspace_premium</span>
+            Auspiciado
+          </div>
         ` : ''}
       </div>
       <div class="p-md flex-grow flex flex-col">

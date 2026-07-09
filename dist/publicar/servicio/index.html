@@ -2,8 +2,8 @@
 <html lang="es" class="light"><head>
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
-<title>Agenda Santa Cruz | Eventos, Destinos y Servicios</title>
-  <meta name="description" content="Portal interactivo de la Agenda Santa Cruz. Eventos, destinos turísticos y directorio de servicios profesionales.">
+<title>Sumar servicio turístico en Santa Cruz | Agenda Santa Cruz</title>
+  <meta name="description" content="Sumá tu servicio turístico para que lo revisemos y lo publiquemos. Recibí consultas por WhatsApp.">
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Montserrat:wght@600;700&amp;display=swap" rel="stylesheet">
@@ -123,10 +123,256 @@
             box-shadow: 0px 4px 12px rgba(0, 56, 77, 0.08);
         }
       </style>
-<meta property="og:title" content="Agenda Santa Cruz | Eventos, Destinos y Servicios"><meta property="og:description" content="Portal interactivo de la Agenda Santa Cruz. Eventos, destinos turísticos y directorio de servicios profesionales."></head>
+<style id="highlight-glow-style">
+    .highlight-glow {
+      animation: highlightGlow 1.2s ease-in-out;
+    }
+    @keyframes highlightGlow {
+      0% {
+        outline: 3px solid #006a60;
+        box-shadow: 0 0 20px rgba(0, 106, 96, 0.7);
+      }
+      100% {
+        outline: 3px solid transparent;
+        box-shadow: none;
+      }
+    }
+    
+    /* Micro-interactions: scale down slightly on active click/press for tactile feedback */
+    button:active, 
+    a:active, 
+    article:active, 
+    [onclick]:active,
+    .btn-active-scale:active {
+      transform: scale(0.97) !important;
+      transition: transform 150ms cubic-bezier(0.23, 1, 0.32, 1) !important;
+    }
+    
+    /* Gated Hover: hover styles only apply to devices with precise pointers (fine hover support) */
+    @media (hover: hover) and (pointer: fine) {
+      .group:hover .group-hover\:scale-105 {
+        transform: scale(1.05) !important;
+      }
+    }
+    
+    /* Accessibility focus styling: clearly visible 2px offset outline */
+    input:focus-visible, 
+    select:focus-visible, 
+    textarea:focus-visible, 
+    button:focus-visible, 
+    a:focus-visible {
+      outline: 2.5px solid #006a60 !important;
+      outline-offset: 2.5px !important;
+      box-shadow: 0 0 0 4px rgba(0, 106, 96, 0.25) !important;
+    }
+    
+    /* Support users who prefer reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, ::before, ::after {
+        animation-delay: -1ms !important;
+        animation-duration: 1ms !important;
+        animation-iteration-count: 1 !important;
+        background-attachment: initial !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0s !important;
+        transition-delay: 0s !important;
+      }
+      .group-hover\:scale-105 {
+        transform: none !important;
+      }
+    }
+  </style><meta property="og:title" content="Sumar servicio turístico en Santa Cruz | Agenda Santa Cruz"><meta property="og:description" content="Sumá tu servicio turístico para que lo revisemos y lo publiquemos. Recibí consultas por WhatsApp."></head>
 <body class="bg-background text-on-background min-h-screen flex flex-col font-body-md">
   <div id="toast-container" class="fixed top-5 right-5 z-[9999] flex flex-col gap-2 pointer-events-none"></div>
-  <div id="app" class="flex-grow flex flex-col"></div>
+  <div id="app" class="flex-grow flex flex-col">
+    
+    <nav class="bg-surface/95 dark:bg-on-background/95 fixed top-0 w-full z-50 border-b border-outline-variant/30 backdrop-blur-md shadow-sm hidden md:block">
+      <div class="flex justify-between items-center px-container-margin h-16 max-w-7xl mx-auto">
+        <a href="#/" class="font-display-lg text-[22px] font-bold text-primary flex items-center gap-2 hover:opacity-90 transition-opacity">
+          <div class="bg-secondary-fixed text-primary p-1.5 rounded-lg flex items-center justify-center">
+            <span class="material-symbols-outlined text-lg leading-none">explore</span>
+          </div>
+          Agenda Santa Cruz
+        </a>
+        <div class="flex space-x-lg font-body-md text-body-md text-primary h-full items-center">
+          
+            <a href="#/" class="flex items-center h-full transition-all duration-200 border-b-2 text-on-surface-variant hover:text-primary hover:bg-surface-container-low border-transparent">
+              <span class="px-2">Home</span>
+            </a>
+          
+            <a href="#/agenda" class="flex items-center h-full transition-all duration-200 border-b-2 text-on-surface-variant hover:text-primary hover:bg-surface-container-low border-transparent">
+              <span class="px-2">Agenda</span>
+            </a>
+          
+            <a href="#/destinos" class="flex items-center h-full transition-all duration-200 border-b-2 text-on-surface-variant hover:text-primary hover:bg-surface-container-low border-transparent">
+              <span class="px-2">Destinos</span>
+            </a>
+          
+            <a href="#/servicios" class="flex items-center h-full transition-all duration-200 border-b-2 text-on-surface-variant hover:text-primary hover:bg-surface-container-low border-transparent">
+              <span class="px-2">Servicios</span>
+            </a>
+          
+        </div>
+        <div class="flex items-center gap-md">
+          <a href="#/municipios" class="font-button text-sm text-on-surface-variant hover:text-primary transition-colors">Soluciones para Municipios</a>
+          <a href="#/publicar/evento" class="bg-primary-container text-on-primary font-button text-button px-lg py-sm rounded-lg hover:bg-primary transition-colors duration-200">
+            Publicar
+          </a>
+        </div>
+      </div>
+    </nav>
+  
+    <main class="flex-grow pt-[16px] md:pt-[80px] pb-16 md:pb-0 animate-fade-in">
+      
+    <div class="max-w-7xl mx-auto px-container-margin py-xl">
+      <div class="mb-lg border-b border-outline-variant/30 pb-sm">
+        <h1 class="font-display-lg text-[32px] md:text-[36px] text-primary mb-xs font-bold">
+          Sugerir un nuevo Servicio Turístico
+        </h1>
+        <p class="font-body-md text-on-surface-variant max-w-2xl text-sm md:text-base">
+          Completá el formulario para que nuestro equipo lo revise y lo publique en el portal.
+          Es gratuito y nos ayuda a promover tu ciudad.
+        </p>
+      </div>
+      
+      <div class="flex gap-4 mb-xl font-label-sm uppercase">
+        <a href="#/publicar/evento" class="flex-1 py-3 text-center rounded-xl border border-outline-variant/50 text-on-surface-variant hover:bg-surface-container-low transition-all text-xs font-bold">
+          <span class="material-symbols-outlined text-[20px] block mb-1">event</span>
+          Evento Público
+        </a>
+        <a href="#/publicar/servicio" class="flex-1 py-3 text-center rounded-xl border border-primary bg-primary text-white shadow-md transition-all text-xs font-bold">
+          <span class="material-symbols-outlined text-[20px] block mb-1">add_business</span>
+          Servicio Privado
+        </a>
+      </div>
+      
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-xl">
+        <!-- Form Column -->
+        <form id="publish-form" class="lg:col-span-8 bg-surface border border-outline-variant/30 p-lg md:p-xl rounded-2xl shadow-sm flex flex-col gap-md" novalidate="">
+          <div id="form-error-summary" class="hidden bg-error-container text-on-error-container p-sm rounded-lg font-body-md mb-sm border border-error/20 flex items-start gap-2">
+            <span class="material-symbols-outlined text-[20px]">error</span>
+            <span id="form-error-text">Por favor revisá los campos marcados en rojo.</span>
+          </div>
+          
+          <div>
+            <label for="pub-title" class="font-label-sm text-on-surface-variant block mb-xs text-xs font-semibold">Título / Nombre *</label>
+            <input type="text" id="pub-title" required="" class="w-full bg-surface-bright border border-outline-variant rounded-lg px-sm py-2.5 focus:border-primary outline-none font-body-md text-on-background text-sm peer invalid:[&amp;:not(:placeholder-shown)]:border-error" placeholder="Ej. Alquiler de Cabañas Las Nubes">
+            <span class="hidden peer-invalid:[&amp;:not(:placeholder-shown)]:block text-error text-[11px] mt-1">Este campo es obligatorio.</span>
+          </div>
+          
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-md">
+            <div>
+              <label for="pub-locality" class="font-label-sm text-on-surface-variant block mb-xs text-xs font-semibold">Localidad *</label>
+              <select id="pub-locality" required="" class="w-full bg-surface-bright border border-outline-variant rounded-lg px-sm py-2.5 focus:border-primary outline-none font-body-md text-on-background text-sm cursor-pointer">
+                <option value="28 de Noviembre" selected="">28 de Noviembre</option><option value="Bajo Caracoles">Bajo Caracoles</option><option value="Caleta Olivia">Caleta Olivia</option><option value="Cañadón Seco">Cañadón Seco</option><option value="Comandante Luis Piedra Buena">Comandante Luis Piedra Buena</option><option value="El Calafate">El Calafate</option><option value="El Chaltén">El Chaltén</option><option value="Fitz Roy">Fitz Roy</option><option value="Gobernador Gregores">Gobernador Gregores</option><option value="Jaramillo">Jaramillo</option><option value="Julia Dufour">Julia Dufour</option><option value="Koluel Kaike">Koluel Kaike</option><option value="Lago Posadas (Hipólito Yrigoyen)">Lago Posadas (Hipólito Yrigoyen)</option><option value="Las Heras">Las Heras</option><option value="Mina 3">Mina 3</option><option value="Los Antiguos">Los Antiguos</option><option value="Perito Moreno">Perito Moreno</option><option value="Pico Truncado">Pico Truncado</option><option value="Puerto Deseado">Puerto Deseado</option><option value="Puerto San Julián">Puerto San Julián</option><option value="Puerto Santa Cruz">Puerto Santa Cruz</option><option value="Río Gallegos">Río Gallegos</option><option value="Río Turbio">Río Turbio</option><option value="Rospentek Aike">Rospentek Aike</option><option value="Tellier">Tellier</option><option value="Tres Lagos">Tres Lagos</option>
+              </select>
+            </div>
+            <div>
+              <label for="pub-category" class="font-label-sm text-on-surface-variant block mb-xs text-xs font-semibold">Categoría / Rubro *</label>
+              <select id="pub-category" required="" class="w-full bg-surface-bright border border-outline-variant rounded-lg px-sm py-2.5 focus:border-primary outline-none font-body-md text-on-background text-sm cursor-pointer">
+                <option value="Alojamiento">Alojamiento</option><option value="Gastronomía">Gastronomía</option><option value="Excursiones/Actividades">Excursiones/Actividades</option><option value="Transporte">Transporte</option><option value="Agencias">Agencias</option>
+              </select>
+            </div>
+          </div>
+
+          
+
+          <div>
+            <label for="pub-desc" class="font-label-sm text-on-surface-variant block mb-xs text-xs font-semibold">Descripción *</label>
+            <textarea id="pub-desc" required="" rows="4" class="w-full bg-surface-bright border border-outline-variant rounded-lg px-sm py-2.5 focus:border-primary outline-none font-body-md text-on-background resize-y text-sm peer invalid:[&amp;:not(:placeholder-shown)]:border-error" placeholder="Brindá información útil para los visitantes (duración, costos, características)..."></textarea>
+            <span class="hidden peer-invalid:[&amp;:not(:placeholder-shown)]:block text-error text-[11px] mt-1">Este campo es obligatorio.</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-md">
+            <div>
+              <label for="pub-phone" class="font-label-sm text-on-surface-variant block mb-xs text-xs font-semibold">WhatsApp de Contacto *</label>
+              <div class="relative">
+                <span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">phone</span>
+                <input type="tel" id="pub-phone" required="" pattern="^\+?549?\d{10}$" class="w-full bg-surface-bright border border-outline-variant rounded-lg pl-9 pr-sm py-2.5 focus:border-primary outline-none font-body-md text-on-background text-sm peer invalid:[&amp;:not(:placeholder-shown)]:border-error" placeholder="+54 9 297 4123456">
+              </div>
+              <span class="hidden peer-invalid:[&amp;:not(:placeholder-shown)]:block text-error text-[11px] mt-1">Ingresá un número válido con código de área (ej: +549...).</span>
+            </div>
+            <div>
+              <label class="font-label-sm text-on-surface-variant block mb-xs text-xs font-semibold">Foto ilustrativa</label>
+              <div class="border border-dashed border-outline-variant/80 rounded-lg p-2.5 text-center flex items-center justify-center gap-1.5 cursor-pointer hover:bg-surface-container-low transition-colors text-primary font-body-md text-sm font-semibold">
+                <span class="material-symbols-outlined text-[20px]">add_photo_alternate</span> 
+                <span>Subir archivo...</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-md">
+            <button type="submit" class="w-full bg-secondary-fixed text-primary font-button py-3.5 rounded-lg hover:bg-white transition-colors shadow-sm flex items-center justify-center gap-2 font-bold text-sm">
+              <span class="material-symbols-outlined text-[20px]">send</span>
+              Enviar para revisión
+            </button>
+            <p class="text-[11px] text-on-surface-variant text-center mt-2 font-semibold">Revisión estimada: 24–48 hs</p>
+          </div>
+        </form>
+
+        <!-- Rules Sidebar -->
+        <aside class="lg:col-span-4 bg-surface-container-low border border-outline-variant/30 p-lg rounded-2xl h-fit">
+          <h3 class="font-headline-md text-primary mb-md pb-xs border-b border-outline-variant/30 font-bold">Proceso de verificación</h3>
+          <ul class="flex flex-col gap-md">
+            <li class="flex gap-3">
+              <span class="w-8 h-8 rounded-full bg-primary text-white font-button flex items-center justify-center flex-shrink-0 text-xs font-bold">1</span>
+              <div>
+                <h4 class="font-title-sm text-on-surface font-bold text-sm">Completar formulario</h4>
+                <p class="font-body-md text-on-surface-variant mt-1 text-xs">Llená todos los campos requeridos con información fidedigna.</p>
+              </div>
+            </li>
+            <li class="flex gap-3">
+              <span class="w-8 h-8 rounded-full bg-primary/20 text-primary font-button flex items-center justify-center flex-shrink-0 text-xs font-bold">2</span>
+              <div>
+                <h4 class="font-title-sm text-on-surface font-bold text-sm">Revisión manual</h4>
+                <p class="font-body-md text-on-surface-variant mt-1 text-xs">Nuestro equipo comprueba los datos y se comunica si hay dudas.</p>
+              </div>
+            </li>
+            <li class="flex gap-3">
+              <span class="w-8 h-8 rounded-full bg-primary/20 text-primary font-button flex items-center justify-center flex-shrink-0 text-xs font-bold">3</span>
+              <div>
+                <h4 class="font-title-sm text-on-surface font-bold text-sm">Publicación en vivo</h4>
+                <p class="font-body-md text-on-surface-variant mt-1 text-xs">El evento o servicio aparecerá en el listado oficial tras ser aprobado.</p>
+              </div>
+            </li>
+          </ul>
+        </aside>
+      </div>
+    </div>
+  
+    </main>
+    
+    
+    <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-surface border-t border-outline-variant/30 z-50 flex justify-around items-center h-16 px-2 ambient-shadow">
+      
+        <a href="#/" class="flex flex-col items-center justify-center flex-1 h-full py-1 text-on-surface-variant hover:text-primary">
+          <span class="material-symbols-outlined text-[20px] mb-0.5 ">home</span>
+          <span class="text-[10px] tracking-wide">Inicio</span>
+        </a>
+      
+        <a href="#/agenda" class="flex flex-col items-center justify-center flex-1 h-full py-1 text-on-surface-variant hover:text-primary">
+          <span class="material-symbols-outlined text-[20px] mb-0.5 ">calendar_today</span>
+          <span class="text-[10px] tracking-wide">Agenda</span>
+        </a>
+      
+        <a href="#/destinos" class="flex flex-col items-center justify-center flex-1 h-full py-1 text-on-surface-variant hover:text-primary">
+          <span class="material-symbols-outlined text-[20px] mb-0.5 ">explore</span>
+          <span class="text-[10px] tracking-wide">Destinos</span>
+        </a>
+      
+        <a href="#/servicios" class="flex flex-col items-center justify-center flex-1 h-full py-1 text-on-surface-variant hover:text-primary">
+          <span class="material-symbols-outlined text-[20px] mb-0.5 ">business_center</span>
+          <span class="text-[10px] tracking-wide">Servicios</span>
+        </a>
+      
+        <a href="#/publicar/evento" class="flex flex-col items-center justify-center flex-1 h-full py-1 text-secondary font-bold">
+          <span class="material-symbols-outlined text-[20px] mb-0.5 fill-current">add_box</span>
+          <span class="text-[10px] tracking-wide">Publicar</span>
+        </a>
+      
+    </nav>
+  
+  </div>
   <script>
 const SVG={
   pin:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>',
@@ -212,6 +458,7 @@ function makeServices(locality, density='full'){
 const services=[...makeServices('Puerto Deseado','full'),...makeServices('28 de Noviembre','full'),...makeServices('El Calafate','lite'),...['Río Gallegos','Caleta Olivia','El Chaltén','Puerto San Julián','Los Antiguos','Perito Moreno'].flatMap((l,idx)=>makeServices(l,'lite').slice(0,5+idx%2))];
 
 
+console.log("PATCH1 running, protocol:", window.location.protocol);
 console.log("PATCH1 running, protocol:", window.location.protocol);
 console.log("PATCH1 running, protocol:", window.location.protocol);
 console.log("PATCH1 running, protocol:", window.location.protocol);
@@ -672,6 +919,8 @@ function serviceCard(s) {
       </div>
     </article>
   `;
+}
+
 function eventCard(e, compact = false) {
   const badgeCls = ticketBadgeColor(e.ticket || 'A confirmar');
   const tkt = e.ticket || 'A confirmar';

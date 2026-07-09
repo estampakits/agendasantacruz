@@ -225,6 +225,7 @@ console.log("PATCH1 running, protocol:", window.location.protocol);
 console.log("PATCH1 running, protocol:", window.location.protocol);
 console.log("PATCH1 running, protocol:", window.location.protocol);
 console.log("PATCH1 running, protocol:", window.location.protocol);
+console.log("PATCH1 running, protocol:", window.location.protocol);
 const state = {
   route: 'home',
   params: {},
@@ -673,6 +674,8 @@ function serviceCard(s) {
       </div>
     </article>
   `;
+}
+
 function eventCard(e, compact = false) {
   const badgeCls = ticketBadgeColor(e.ticket || 'A confirmar');
   const tkt = e.ticket || 'A confirmar';

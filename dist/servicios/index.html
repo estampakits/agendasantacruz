@@ -2,8 +2,8 @@
 <html lang="es" class="light"><head>
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
-<title>Agenda Santa Cruz | Eventos, Destinos y Servicios</title>
-  <meta name="description" content="Portal interactivo de la Agenda Santa Cruz. Eventos, destinos turísticos y directorio de servicios profesionales.">
+<title>Servicios turísticos en Santa Cruz: alojamiento, gastronomía y excursiones | Agenda Santa Cruz</title>
+  <meta name="description" content="Conectá con prestadores turísticos en Santa Cruz. Filtrá por localidad y rubro y contactá por WhatsApp.">
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Montserrat:wght@600;700&amp;display=swap" rel="stylesheet">
@@ -123,10 +123,1048 @@
             box-shadow: 0px 4px 12px rgba(0, 56, 77, 0.08);
         }
       </style>
-<meta property="og:title" content="Agenda Santa Cruz | Eventos, Destinos y Servicios"><meta property="og:description" content="Portal interactivo de la Agenda Santa Cruz. Eventos, destinos turísticos y directorio de servicios profesionales."></head>
+<style id="highlight-glow-style">
+    .highlight-glow {
+      animation: highlightGlow 1.2s ease-in-out;
+    }
+    @keyframes highlightGlow {
+      0% {
+        outline: 3px solid #006a60;
+        box-shadow: 0 0 20px rgba(0, 106, 96, 0.7);
+      }
+      100% {
+        outline: 3px solid transparent;
+        box-shadow: none;
+      }
+    }
+    
+    /* Micro-interactions: scale down slightly on active click/press for tactile feedback */
+    button:active, 
+    a:active, 
+    article:active, 
+    [onclick]:active,
+    .btn-active-scale:active {
+      transform: scale(0.97) !important;
+      transition: transform 150ms cubic-bezier(0.23, 1, 0.32, 1) !important;
+    }
+    
+    /* Gated Hover: hover styles only apply to devices with precise pointers (fine hover support) */
+    @media (hover: hover) and (pointer: fine) {
+      .group:hover .group-hover\:scale-105 {
+        transform: scale(1.05) !important;
+      }
+    }
+    
+    /* Accessibility focus styling: clearly visible 2px offset outline */
+    input:focus-visible, 
+    select:focus-visible, 
+    textarea:focus-visible, 
+    button:focus-visible, 
+    a:focus-visible {
+      outline: 2.5px solid #006a60 !important;
+      outline-offset: 2.5px !important;
+      box-shadow: 0 0 0 4px rgba(0, 106, 96, 0.25) !important;
+    }
+    
+    /* Support users who prefer reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, ::before, ::after {
+        animation-delay: -1ms !important;
+        animation-duration: 1ms !important;
+        animation-iteration-count: 1 !important;
+        background-attachment: initial !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0s !important;
+        transition-delay: 0s !important;
+      }
+      .group-hover\:scale-105 {
+        transform: none !important;
+      }
+    }
+  </style><meta property="og:title" content="Servicios turísticos en Santa Cruz: alojamiento, gastronomía y excursiones | Agenda Santa Cruz"><meta property="og:description" content="Conectá con prestadores turísticos en Santa Cruz. Filtrá por localidad y rubro y contactá por WhatsApp."></head>
 <body class="bg-background text-on-background min-h-screen flex flex-col font-body-md">
   <div id="toast-container" class="fixed top-5 right-5 z-[9999] flex flex-col gap-2 pointer-events-none"></div>
-  <div id="app" class="flex-grow flex flex-col"></div>
+  <div id="app" class="flex-grow flex flex-col">
+    
+    <nav class="bg-surface/95 dark:bg-on-background/95 fixed top-0 w-full z-50 border-b border-outline-variant/30 backdrop-blur-md shadow-sm hidden md:block">
+      <div class="flex justify-between items-center px-container-margin h-16 max-w-7xl mx-auto">
+        <a href="#/" class="font-display-lg text-[22px] font-bold text-primary flex items-center gap-2 hover:opacity-90 transition-opacity">
+          <div class="bg-secondary-fixed text-primary p-1.5 rounded-lg flex items-center justify-center">
+            <span class="material-symbols-outlined text-lg leading-none">explore</span>
+          </div>
+          Agenda Santa Cruz
+        </a>
+        <div class="flex space-x-lg font-body-md text-body-md text-primary h-full items-center">
+          
+            <a href="#/" class="flex items-center h-full transition-all duration-200 border-b-2 text-on-surface-variant hover:text-primary hover:bg-surface-container-low border-transparent">
+              <span class="px-2">Home</span>
+            </a>
+          
+            <a href="#/agenda" class="flex items-center h-full transition-all duration-200 border-b-2 text-on-surface-variant hover:text-primary hover:bg-surface-container-low border-transparent">
+              <span class="px-2">Agenda</span>
+            </a>
+          
+            <a href="#/destinos" class="flex items-center h-full transition-all duration-200 border-b-2 text-on-surface-variant hover:text-primary hover:bg-surface-container-low border-transparent">
+              <span class="px-2">Destinos</span>
+            </a>
+          
+            <a href="#/servicios" class="flex items-center h-full transition-all duration-200 border-b-2 text-secondary font-bold border-secondary">
+              <span class="px-2">Servicios</span>
+            </a>
+          
+        </div>
+        <div class="flex items-center gap-md">
+          <a href="#/municipios" class="font-button text-sm text-on-surface-variant hover:text-primary transition-colors">Soluciones para Municipios</a>
+          <a href="#/publicar/evento" class="bg-primary-container text-on-primary font-button text-button px-lg py-sm rounded-lg hover:bg-primary transition-colors duration-200">
+            Publicar
+          </a>
+        </div>
+      </div>
+    </nav>
+  
+    <main class="flex-grow pt-[16px] md:pt-[80px] pb-16 md:pb-0 animate-fade-in">
+      
+    <div class="max-w-7xl mx-auto px-container-margin py-xl">
+      <div class="mb-lg border-b border-outline-variant/30 pb-sm flex flex-col md:flex-row md:justify-between md:items-end gap-md">
+        <div>
+          <h1 class="font-display-lg text-primary mb-xs font-bold text-2xl md:text-3xl">Servicios Turísticos en la Provincia</h1>
+          <p class="font-body-md text-on-surface-variant">Conectá directamente con prestadores turísticos por WhatsApp.</p>
+        </div>
+        <a href="#/publicar/servicio" class="bg-secondary-fixed text-primary font-button px-md py-2 rounded-lg hover:bg-white transition-colors flex items-center gap-1 w-fit font-bold shadow-sm text-xs">
+          <span class="material-symbols-outlined text-[18px]">add_business</span> Sumar mi servicio (gratis)
+        </a>
+      </div>
+
+      <!-- Tabs Segmentadas por Rubro (UX / CRO) -->
+      <div class="flex flex-wrap gap-2 mb-md border-b border-outline-variant/20 pb-4">
+        
+            <button onclick="setSrvRubric('Todos')" class="flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-bold transition-all border bg-secondary text-white border-secondary shadow-sm">
+              <span class="material-symbols-outlined text-[16px]">storefront</span>
+              Todos
+            </button>
+          
+            <button onclick="setSrvRubric('Alojamiento')" class="flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-bold transition-all border bg-surface border-outline-variant/50 text-on-surface-variant hover:bg-surface-container-low">
+              <span class="material-symbols-outlined text-[16px]">bed</span>
+              Alojamiento 🛏️
+            </button>
+          
+            <button onclick="setSrvRubric('Gastronomía')" class="flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-bold transition-all border bg-surface border-outline-variant/50 text-on-surface-variant hover:bg-surface-container-low">
+              <span class="material-symbols-outlined text-[16px]">restaurant</span>
+              Gastronomía 🍴
+            </button>
+          
+            <button onclick="setSrvRubric('Excursiones/Actividades')" class="flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-bold transition-all border bg-surface border-outline-variant/50 text-on-surface-variant hover:bg-surface-container-low">
+              <span class="material-symbols-outlined text-[16px]">hiking</span>
+              Excursiones ⛰️
+            </button>
+          
+            <button onclick="setSrvRubric('Transporte')" class="flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-bold transition-all border bg-surface border-outline-variant/50 text-on-surface-variant hover:bg-surface-container-low">
+              <span class="material-symbols-outlined text-[16px]">directions_bus</span>
+              Transporte 🚌
+            </button>
+          
+            <button onclick="setSrvRubric('Agencias')" class="flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-bold transition-all border bg-surface border-outline-variant/50 text-on-surface-variant hover:bg-surface-container-low">
+              <span class="material-symbols-outlined text-[16px]">work</span>
+              Agencias 💼
+            </button>
+          
+      </div>
+      
+      <!-- Buscador y Localidad -->
+      <div class="bg-surface border border-outline-variant/30 p-md rounded-xl shadow-sm mb-xl">
+        <form id="services-search-form" class="grid grid-cols-1 md:grid-cols-12 gap-md items-end">
+          <div class="md:col-span-6 text-left">
+            <label for="srv-search" class="font-label-sm text-on-surface-variant mb-xs block text-xs font-semibold">Buscar</label>
+            <div class="relative">
+              <span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">search</span>
+              <input id="srv-search" type="text" value="" class="w-full bg-surface-bright border border-outline-variant rounded-lg pl-10 pr-sm py-2.5 focus:border-primary outline-none font-body-md text-on-background text-sm" placeholder="Ej. Cabañas, Pizzería...">
+            </div>
+          </div>
+          <div class="md:col-span-5 text-left">
+            <label for="srv-locality" class="font-label-sm text-on-surface-variant mb-xs block text-xs font-semibold">Localidad</label>
+            <select id="srv-locality" class="w-full bg-surface-bright border border-outline-variant rounded-lg px-sm py-2.5 focus:border-primary outline-none font-body-md text-on-background text-sm cursor-pointer">
+              <option value="Todas" selected="">Toda la provincia</option><option value="28 de Noviembre">28 de Noviembre</option><option value="Bajo Caracoles">Bajo Caracoles</option><option value="Caleta Olivia">Caleta Olivia</option><option value="Cañadón Seco">Cañadón Seco</option><option value="Comandante Luis Piedra Buena">Comandante Luis Piedra Buena</option><option value="El Calafate">El Calafate</option><option value="El Chaltén">El Chaltén</option><option value="Fitz Roy">Fitz Roy</option><option value="Gobernador Gregores">Gobernador Gregores</option><option value="Jaramillo">Jaramillo</option><option value="Julia Dufour">Julia Dufour</option><option value="Koluel Kaike">Koluel Kaike</option><option value="Lago Posadas (Hipólito Yrigoyen)">Lago Posadas (Hipólito Yrigoyen)</option><option value="Las Heras">Las Heras</option><option value="Mina 3">Mina 3</option><option value="Los Antiguos">Los Antiguos</option><option value="Perito Moreno">Perito Moreno</option><option value="Pico Truncado">Pico Truncado</option><option value="Puerto Deseado">Puerto Deseado</option><option value="Puerto San Julián">Puerto San Julián</option><option value="Puerto Santa Cruz">Puerto Santa Cruz</option><option value="Río Gallegos">Río Gallegos</option><option value="Río Turbio">Río Turbio</option><option value="Rospentek Aike">Rospentek Aike</option><option value="Tellier">Tellier</option><option value="Tres Lagos">Tres Lagos</option>
+            </select>
+          </div>
+          <div class="md:col-span-1">
+            <button type="submit" class="w-full bg-primary-container text-on-primary font-button py-2.5 rounded-lg hover:bg-primary transition-colors flex items-center justify-center">
+              <span class="material-symbols-outlined text-[20px]">filter_list</span>
+            </button>
+          </div>
+        </form>
+      </div>
+      
+      <!-- Filtros Activos -->
+      <div class="flex flex-wrap items-center justify-between gap-2 mb-md">
+        
+          <span class="font-label-sm text-on-surface-variant text-xs">Mostrando: Toda la provincia · Todos los rubros</span>
+        
+      </div>
+
+      
+        <!-- Nivel A: Recomendados para vos (carrusel / grilla fija) -->
+        
+          <div class="mb-12">
+            <h2 class="font-headline-md text-primary mb-6 font-bold text-lg flex items-center gap-2 border-b border-outline-variant/20 pb-2">
+              <span class="w-1.5 h-5 bg-secondary rounded-full"></span>
+              Recomendados para vos
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-md">
+              
+      <article class="bg-secondary/[0.03] rounded-xl border-2 border-secondary p-md hover:ambient-shadow transition-shadow flex flex-col justify-between group cursor-pointer relative shadow-md shadow-secondary/5 h-full" onclick="if(!event.target.closest('a') &amp;&amp; !event.target.closest('button')) route('/prestador/puerto-deseado-alojamiento-0')">
+        <!-- Ribbon Auspiciado -->
+        <div class="absolute top-2 right-2 bg-secondary text-white text-[9px] uppercase font-bold px-2 py-0.5 rounded shadow-sm flex items-center gap-1 z-10">
+          <span class="material-symbols-outlined text-[10px]">workspace_premium</span>
+          Auspiciado
+        </div>
+        
+        <div>
+          <!-- Thumbnail and core details in flex row -->
+          <div class="flex gap-3 mb-3">
+            <img src="/images/lodge.jpg" alt="Hostería Viento Sur" class="w-14 h-14 object-cover rounded-lg flex-shrink-0 border border-outline-variant/30">
+            <div class="min-w-0 flex-grow text-left">
+              <div class="flex flex-wrap gap-1.5 text-[9px] text-on-surface-variant font-semibold items-center mb-0.5">
+                <span class="flex items-center gap-0.5 bg-secondary/10 text-secondary border border-secondary/20 px-2 py-0.5 rounded text-[10px] font-bold">
+                  <span class="material-symbols-outlined text-[10px]">bed</span>
+                  Alojamiento
+                </span>
+                <span class="flex items-center gap-0.5">
+                  <span class="material-symbols-outlined text-[10px] text-secondary">location_on</span>
+                  Puerto Deseado
+                </span>
+              </div>
+              <h3 class="font-title-sm text-primary line-clamp-1 group-hover:text-secondary transition-colors font-bold text-sm">Hostería Viento Sur</h3>
+              <p class="text-[10px] text-secondary font-bold flex items-center gap-0.5 mt-0.5">
+                <span class="material-symbols-outlined text-[12px]">verified</span>
+                Servicio Destacado Verificado
+              </p>
+            </div>
+          </div>
+          
+          <p class="font-body-md text-on-surface-variant line-clamp-2 mb-3 text-xs leading-relaxed text-left">Atención personalizada y respuesta rápida por WhatsApp.</p>
+          
+          <!-- Line of Value -->
+          <div class="bg-secondary/5 border border-secondary/10 rounded-lg p-2 mb-4 text-left">
+            <p class="text-[10px] text-secondary font-medium flex items-center gap-1">
+              <span class="material-symbols-outlined text-[12px]">check_circle</span>
+              Incluye guía completa + destacados del mes
+            </p>
+          </div>
+        </div>
+        
+        <div class="pt-3 border-t border-outline-variant/20 flex flex-col gap-1.5">
+          <!-- WhatsApp as Primary (prominent) -->
+          <a href="https://wa.me/5492974000000?text=Hola! Te contacto desde el espacio de destaque de Agenda Santa Cruz por tu servicio de Alojamiento (Hostería Viento Sur)." target="_blank" class="w-full bg-[#075e54] text-white font-button py-2.5 px-3 rounded-lg flex items-center justify-center gap-1.5 hover:bg-[#053e2a] transition-colors text-xs font-bold shadow-sm">
+            <span class="material-symbols-outlined text-[16px]">chat</span>
+            WhatsApp de Reservas
+          </a>
+          <!-- Ver detalles as Secondary (discrete text link) -->
+          <a href="#/prestador/puerto-deseado-alojamiento-0" class="text-on-surface-variant hover:text-primary font-button py-1 text-center text-xs transition-colors hover:underline font-bold">
+            Ver Ficha Completa
+          </a>
+        </div>
+      </article>
+    
+      <article class="bg-secondary/[0.03] rounded-xl border-2 border-secondary p-md hover:ambient-shadow transition-shadow flex flex-col justify-between group cursor-pointer relative shadow-md shadow-secondary/5 h-full" onclick="if(!event.target.closest('a') &amp;&amp; !event.target.closest('button')) route('/prestador/28-de-noviembre-alojamiento-0')">
+        <!-- Ribbon Auspiciado -->
+        <div class="absolute top-2 right-2 bg-secondary text-white text-[9px] uppercase font-bold px-2 py-0.5 rounded shadow-sm flex items-center gap-1 z-10">
+          <span class="material-symbols-outlined text-[10px]">workspace_premium</span>
+          Auspiciado
+        </div>
+        
+        <div>
+          <!-- Thumbnail and core details in flex row -->
+          <div class="flex gap-3 mb-3">
+            <img src="/images/lodge.jpg" alt="Hostería Viento Sur" class="w-14 h-14 object-cover rounded-lg flex-shrink-0 border border-outline-variant/30">
+            <div class="min-w-0 flex-grow text-left">
+              <div class="flex flex-wrap gap-1.5 text-[9px] text-on-surface-variant font-semibold items-center mb-0.5">
+                <span class="flex items-center gap-0.5 bg-secondary/10 text-secondary border border-secondary/20 px-2 py-0.5 rounded text-[10px] font-bold">
+                  <span class="material-symbols-outlined text-[10px]">bed</span>
+                  Alojamiento
+                </span>
+                <span class="flex items-center gap-0.5">
+                  <span class="material-symbols-outlined text-[10px] text-secondary">location_on</span>
+                  28 de Noviembre
+                </span>
+              </div>
+              <h3 class="font-title-sm text-primary line-clamp-1 group-hover:text-secondary transition-colors font-bold text-sm">Hostería Viento Sur</h3>
+              <p class="text-[10px] text-secondary font-bold flex items-center gap-0.5 mt-0.5">
+                <span class="material-symbols-outlined text-[12px]">verified</span>
+                Servicio Destacado Verificado
+              </p>
+            </div>
+          </div>
+          
+          <p class="font-body-md text-on-surface-variant line-clamp-2 mb-3 text-xs leading-relaxed text-left">Atención personalizada y respuesta rápida por WhatsApp.</p>
+          
+          <!-- Line of Value -->
+          <div class="bg-secondary/5 border border-secondary/10 rounded-lg p-2 mb-4 text-left">
+            <p class="text-[10px] text-secondary font-medium flex items-center gap-1">
+              <span class="material-symbols-outlined text-[12px]">check_circle</span>
+              Incluye guía completa + destacados del mes
+            </p>
+          </div>
+        </div>
+        
+        <div class="pt-3 border-t border-outline-variant/20 flex flex-col gap-1.5">
+          <!-- WhatsApp as Primary (prominent) -->
+          <a href="https://wa.me/5492974000000?text=Hola! Te contacto desde el espacio de destaque de Agenda Santa Cruz por tu servicio de Alojamiento (Hostería Viento Sur)." target="_blank" class="w-full bg-[#075e54] text-white font-button py-2.5 px-3 rounded-lg flex items-center justify-center gap-1.5 hover:bg-[#053e2a] transition-colors text-xs font-bold shadow-sm">
+            <span class="material-symbols-outlined text-[16px]">chat</span>
+            WhatsApp de Reservas
+          </a>
+          <!-- Ver detalles as Secondary (discrete text link) -->
+          <a href="#/prestador/28-de-noviembre-alojamiento-0" class="text-on-surface-variant hover:text-primary font-button py-1 text-center text-xs transition-colors hover:underline font-bold">
+            Ver Ficha Completa
+          </a>
+        </div>
+      </article>
+    
+      <article class="bg-secondary/[0.03] rounded-xl border-2 border-secondary p-md hover:ambient-shadow transition-shadow flex flex-col justify-between group cursor-pointer relative shadow-md shadow-secondary/5 h-full" onclick="if(!event.target.closest('a') &amp;&amp; !event.target.closest('button')) route('/prestador/el-calafate-alojamiento-0')">
+        <!-- Ribbon Auspiciado -->
+        <div class="absolute top-2 right-2 bg-secondary text-white text-[9px] uppercase font-bold px-2 py-0.5 rounded shadow-sm flex items-center gap-1 z-10">
+          <span class="material-symbols-outlined text-[10px]">workspace_premium</span>
+          Auspiciado
+        </div>
+        
+        <div>
+          <!-- Thumbnail and core details in flex row -->
+          <div class="flex gap-3 mb-3">
+            <img src="/images/lodge.jpg" alt="Hostería Viento Sur" class="w-14 h-14 object-cover rounded-lg flex-shrink-0 border border-outline-variant/30">
+            <div class="min-w-0 flex-grow text-left">
+              <div class="flex flex-wrap gap-1.5 text-[9px] text-on-surface-variant font-semibold items-center mb-0.5">
+                <span class="flex items-center gap-0.5 bg-secondary/10 text-secondary border border-secondary/20 px-2 py-0.5 rounded text-[10px] font-bold">
+                  <span class="material-symbols-outlined text-[10px]">bed</span>
+                  Alojamiento
+                </span>
+                <span class="flex items-center gap-0.5">
+                  <span class="material-symbols-outlined text-[10px] text-secondary">location_on</span>
+                  El Calafate
+                </span>
+              </div>
+              <h3 class="font-title-sm text-primary line-clamp-1 group-hover:text-secondary transition-colors font-bold text-sm">Hostería Viento Sur</h3>
+              <p class="text-[10px] text-secondary font-bold flex items-center gap-0.5 mt-0.5">
+                <span class="material-symbols-outlined text-[12px]">verified</span>
+                Servicio Destacado Verificado
+              </p>
+            </div>
+          </div>
+          
+          <p class="font-body-md text-on-surface-variant line-clamp-2 mb-3 text-xs leading-relaxed text-left">Atención personalizada y respuesta rápida por WhatsApp.</p>
+          
+          <!-- Line of Value -->
+          <div class="bg-secondary/5 border border-secondary/10 rounded-lg p-2 mb-4 text-left">
+            <p class="text-[10px] text-secondary font-medium flex items-center gap-1">
+              <span class="material-symbols-outlined text-[12px]">check_circle</span>
+              Incluye guía completa + destacados del mes
+            </p>
+          </div>
+        </div>
+        
+        <div class="pt-3 border-t border-outline-variant/20 flex flex-col gap-1.5">
+          <!-- WhatsApp as Primary (prominent) -->
+          <a href="https://wa.me/5492974000000?text=Hola! Te contacto desde el espacio de destaque de Agenda Santa Cruz por tu servicio de Alojamiento (Hostería Viento Sur)." target="_blank" class="w-full bg-[#075e54] text-white font-button py-2.5 px-3 rounded-lg flex items-center justify-center gap-1.5 hover:bg-[#053e2a] transition-colors text-xs font-bold shadow-sm">
+            <span class="material-symbols-outlined text-[16px]">chat</span>
+            WhatsApp de Reservas
+          </a>
+          <!-- Ver detalles as Secondary (discrete text link) -->
+          <a href="#/prestador/el-calafate-alojamiento-0" class="text-on-surface-variant hover:text-primary font-button py-1 text-center text-xs transition-colors hover:underline font-bold">
+            Ver Ficha Completa
+          </a>
+        </div>
+      </article>
+    
+      <article class="bg-secondary/[0.03] rounded-xl border-2 border-secondary p-md hover:ambient-shadow transition-shadow flex flex-col justify-between group cursor-pointer relative shadow-md shadow-secondary/5 h-full" onclick="if(!event.target.closest('a') &amp;&amp; !event.target.closest('button')) route('/prestador/rio-gallegos-alojamiento-0')">
+        <!-- Ribbon Auspiciado -->
+        <div class="absolute top-2 right-2 bg-secondary text-white text-[9px] uppercase font-bold px-2 py-0.5 rounded shadow-sm flex items-center gap-1 z-10">
+          <span class="material-symbols-outlined text-[10px]">workspace_premium</span>
+          Auspiciado
+        </div>
+        
+        <div>
+          <!-- Thumbnail and core details in flex row -->
+          <div class="flex gap-3 mb-3">
+            <img src="/images/lodge.jpg" alt="Hostería Viento Sur" class="w-14 h-14 object-cover rounded-lg flex-shrink-0 border border-outline-variant/30">
+            <div class="min-w-0 flex-grow text-left">
+              <div class="flex flex-wrap gap-1.5 text-[9px] text-on-surface-variant font-semibold items-center mb-0.5">
+                <span class="flex items-center gap-0.5 bg-secondary/10 text-secondary border border-secondary/20 px-2 py-0.5 rounded text-[10px] font-bold">
+                  <span class="material-symbols-outlined text-[10px]">bed</span>
+                  Alojamiento
+                </span>
+                <span class="flex items-center gap-0.5">
+                  <span class="material-symbols-outlined text-[10px] text-secondary">location_on</span>
+                  Río Gallegos
+                </span>
+              </div>
+              <h3 class="font-title-sm text-primary line-clamp-1 group-hover:text-secondary transition-colors font-bold text-sm">Hostería Viento Sur</h3>
+              <p class="text-[10px] text-secondary font-bold flex items-center gap-0.5 mt-0.5">
+                <span class="material-symbols-outlined text-[12px]">verified</span>
+                Servicio Destacado Verificado
+              </p>
+            </div>
+          </div>
+          
+          <p class="font-body-md text-on-surface-variant line-clamp-2 mb-3 text-xs leading-relaxed text-left">Atención personalizada y respuesta rápida por WhatsApp.</p>
+          
+          <!-- Line of Value -->
+          <div class="bg-secondary/5 border border-secondary/10 rounded-lg p-2 mb-4 text-left">
+            <p class="text-[10px] text-secondary font-medium flex items-center gap-1">
+              <span class="material-symbols-outlined text-[12px]">check_circle</span>
+              Incluye guía completa + destacados del mes
+            </p>
+          </div>
+        </div>
+        
+        <div class="pt-3 border-t border-outline-variant/20 flex flex-col gap-1.5">
+          <!-- WhatsApp as Primary (prominent) -->
+          <a href="https://wa.me/5492974000000?text=Hola! Te contacto desde el espacio de destaque de Agenda Santa Cruz por tu servicio de Alojamiento (Hostería Viento Sur)." target="_blank" class="w-full bg-[#075e54] text-white font-button py-2.5 px-3 rounded-lg flex items-center justify-center gap-1.5 hover:bg-[#053e2a] transition-colors text-xs font-bold shadow-sm">
+            <span class="material-symbols-outlined text-[16px]">chat</span>
+            WhatsApp de Reservas
+          </a>
+          <!-- Ver detalles as Secondary (discrete text link) -->
+          <a href="#/prestador/rio-gallegos-alojamiento-0" class="text-on-surface-variant hover:text-primary font-button py-1 text-center text-xs transition-colors hover:underline font-bold">
+            Ver Ficha Completa
+          </a>
+        </div>
+      </article>
+    
+      <article class="bg-secondary/[0.03] rounded-xl border-2 border-secondary p-md hover:ambient-shadow transition-shadow flex flex-col justify-between group cursor-pointer relative shadow-md shadow-secondary/5 h-full" onclick="if(!event.target.closest('a') &amp;&amp; !event.target.closest('button')) route('/prestador/caleta-olivia-alojamiento-0')">
+        <!-- Ribbon Auspiciado -->
+        <div class="absolute top-2 right-2 bg-secondary text-white text-[9px] uppercase font-bold px-2 py-0.5 rounded shadow-sm flex items-center gap-1 z-10">
+          <span class="material-symbols-outlined text-[10px]">workspace_premium</span>
+          Auspiciado
+        </div>
+        
+        <div>
+          <!-- Thumbnail and core details in flex row -->
+          <div class="flex gap-3 mb-3">
+            <img src="/images/lodge.jpg" alt="Hostería Viento Sur" class="w-14 h-14 object-cover rounded-lg flex-shrink-0 border border-outline-variant/30">
+            <div class="min-w-0 flex-grow text-left">
+              <div class="flex flex-wrap gap-1.5 text-[9px] text-on-surface-variant font-semibold items-center mb-0.5">
+                <span class="flex items-center gap-0.5 bg-secondary/10 text-secondary border border-secondary/20 px-2 py-0.5 rounded text-[10px] font-bold">
+                  <span class="material-symbols-outlined text-[10px]">bed</span>
+                  Alojamiento
+                </span>
+                <span class="flex items-center gap-0.5">
+                  <span class="material-symbols-outlined text-[10px] text-secondary">location_on</span>
+                  Caleta Olivia
+                </span>
+              </div>
+              <h3 class="font-title-sm text-primary line-clamp-1 group-hover:text-secondary transition-colors font-bold text-sm">Hostería Viento Sur</h3>
+              <p class="text-[10px] text-secondary font-bold flex items-center gap-0.5 mt-0.5">
+                <span class="material-symbols-outlined text-[12px]">verified</span>
+                Servicio Destacado Verificado
+              </p>
+            </div>
+          </div>
+          
+          <p class="font-body-md text-on-surface-variant line-clamp-2 mb-3 text-xs leading-relaxed text-left">Atención personalizada y respuesta rápida por WhatsApp.</p>
+          
+          <!-- Line of Value -->
+          <div class="bg-secondary/5 border border-secondary/10 rounded-lg p-2 mb-4 text-left">
+            <p class="text-[10px] text-secondary font-medium flex items-center gap-1">
+              <span class="material-symbols-outlined text-[12px]">check_circle</span>
+              Incluye guía completa + destacados del mes
+            </p>
+          </div>
+        </div>
+        
+        <div class="pt-3 border-t border-outline-variant/20 flex flex-col gap-1.5">
+          <!-- WhatsApp as Primary (prominent) -->
+          <a href="https://wa.me/5492974000000?text=Hola! Te contacto desde el espacio de destaque de Agenda Santa Cruz por tu servicio de Alojamiento (Hostería Viento Sur)." target="_blank" class="w-full bg-[#075e54] text-white font-button py-2.5 px-3 rounded-lg flex items-center justify-center gap-1.5 hover:bg-[#053e2a] transition-colors text-xs font-bold shadow-sm">
+            <span class="material-symbols-outlined text-[16px]">chat</span>
+            WhatsApp de Reservas
+          </a>
+          <!-- Ver detalles as Secondary (discrete text link) -->
+          <a href="#/prestador/caleta-olivia-alojamiento-0" class="text-on-surface-variant hover:text-primary font-button py-1 text-center text-xs transition-colors hover:underline font-bold">
+            Ver Ficha Completa
+          </a>
+        </div>
+      </article>
+    
+      <article class="bg-secondary/[0.03] rounded-xl border-2 border-secondary p-md hover:ambient-shadow transition-shadow flex flex-col justify-between group cursor-pointer relative shadow-md shadow-secondary/5 h-full" onclick="if(!event.target.closest('a') &amp;&amp; !event.target.closest('button')) route('/prestador/el-chalten-alojamiento-0')">
+        <!-- Ribbon Auspiciado -->
+        <div class="absolute top-2 right-2 bg-secondary text-white text-[9px] uppercase font-bold px-2 py-0.5 rounded shadow-sm flex items-center gap-1 z-10">
+          <span class="material-symbols-outlined text-[10px]">workspace_premium</span>
+          Auspiciado
+        </div>
+        
+        <div>
+          <!-- Thumbnail and core details in flex row -->
+          <div class="flex gap-3 mb-3">
+            <img src="/images/lodge.jpg" alt="Hostería Viento Sur" class="w-14 h-14 object-cover rounded-lg flex-shrink-0 border border-outline-variant/30">
+            <div class="min-w-0 flex-grow text-left">
+              <div class="flex flex-wrap gap-1.5 text-[9px] text-on-surface-variant font-semibold items-center mb-0.5">
+                <span class="flex items-center gap-0.5 bg-secondary/10 text-secondary border border-secondary/20 px-2 py-0.5 rounded text-[10px] font-bold">
+                  <span class="material-symbols-outlined text-[10px]">bed</span>
+                  Alojamiento
+                </span>
+                <span class="flex items-center gap-0.5">
+                  <span class="material-symbols-outlined text-[10px] text-secondary">location_on</span>
+                  El Chaltén
+                </span>
+              </div>
+              <h3 class="font-title-sm text-primary line-clamp-1 group-hover:text-secondary transition-colors font-bold text-sm">Hostería Viento Sur</h3>
+              <p class="text-[10px] text-secondary font-bold flex items-center gap-0.5 mt-0.5">
+                <span class="material-symbols-outlined text-[12px]">verified</span>
+                Servicio Destacado Verificado
+              </p>
+            </div>
+          </div>
+          
+          <p class="font-body-md text-on-surface-variant line-clamp-2 mb-3 text-xs leading-relaxed text-left">Atención personalizada y respuesta rápida por WhatsApp.</p>
+          
+          <!-- Line of Value -->
+          <div class="bg-secondary/5 border border-secondary/10 rounded-lg p-2 mb-4 text-left">
+            <p class="text-[10px] text-secondary font-medium flex items-center gap-1">
+              <span class="material-symbols-outlined text-[12px]">check_circle</span>
+              Incluye guía completa + destacados del mes
+            </p>
+          </div>
+        </div>
+        
+        <div class="pt-3 border-t border-outline-variant/20 flex flex-col gap-1.5">
+          <!-- WhatsApp as Primary (prominent) -->
+          <a href="https://wa.me/5492974000000?text=Hola! Te contacto desde el espacio de destaque de Agenda Santa Cruz por tu servicio de Alojamiento (Hostería Viento Sur)." target="_blank" class="w-full bg-[#075e54] text-white font-button py-2.5 px-3 rounded-lg flex items-center justify-center gap-1.5 hover:bg-[#053e2a] transition-colors text-xs font-bold shadow-sm">
+            <span class="material-symbols-outlined text-[16px]">chat</span>
+            WhatsApp de Reservas
+          </a>
+          <!-- Ver detalles as Secondary (discrete text link) -->
+          <a href="#/prestador/el-chalten-alojamiento-0" class="text-on-surface-variant hover:text-primary font-button py-1 text-center text-xs transition-colors hover:underline font-bold">
+            Ver Ficha Completa
+          </a>
+        </div>
+      </article>
+    
+            </div>
+          </div>
+        
+
+        <!-- Nivel B: Todos los servicios -->
+        <div>
+          <h2 class="font-headline-md text-primary mb-6 font-bold text-lg flex items-center gap-2 border-b border-outline-variant/20 pb-2">
+            <span class="w-1.5 h-5 bg-outline rounded-full"></span>
+            Todos los servicios
+          </h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-md mb-8">
+            
+      <article class="bg-secondary/[0.03] rounded-xl border-2 border-secondary p-md hover:ambient-shadow transition-shadow flex flex-col justify-between group cursor-pointer relative shadow-md shadow-secondary/5 h-full" onclick="if(!event.target.closest('a') &amp;&amp; !event.target.closest('button')) route('/prestador/puerto-deseado-alojamiento-0')">
+        <!-- Ribbon Auspiciado -->
+        <div class="absolute top-2 right-2 bg-secondary text-white text-[9px] uppercase font-bold px-2 py-0.5 rounded shadow-sm flex items-center gap-1 z-10">
+          <span class="material-symbols-outlined text-[10px]">workspace_premium</span>
+          Auspiciado
+        </div>
+        
+        <div>
+          <!-- Thumbnail and core details in flex row -->
+          <div class="flex gap-3 mb-3">
+            <img src="/images/lodge.jpg" alt="Hostería Viento Sur" class="w-14 h-14 object-cover rounded-lg flex-shrink-0 border border-outline-variant/30">
+            <div class="min-w-0 flex-grow text-left">
+              <div class="flex flex-wrap gap-1.5 text-[9px] text-on-surface-variant font-semibold items-center mb-0.5">
+                <span class="flex items-center gap-0.5 bg-secondary/10 text-secondary border border-secondary/20 px-2 py-0.5 rounded text-[10px] font-bold">
+                  <span class="material-symbols-outlined text-[10px]">bed</span>
+                  Alojamiento
+                </span>
+                <span class="flex items-center gap-0.5">
+                  <span class="material-symbols-outlined text-[10px] text-secondary">location_on</span>
+                  Puerto Deseado
+                </span>
+              </div>
+              <h3 class="font-title-sm text-primary line-clamp-1 group-hover:text-secondary transition-colors font-bold text-sm">Hostería Viento Sur</h3>
+              <p class="text-[10px] text-secondary font-bold flex items-center gap-0.5 mt-0.5">
+                <span class="material-symbols-outlined text-[12px]">verified</span>
+                Servicio Destacado Verificado
+              </p>
+            </div>
+          </div>
+          
+          <p class="font-body-md text-on-surface-variant line-clamp-2 mb-3 text-xs leading-relaxed text-left">Atención personalizada y respuesta rápida por WhatsApp.</p>
+          
+          <!-- Line of Value -->
+          <div class="bg-secondary/5 border border-secondary/10 rounded-lg p-2 mb-4 text-left">
+            <p class="text-[10px] text-secondary font-medium flex items-center gap-1">
+              <span class="material-symbols-outlined text-[12px]">check_circle</span>
+              Incluye guía completa + destacados del mes
+            </p>
+          </div>
+        </div>
+        
+        <div class="pt-3 border-t border-outline-variant/20 flex flex-col gap-1.5">
+          <!-- WhatsApp as Primary (prominent) -->
+          <a href="https://wa.me/5492974000000?text=Hola! Te contacto desde el espacio de destaque de Agenda Santa Cruz por tu servicio de Alojamiento (Hostería Viento Sur)." target="_blank" class="w-full bg-[#075e54] text-white font-button py-2.5 px-3 rounded-lg flex items-center justify-center gap-1.5 hover:bg-[#053e2a] transition-colors text-xs font-bold shadow-sm">
+            <span class="material-symbols-outlined text-[16px]">chat</span>
+            WhatsApp de Reservas
+          </a>
+          <!-- Ver detalles as Secondary (discrete text link) -->
+          <a href="#/prestador/puerto-deseado-alojamiento-0" class="text-on-surface-variant hover:text-primary font-button py-1 text-center text-xs transition-colors hover:underline font-bold">
+            Ver Ficha Completa
+          </a>
+        </div>
+      </article>
+    
+      <article class="bg-secondary/[0.03] rounded-xl border-2 border-secondary p-md hover:ambient-shadow transition-shadow flex flex-col justify-between group cursor-pointer relative shadow-md shadow-secondary/5 h-full" onclick="if(!event.target.closest('a') &amp;&amp; !event.target.closest('button')) route('/prestador/28-de-noviembre-alojamiento-0')">
+        <!-- Ribbon Auspiciado -->
+        <div class="absolute top-2 right-2 bg-secondary text-white text-[9px] uppercase font-bold px-2 py-0.5 rounded shadow-sm flex items-center gap-1 z-10">
+          <span class="material-symbols-outlined text-[10px]">workspace_premium</span>
+          Auspiciado
+        </div>
+        
+        <div>
+          <!-- Thumbnail and core details in flex row -->
+          <div class="flex gap-3 mb-3">
+            <img src="/images/lodge.jpg" alt="Hostería Viento Sur" class="w-14 h-14 object-cover rounded-lg flex-shrink-0 border border-outline-variant/30">
+            <div class="min-w-0 flex-grow text-left">
+              <div class="flex flex-wrap gap-1.5 text-[9px] text-on-surface-variant font-semibold items-center mb-0.5">
+                <span class="flex items-center gap-0.5 bg-secondary/10 text-secondary border border-secondary/20 px-2 py-0.5 rounded text-[10px] font-bold">
+                  <span class="material-symbols-outlined text-[10px]">bed</span>
+                  Alojamiento
+                </span>
+                <span class="flex items-center gap-0.5">
+                  <span class="material-symbols-outlined text-[10px] text-secondary">location_on</span>
+                  28 de Noviembre
+                </span>
+              </div>
+              <h3 class="font-title-sm text-primary line-clamp-1 group-hover:text-secondary transition-colors font-bold text-sm">Hostería Viento Sur</h3>
+              <p class="text-[10px] text-secondary font-bold flex items-center gap-0.5 mt-0.5">
+                <span class="material-symbols-outlined text-[12px]">verified</span>
+                Servicio Destacado Verificado
+              </p>
+            </div>
+          </div>
+          
+          <p class="font-body-md text-on-surface-variant line-clamp-2 mb-3 text-xs leading-relaxed text-left">Atención personalizada y respuesta rápida por WhatsApp.</p>
+          
+          <!-- Line of Value -->
+          <div class="bg-secondary/5 border border-secondary/10 rounded-lg p-2 mb-4 text-left">
+            <p class="text-[10px] text-secondary font-medium flex items-center gap-1">
+              <span class="material-symbols-outlined text-[12px]">check_circle</span>
+              Incluye guía completa + destacados del mes
+            </p>
+          </div>
+        </div>
+        
+        <div class="pt-3 border-t border-outline-variant/20 flex flex-col gap-1.5">
+          <!-- WhatsApp as Primary (prominent) -->
+          <a href="https://wa.me/5492974000000?text=Hola! Te contacto desde el espacio de destaque de Agenda Santa Cruz por tu servicio de Alojamiento (Hostería Viento Sur)." target="_blank" class="w-full bg-[#075e54] text-white font-button py-2.5 px-3 rounded-lg flex items-center justify-center gap-1.5 hover:bg-[#053e2a] transition-colors text-xs font-bold shadow-sm">
+            <span class="material-symbols-outlined text-[16px]">chat</span>
+            WhatsApp de Reservas
+          </a>
+          <!-- Ver detalles as Secondary (discrete text link) -->
+          <a href="#/prestador/28-de-noviembre-alojamiento-0" class="text-on-surface-variant hover:text-primary font-button py-1 text-center text-xs transition-colors hover:underline font-bold">
+            Ver Ficha Completa
+          </a>
+        </div>
+      </article>
+    
+      <article class="bg-secondary/[0.03] rounded-xl border-2 border-secondary p-md hover:ambient-shadow transition-shadow flex flex-col justify-between group cursor-pointer relative shadow-md shadow-secondary/5 h-full" onclick="if(!event.target.closest('a') &amp;&amp; !event.target.closest('button')) route('/prestador/el-calafate-alojamiento-0')">
+        <!-- Ribbon Auspiciado -->
+        <div class="absolute top-2 right-2 bg-secondary text-white text-[9px] uppercase font-bold px-2 py-0.5 rounded shadow-sm flex items-center gap-1 z-10">
+          <span class="material-symbols-outlined text-[10px]">workspace_premium</span>
+          Auspiciado
+        </div>
+        
+        <div>
+          <!-- Thumbnail and core details in flex row -->
+          <div class="flex gap-3 mb-3">
+            <img src="/images/lodge.jpg" alt="Hostería Viento Sur" class="w-14 h-14 object-cover rounded-lg flex-shrink-0 border border-outline-variant/30">
+            <div class="min-w-0 flex-grow text-left">
+              <div class="flex flex-wrap gap-1.5 text-[9px] text-on-surface-variant font-semibold items-center mb-0.5">
+                <span class="flex items-center gap-0.5 bg-secondary/10 text-secondary border border-secondary/20 px-2 py-0.5 rounded text-[10px] font-bold">
+                  <span class="material-symbols-outlined text-[10px]">bed</span>
+                  Alojamiento
+                </span>
+                <span class="flex items-center gap-0.5">
+                  <span class="material-symbols-outlined text-[10px] text-secondary">location_on</span>
+                  El Calafate
+                </span>
+              </div>
+              <h3 class="font-title-sm text-primary line-clamp-1 group-hover:text-secondary transition-colors font-bold text-sm">Hostería Viento Sur</h3>
+              <p class="text-[10px] text-secondary font-bold flex items-center gap-0.5 mt-0.5">
+                <span class="material-symbols-outlined text-[12px]">verified</span>
+                Servicio Destacado Verificado
+              </p>
+            </div>
+          </div>
+          
+          <p class="font-body-md text-on-surface-variant line-clamp-2 mb-3 text-xs leading-relaxed text-left">Atención personalizada y respuesta rápida por WhatsApp.</p>
+          
+          <!-- Line of Value -->
+          <div class="bg-secondary/5 border border-secondary/10 rounded-lg p-2 mb-4 text-left">
+            <p class="text-[10px] text-secondary font-medium flex items-center gap-1">
+              <span class="material-symbols-outlined text-[12px]">check_circle</span>
+              Incluye guía completa + destacados del mes
+            </p>
+          </div>
+        </div>
+        
+        <div class="pt-3 border-t border-outline-variant/20 flex flex-col gap-1.5">
+          <!-- WhatsApp as Primary (prominent) -->
+          <a href="https://wa.me/5492974000000?text=Hola! Te contacto desde el espacio de destaque de Agenda Santa Cruz por tu servicio de Alojamiento (Hostería Viento Sur)." target="_blank" class="w-full bg-[#075e54] text-white font-button py-2.5 px-3 rounded-lg flex items-center justify-center gap-1.5 hover:bg-[#053e2a] transition-colors text-xs font-bold shadow-sm">
+            <span class="material-symbols-outlined text-[16px]">chat</span>
+            WhatsApp de Reservas
+          </a>
+          <!-- Ver detalles as Secondary (discrete text link) -->
+          <a href="#/prestador/el-calafate-alojamiento-0" class="text-on-surface-variant hover:text-primary font-button py-1 text-center text-xs transition-colors hover:underline font-bold">
+            Ver Ficha Completa
+          </a>
+        </div>
+      </article>
+    
+      <article class="bg-secondary/[0.03] rounded-xl border-2 border-secondary p-md hover:ambient-shadow transition-shadow flex flex-col justify-between group cursor-pointer relative shadow-md shadow-secondary/5 h-full" onclick="if(!event.target.closest('a') &amp;&amp; !event.target.closest('button')) route('/prestador/rio-gallegos-alojamiento-0')">
+        <!-- Ribbon Auspiciado -->
+        <div class="absolute top-2 right-2 bg-secondary text-white text-[9px] uppercase font-bold px-2 py-0.5 rounded shadow-sm flex items-center gap-1 z-10">
+          <span class="material-symbols-outlined text-[10px]">workspace_premium</span>
+          Auspiciado
+        </div>
+        
+        <div>
+          <!-- Thumbnail and core details in flex row -->
+          <div class="flex gap-3 mb-3">
+            <img src="/images/lodge.jpg" alt="Hostería Viento Sur" class="w-14 h-14 object-cover rounded-lg flex-shrink-0 border border-outline-variant/30">
+            <div class="min-w-0 flex-grow text-left">
+              <div class="flex flex-wrap gap-1.5 text-[9px] text-on-surface-variant font-semibold items-center mb-0.5">
+                <span class="flex items-center gap-0.5 bg-secondary/10 text-secondary border border-secondary/20 px-2 py-0.5 rounded text-[10px] font-bold">
+                  <span class="material-symbols-outlined text-[10px]">bed</span>
+                  Alojamiento
+                </span>
+                <span class="flex items-center gap-0.5">
+                  <span class="material-symbols-outlined text-[10px] text-secondary">location_on</span>
+                  Río Gallegos
+                </span>
+              </div>
+              <h3 class="font-title-sm text-primary line-clamp-1 group-hover:text-secondary transition-colors font-bold text-sm">Hostería Viento Sur</h3>
+              <p class="text-[10px] text-secondary font-bold flex items-center gap-0.5 mt-0.5">
+                <span class="material-symbols-outlined text-[12px]">verified</span>
+                Servicio Destacado Verificado
+              </p>
+            </div>
+          </div>
+          
+          <p class="font-body-md text-on-surface-variant line-clamp-2 mb-3 text-xs leading-relaxed text-left">Atención personalizada y respuesta rápida por WhatsApp.</p>
+          
+          <!-- Line of Value -->
+          <div class="bg-secondary/5 border border-secondary/10 rounded-lg p-2 mb-4 text-left">
+            <p class="text-[10px] text-secondary font-medium flex items-center gap-1">
+              <span class="material-symbols-outlined text-[12px]">check_circle</span>
+              Incluye guía completa + destacados del mes
+            </p>
+          </div>
+        </div>
+        
+        <div class="pt-3 border-t border-outline-variant/20 flex flex-col gap-1.5">
+          <!-- WhatsApp as Primary (prominent) -->
+          <a href="https://wa.me/5492974000000?text=Hola! Te contacto desde el espacio de destaque de Agenda Santa Cruz por tu servicio de Alojamiento (Hostería Viento Sur)." target="_blank" class="w-full bg-[#075e54] text-white font-button py-2.5 px-3 rounded-lg flex items-center justify-center gap-1.5 hover:bg-[#053e2a] transition-colors text-xs font-bold shadow-sm">
+            <span class="material-symbols-outlined text-[16px]">chat</span>
+            WhatsApp de Reservas
+          </a>
+          <!-- Ver detalles as Secondary (discrete text link) -->
+          <a href="#/prestador/rio-gallegos-alojamiento-0" class="text-on-surface-variant hover:text-primary font-button py-1 text-center text-xs transition-colors hover:underline font-bold">
+            Ver Ficha Completa
+          </a>
+        </div>
+      </article>
+    
+      <article class="bg-secondary/[0.03] rounded-xl border-2 border-secondary p-md hover:ambient-shadow transition-shadow flex flex-col justify-between group cursor-pointer relative shadow-md shadow-secondary/5 h-full" onclick="if(!event.target.closest('a') &amp;&amp; !event.target.closest('button')) route('/prestador/caleta-olivia-alojamiento-0')">
+        <!-- Ribbon Auspiciado -->
+        <div class="absolute top-2 right-2 bg-secondary text-white text-[9px] uppercase font-bold px-2 py-0.5 rounded shadow-sm flex items-center gap-1 z-10">
+          <span class="material-symbols-outlined text-[10px]">workspace_premium</span>
+          Auspiciado
+        </div>
+        
+        <div>
+          <!-- Thumbnail and core details in flex row -->
+          <div class="flex gap-3 mb-3">
+            <img src="/images/lodge.jpg" alt="Hostería Viento Sur" class="w-14 h-14 object-cover rounded-lg flex-shrink-0 border border-outline-variant/30">
+            <div class="min-w-0 flex-grow text-left">
+              <div class="flex flex-wrap gap-1.5 text-[9px] text-on-surface-variant font-semibold items-center mb-0.5">
+                <span class="flex items-center gap-0.5 bg-secondary/10 text-secondary border border-secondary/20 px-2 py-0.5 rounded text-[10px] font-bold">
+                  <span class="material-symbols-outlined text-[10px]">bed</span>
+                  Alojamiento
+                </span>
+                <span class="flex items-center gap-0.5">
+                  <span class="material-symbols-outlined text-[10px] text-secondary">location_on</span>
+                  Caleta Olivia
+                </span>
+              </div>
+              <h3 class="font-title-sm text-primary line-clamp-1 group-hover:text-secondary transition-colors font-bold text-sm">Hostería Viento Sur</h3>
+              <p class="text-[10px] text-secondary font-bold flex items-center gap-0.5 mt-0.5">
+                <span class="material-symbols-outlined text-[12px]">verified</span>
+                Servicio Destacado Verificado
+              </p>
+            </div>
+          </div>
+          
+          <p class="font-body-md text-on-surface-variant line-clamp-2 mb-3 text-xs leading-relaxed text-left">Atención personalizada y respuesta rápida por WhatsApp.</p>
+          
+          <!-- Line of Value -->
+          <div class="bg-secondary/5 border border-secondary/10 rounded-lg p-2 mb-4 text-left">
+            <p class="text-[10px] text-secondary font-medium flex items-center gap-1">
+              <span class="material-symbols-outlined text-[12px]">check_circle</span>
+              Incluye guía completa + destacados del mes
+            </p>
+          </div>
+        </div>
+        
+        <div class="pt-3 border-t border-outline-variant/20 flex flex-col gap-1.5">
+          <!-- WhatsApp as Primary (prominent) -->
+          <a href="https://wa.me/5492974000000?text=Hola! Te contacto desde el espacio de destaque de Agenda Santa Cruz por tu servicio de Alojamiento (Hostería Viento Sur)." target="_blank" class="w-full bg-[#075e54] text-white font-button py-2.5 px-3 rounded-lg flex items-center justify-center gap-1.5 hover:bg-[#053e2a] transition-colors text-xs font-bold shadow-sm">
+            <span class="material-symbols-outlined text-[16px]">chat</span>
+            WhatsApp de Reservas
+          </a>
+          <!-- Ver detalles as Secondary (discrete text link) -->
+          <a href="#/prestador/caleta-olivia-alojamiento-0" class="text-on-surface-variant hover:text-primary font-button py-1 text-center text-xs transition-colors hover:underline font-bold">
+            Ver Ficha Completa
+          </a>
+        </div>
+      </article>
+    
+      <article class="bg-secondary/[0.03] rounded-xl border-2 border-secondary p-md hover:ambient-shadow transition-shadow flex flex-col justify-between group cursor-pointer relative shadow-md shadow-secondary/5 h-full" onclick="if(!event.target.closest('a') &amp;&amp; !event.target.closest('button')) route('/prestador/el-chalten-alojamiento-0')">
+        <!-- Ribbon Auspiciado -->
+        <div class="absolute top-2 right-2 bg-secondary text-white text-[9px] uppercase font-bold px-2 py-0.5 rounded shadow-sm flex items-center gap-1 z-10">
+          <span class="material-symbols-outlined text-[10px]">workspace_premium</span>
+          Auspiciado
+        </div>
+        
+        <div>
+          <!-- Thumbnail and core details in flex row -->
+          <div class="flex gap-3 mb-3">
+            <img src="/images/lodge.jpg" alt="Hostería Viento Sur" class="w-14 h-14 object-cover rounded-lg flex-shrink-0 border border-outline-variant/30">
+            <div class="min-w-0 flex-grow text-left">
+              <div class="flex flex-wrap gap-1.5 text-[9px] text-on-surface-variant font-semibold items-center mb-0.5">
+                <span class="flex items-center gap-0.5 bg-secondary/10 text-secondary border border-secondary/20 px-2 py-0.5 rounded text-[10px] font-bold">
+                  <span class="material-symbols-outlined text-[10px]">bed</span>
+                  Alojamiento
+                </span>
+                <span class="flex items-center gap-0.5">
+                  <span class="material-symbols-outlined text-[10px] text-secondary">location_on</span>
+                  El Chaltén
+                </span>
+              </div>
+              <h3 class="font-title-sm text-primary line-clamp-1 group-hover:text-secondary transition-colors font-bold text-sm">Hostería Viento Sur</h3>
+              <p class="text-[10px] text-secondary font-bold flex items-center gap-0.5 mt-0.5">
+                <span class="material-symbols-outlined text-[12px]">verified</span>
+                Servicio Destacado Verificado
+              </p>
+            </div>
+          </div>
+          
+          <p class="font-body-md text-on-surface-variant line-clamp-2 mb-3 text-xs leading-relaxed text-left">Atención personalizada y respuesta rápida por WhatsApp.</p>
+          
+          <!-- Line of Value -->
+          <div class="bg-secondary/5 border border-secondary/10 rounded-lg p-2 mb-4 text-left">
+            <p class="text-[10px] text-secondary font-medium flex items-center gap-1">
+              <span class="material-symbols-outlined text-[12px]">check_circle</span>
+              Incluye guía completa + destacados del mes
+            </p>
+          </div>
+        </div>
+        
+        <div class="pt-3 border-t border-outline-variant/20 flex flex-col gap-1.5">
+          <!-- WhatsApp as Primary (prominent) -->
+          <a href="https://wa.me/5492974000000?text=Hola! Te contacto desde el espacio de destaque de Agenda Santa Cruz por tu servicio de Alojamiento (Hostería Viento Sur)." target="_blank" class="w-full bg-[#075e54] text-white font-button py-2.5 px-3 rounded-lg flex items-center justify-center gap-1.5 hover:bg-[#053e2a] transition-colors text-xs font-bold shadow-sm">
+            <span class="material-symbols-outlined text-[16px]">chat</span>
+            WhatsApp de Reservas
+          </a>
+          <!-- Ver detalles as Secondary (discrete text link) -->
+          <a href="#/prestador/el-chalten-alojamiento-0" class="text-on-surface-variant hover:text-primary font-button py-1 text-center text-xs transition-colors hover:underline font-bold">
+            Ver Ficha Completa
+          </a>
+        </div>
+      </article>
+    
+      <article class="bg-secondary/[0.03] rounded-xl border-2 border-secondary p-md hover:ambient-shadow transition-shadow flex flex-col justify-between group cursor-pointer relative shadow-md shadow-secondary/5 h-full" onclick="if(!event.target.closest('a') &amp;&amp; !event.target.closest('button')) route('/prestador/puerto-san-julian-alojamiento-0')">
+        <!-- Ribbon Auspiciado -->
+        <div class="absolute top-2 right-2 bg-secondary text-white text-[9px] uppercase font-bold px-2 py-0.5 rounded shadow-sm flex items-center gap-1 z-10">
+          <span class="material-symbols-outlined text-[10px]">workspace_premium</span>
+          Auspiciado
+        </div>
+        
+        <div>
+          <!-- Thumbnail and core details in flex row -->
+          <div class="flex gap-3 mb-3">
+            <img src="/images/lodge.jpg" alt="Hostería Viento Sur" class="w-14 h-14 object-cover rounded-lg flex-shrink-0 border border-outline-variant/30">
+            <div class="min-w-0 flex-grow text-left">
+              <div class="flex flex-wrap gap-1.5 text-[9px] text-on-surface-variant font-semibold items-center mb-0.5">
+                <span class="flex items-center gap-0.5 bg-secondary/10 text-secondary border border-secondary/20 px-2 py-0.5 rounded text-[10px] font-bold">
+                  <span class="material-symbols-outlined text-[10px]">bed</span>
+                  Alojamiento
+                </span>
+                <span class="flex items-center gap-0.5">
+                  <span class="material-symbols-outlined text-[10px] text-secondary">location_on</span>
+                  Puerto San Julián
+                </span>
+              </div>
+              <h3 class="font-title-sm text-primary line-clamp-1 group-hover:text-secondary transition-colors font-bold text-sm">Hostería Viento Sur</h3>
+              <p class="text-[10px] text-secondary font-bold flex items-center gap-0.5 mt-0.5">
+                <span class="material-symbols-outlined text-[12px]">verified</span>
+                Servicio Destacado Verificado
+              </p>
+            </div>
+          </div>
+          
+          <p class="font-body-md text-on-surface-variant line-clamp-2 mb-3 text-xs leading-relaxed text-left">Atención personalizada y respuesta rápida por WhatsApp.</p>
+          
+          <!-- Line of Value -->
+          <div class="bg-secondary/5 border border-secondary/10 rounded-lg p-2 mb-4 text-left">
+            <p class="text-[10px] text-secondary font-medium flex items-center gap-1">
+              <span class="material-symbols-outlined text-[12px]">check_circle</span>
+              Incluye guía completa + destacados del mes
+            </p>
+          </div>
+        </div>
+        
+        <div class="pt-3 border-t border-outline-variant/20 flex flex-col gap-1.5">
+          <!-- WhatsApp as Primary (prominent) -->
+          <a href="https://wa.me/5492974000000?text=Hola! Te contacto desde el espacio de destaque de Agenda Santa Cruz por tu servicio de Alojamiento (Hostería Viento Sur)." target="_blank" class="w-full bg-[#075e54] text-white font-button py-2.5 px-3 rounded-lg flex items-center justify-center gap-1.5 hover:bg-[#053e2a] transition-colors text-xs font-bold shadow-sm">
+            <span class="material-symbols-outlined text-[16px]">chat</span>
+            WhatsApp de Reservas
+          </a>
+          <!-- Ver detalles as Secondary (discrete text link) -->
+          <a href="#/prestador/puerto-san-julian-alojamiento-0" class="text-on-surface-variant hover:text-primary font-button py-1 text-center text-xs transition-colors hover:underline font-bold">
+            Ver Ficha Completa
+          </a>
+        </div>
+      </article>
+    
+      <article class="bg-secondary/[0.03] rounded-xl border-2 border-secondary p-md hover:ambient-shadow transition-shadow flex flex-col justify-between group cursor-pointer relative shadow-md shadow-secondary/5 h-full" onclick="if(!event.target.closest('a') &amp;&amp; !event.target.closest('button')) route('/prestador/los-antiguos-alojamiento-0')">
+        <!-- Ribbon Auspiciado -->
+        <div class="absolute top-2 right-2 bg-secondary text-white text-[9px] uppercase font-bold px-2 py-0.5 rounded shadow-sm flex items-center gap-1 z-10">
+          <span class="material-symbols-outlined text-[10px]">workspace_premium</span>
+          Auspiciado
+        </div>
+        
+        <div>
+          <!-- Thumbnail and core details in flex row -->
+          <div class="flex gap-3 mb-3">
+            <img src="/images/lodge.jpg" alt="Hostería Viento Sur" class="w-14 h-14 object-cover rounded-lg flex-shrink-0 border border-outline-variant/30">
+            <div class="min-w-0 flex-grow text-left">
+              <div class="flex flex-wrap gap-1.5 text-[9px] text-on-surface-variant font-semibold items-center mb-0.5">
+                <span class="flex items-center gap-0.5 bg-secondary/10 text-secondary border border-secondary/20 px-2 py-0.5 rounded text-[10px] font-bold">
+                  <span class="material-symbols-outlined text-[10px]">bed</span>
+                  Alojamiento
+                </span>
+                <span class="flex items-center gap-0.5">
+                  <span class="material-symbols-outlined text-[10px] text-secondary">location_on</span>
+                  Los Antiguos
+                </span>
+              </div>
+              <h3 class="font-title-sm text-primary line-clamp-1 group-hover:text-secondary transition-colors font-bold text-sm">Hostería Viento Sur</h3>
+              <p class="text-[10px] text-secondary font-bold flex items-center gap-0.5 mt-0.5">
+                <span class="material-symbols-outlined text-[12px]">verified</span>
+                Servicio Destacado Verificado
+              </p>
+            </div>
+          </div>
+          
+          <p class="font-body-md text-on-surface-variant line-clamp-2 mb-3 text-xs leading-relaxed text-left">Atención personalizada y respuesta rápida por WhatsApp.</p>
+          
+          <!-- Line of Value -->
+          <div class="bg-secondary/5 border border-secondary/10 rounded-lg p-2 mb-4 text-left">
+            <p class="text-[10px] text-secondary font-medium flex items-center gap-1">
+              <span class="material-symbols-outlined text-[12px]">check_circle</span>
+              Incluye guía completa + destacados del mes
+            </p>
+          </div>
+        </div>
+        
+        <div class="pt-3 border-t border-outline-variant/20 flex flex-col gap-1.5">
+          <!-- WhatsApp as Primary (prominent) -->
+          <a href="https://wa.me/5492974000000?text=Hola! Te contacto desde el espacio de destaque de Agenda Santa Cruz por tu servicio de Alojamiento (Hostería Viento Sur)." target="_blank" class="w-full bg-[#075e54] text-white font-button py-2.5 px-3 rounded-lg flex items-center justify-center gap-1.5 hover:bg-[#053e2a] transition-colors text-xs font-bold shadow-sm">
+            <span class="material-symbols-outlined text-[16px]">chat</span>
+            WhatsApp de Reservas
+          </a>
+          <!-- Ver detalles as Secondary (discrete text link) -->
+          <a href="#/prestador/los-antiguos-alojamiento-0" class="text-on-surface-variant hover:text-primary font-button py-1 text-center text-xs transition-colors hover:underline font-bold">
+            Ver Ficha Completa
+          </a>
+        </div>
+      </article>
+    
+          </div>
+          
+          
+            <div class="flex justify-center mt-6">
+              <button onclick="loadMoreServices()" class="bg-primary text-white font-button px-6 py-3 rounded-xl hover:bg-primary-container transition-colors text-xs font-bold shadow-sm flex items-center gap-2">
+                <span class="material-symbols-outlined">expand_more</span>
+                Cargar más servicios
+              </button>
+            </div>
+          
+        </div>
+      
+    </div>
+  
+    </main>
+    
+    <footer class="bg-surface-container-lowest text-on-surface pt-12 pb-24 md:pb-12 border-t border-outline-variant/30 mt-auto">
+      <div class="max-w-7xl mx-auto px-container-margin grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div>
+          <div class="flex items-center gap-2 mb-4">
+            <span class="material-symbols-outlined text-secondary text-[24px]">explore</span>
+            <span class="font-display-lg text-[20px] font-bold text-primary">Agenda Santa Cruz</span>
+          </div>
+          <p class="font-body-md text-on-surface-variant mb-4 leading-relaxed">Encontrá qué hacer y cómo organizar tu visita en Santa Cruz, por localidad, con acceso rápido a WhatsApp.</p>
+          <div class="text-[11px] text-outline font-label-sm leading-normal">
+            Proyecto digital independiente de difusión turística. No es un sitio gubernamental oficial.
+          </div>
+        </div>
+        <div>
+          <h4 class="font-title-sm text-primary mb-4 uppercase tracking-wider">Explorar el Portal</h4>
+          <div class="flex flex-col gap-3 font-body-md">
+            <a href="#/agenda" class="text-on-surface-variant hover:text-secondary transition-colors">Próximos Eventos</a>
+            <a href="#/destinos" class="text-on-surface-variant hover:text-secondary transition-colors">Destinos Turísticos</a>
+            <a href="#/servicios" class="text-on-surface-variant hover:text-secondary transition-colors">Directorio de Servicios</a>
+            <a href="#/municipios" class="text-on-surface-variant hover:text-secondary transition-colors mt-2 font-medium">Servicios B2G (Municipios)</a>
+          </div>
+        </div>
+        <div>
+          <h4 class="font-title-sm text-primary mb-4 uppercase tracking-wider">Contacto</h4>
+          <div class="flex flex-col gap-3 font-body-md mb-4">
+            <a href="mailto:hola@agendasantacruz.ar" class="text-on-surface-variant hover:text-secondary transition-colors flex items-center gap-2">
+              <span class="material-symbols-outlined text-[18px]">mail</span> hola@agendasantacruz.ar
+            </a>
+          </div>
+          <div class="flex gap-3">
+            <span class="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center hover:bg-surface-container-high transition-colors text-primary font-bold cursor-pointer text-sm">IG</span>
+            <span class="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center hover:bg-surface-container-high transition-colors text-primary font-bold cursor-pointer text-sm">FB</span>
+          </div>
+        </div>
+      </div>
+      <div class="max-w-7xl mx-auto px-container-margin mt-8 pt-8 border-t border-outline-variant/30 text-center font-label-sm text-outline">
+        © 2026 Agenda Santa Cruz. Todos los derechos reservados.
+      </div>
+    </footer>
+  
+    
+    <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-surface border-t border-outline-variant/30 z-50 flex justify-around items-center h-16 px-2 ambient-shadow">
+      
+        <a href="#/" class="flex flex-col items-center justify-center flex-1 h-full py-1 text-on-surface-variant hover:text-primary">
+          <span class="material-symbols-outlined text-[20px] mb-0.5 ">home</span>
+          <span class="text-[10px] tracking-wide">Inicio</span>
+        </a>
+      
+        <a href="#/agenda" class="flex flex-col items-center justify-center flex-1 h-full py-1 text-on-surface-variant hover:text-primary">
+          <span class="material-symbols-outlined text-[20px] mb-0.5 ">calendar_today</span>
+          <span class="text-[10px] tracking-wide">Agenda</span>
+        </a>
+      
+        <a href="#/destinos" class="flex flex-col items-center justify-center flex-1 h-full py-1 text-on-surface-variant hover:text-primary">
+          <span class="material-symbols-outlined text-[20px] mb-0.5 ">explore</span>
+          <span class="text-[10px] tracking-wide">Destinos</span>
+        </a>
+      
+        <a href="#/servicios" class="flex flex-col items-center justify-center flex-1 h-full py-1 text-secondary font-bold">
+          <span class="material-symbols-outlined text-[20px] mb-0.5 fill-current">business_center</span>
+          <span class="text-[10px] tracking-wide">Servicios</span>
+        </a>
+      
+        <a href="#/publicar/evento" class="flex flex-col items-center justify-center flex-1 h-full py-1 text-on-surface-variant hover:text-primary">
+          <span class="material-symbols-outlined text-[20px] mb-0.5 ">add_box</span>
+          <span class="text-[10px] tracking-wide">Publicar</span>
+        </a>
+      
+    </nav>
+  
+  </div>
   <script>
 const SVG={
   pin:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>',
@@ -212,6 +1250,7 @@ function makeServices(locality, density='full'){
 const services=[...makeServices('Puerto Deseado','full'),...makeServices('28 de Noviembre','full'),...makeServices('El Calafate','lite'),...['Río Gallegos','Caleta Olivia','El Chaltén','Puerto San Julián','Los Antiguos','Perito Moreno'].flatMap((l,idx)=>makeServices(l,'lite').slice(0,5+idx%2))];
 
 
+console.log("PATCH1 running, protocol:", window.location.protocol);
 console.log("PATCH1 running, protocol:", window.location.protocol);
 console.log("PATCH1 running, protocol:", window.location.protocol);
 console.log("PATCH1 running, protocol:", window.location.protocol);
@@ -672,6 +1711,8 @@ function serviceCard(s) {
       </div>
     </article>
   `;
+}
+
 function eventCard(e, compact = false) {
   const badgeCls = ticketBadgeColor(e.ticket || 'A confirmar');
   const tkt = e.ticket || 'A confirmar';
