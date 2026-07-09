@@ -2,8 +2,8 @@
 <html lang="es" class="light"><head>
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
-<title>Casa de Té Austral - Gastronomía en Puerto Deseado | Agenda Santa Cruz</title>
-  <meta name="description" content="Portal interactivo de la Agenda Santa Cruz. Eventos, destinos turísticos y directorio de servicios profesionales.">
+<title>Casa de Té Austral en Puerto Deseado | Gastronomía | Agenda Santa Cruz</title>
+  <meta name="description" content="Contactá a Casa de Té Austral por WhatsApp. Información y ubicación en Puerto Deseado, Santa Cruz.">
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Montserrat:wght@600;700&amp;display=swap" rel="stylesheet">
@@ -123,7 +123,7 @@
             box-shadow: 0px 4px 12px rgba(0, 56, 77, 0.08);
         }
       </style>
-<meta property="og:title" content="Casa de Té Austral - Gastronomía en Puerto Deseado | Agenda Santa Cruz"><meta name="description" content="Casa de Té Austral - Gastronomía en Puerto Deseado | Agenda Santa Cruz - Todo lo que pasa en Santa Cruz. Eventos, alojamientos, gastronomía y excursiones."></head>
+<meta property="og:title" content="Casa de Té Austral en Puerto Deseado | Gastronomía | Agenda Santa Cruz"><meta property="og:description" content="Contactá a Casa de Té Austral por WhatsApp. Información y ubicación en Puerto Deseado, Santa Cruz."></head>
 <body class="bg-background text-on-background min-h-screen flex flex-col font-body-md">
   <div id="toast-container" class="fixed top-5 right-5 z-[9999] flex flex-col gap-2 pointer-events-none"></div>
   <div id="app" class="flex-grow flex flex-col">
@@ -167,12 +167,19 @@
     <main class="flex-grow pt-[16px] md:pt-[80px] pb-16 md:pb-0 animate-fade-in">
       
     <div class="max-w-3xl mx-auto px-container-margin py-12">
-      <a href="#/servicios" class="inline-flex items-center gap-1 font-button text-on-surface-variant hover:text-primary mb-6 transition-colors text-sm">
-        <span class="material-symbols-outlined text-[18px]">arrow_back</span> Volver a Servicios
-      </a>
+      <!-- Breadcrumbs -->
+      <nav class="flex items-center gap-2 text-xs font-semibold text-on-surface-variant mb-6 uppercase tracking-wider">
+        <a href="#/servicios" class="hover:text-primary transition-colors">Servicios</a>
+        <span class="text-outline-variant">/</span>
+        <span class="text-outline-variant">Gastronomía</span>
+        <span class="text-outline-variant">/</span>
+        <a href="#/localidad/puerto-deseado" class="hover:text-primary transition-colors">Puerto Deseado</a>
+        <span class="text-outline-variant">/</span>
+        <span class="text-primary truncate max-w-[150px]">Casa de Té Austral</span>
+      </nav>
       
       <div class="bg-surface border border-outline-variant/30 rounded-2xl p-6 md:p-8 shadow-sm">
-        <div class="flex items-center justify-between gap-4 mb-4">
+        <div class="flex flex-wrap items-center justify-between gap-4 mb-4 pb-3 border-b border-outline-variant/20">
           <span class="font-label-sm text-xs font-bold text-primary-container bg-surface-container px-3 py-1 rounded-full uppercase tracking-wider">
             Gastronomía
           </span>
@@ -182,7 +189,11 @@
           </a>
         </div>
         
-        <h1 class="font-display-lg text-[28px] md:text-[36px] text-primary mb-4 font-bold">Qué hacer en Puerto Deseado: Casa de Té Austral</h1>
+        <h1 class="font-display-lg text-[28px] md:text-[36px] text-primary mb-2 font-bold leading-tight">Casa de Té Austral</h1>
+        <p class="font-body-md text-on-surface-variant text-sm font-semibold mb-6 flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-secondary text-[18px]">verified</span>
+          Gastronomía en Puerto Deseado
+        </p>
         
         <!-- Big prominent WhatsApp button on top -->
         <div class="mb-6 bg-surface-container-low p-4 rounded-xl border border-outline-variant/20 flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -385,6 +396,7 @@ const services=[...makeServices('Puerto Deseado','full'),...makeServices('28 de 
 console.log("PATCH1 running, protocol:", window.location.protocol);
 console.log("PATCH1 running, protocol:", window.location.protocol);
 console.log("PATCH1 running, protocol:", window.location.protocol);
+console.log("PATCH1 running, protocol:", window.location.protocol);
 const state = {
   route: 'home',
   params: {},
@@ -405,6 +417,17 @@ function slug(s) {
 
 function localityFromSlug(s) {
   return localities.find(l => slug(l) === s) || 'Puerto Deseado';
+}
+
+function setMeta(title, description) {
+  document.title = title;
+  let meta = document.querySelector('meta[name="description"]');
+  if (!meta) {
+    meta = document.createElement('meta');
+    meta.setAttribute('name', 'description');
+    document.head.appendChild(meta);
+  }
+  meta.setAttribute('content', description);
 }
 
 function route(path) {
@@ -856,13 +879,13 @@ function renderHome() {
         </div>
         <div class="flex flex-col items-center justify-center p-2 md:pl-6">
           <span class="material-symbols-outlined text-secondary text-[36px] mb-2">calendar_month</span>
-          <h4 class="font-headline-md text-primary leading-none mb-1 font-bold text-lg">+200 Eventos</h4>
+          <h4 class="font-headline-md text-primary leading-none mb-1 font-bold text-lg">Agenda Activa</h4>
           <p class="font-body-md text-on-surface-variant text-xs">Actividades culturales y deportivas.</p>
         </div>
         <div class="flex flex-col items-center justify-center p-2 md:pl-6">
           <span class="material-symbols-outlined text-secondary text-[36px] mb-2">verified_user</span>
-          <h4 class="font-headline-md text-primary leading-none mb-1 font-bold text-lg">100% Verificado</h4>
-          <p class="font-body-md text-on-surface-variant text-xs">Moderación manual en menos de 24 hs.</p>
+          <h4 class="font-headline-md text-primary leading-none mb-1 font-bold text-lg">Verificación Manual</h4>
+          <p class="font-body-md text-on-surface-variant text-xs">Moderación de propuestas locales.</p>
         </div>
       </div>
     </section>
@@ -880,6 +903,26 @@ function renderHome() {
       </div>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-md">
         ${upcomingEvents.map(e => eventCard(e)).join('')}
+      </div>
+    </section>
+
+    <!-- Espacio A: Auspicio Home -->
+    <section class="max-w-7xl mx-auto px-container-margin mb-16">
+      <div class="bg-surface-container-low border border-outline-variant/20 rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="flex items-center gap-4">
+          <div class="bg-secondary/10 text-secondary w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0">
+            <span class="material-symbols-outlined text-[24px]">workspace_premium</span>
+          </div>
+          <div class="text-left">
+            <span class="text-[10px] uppercase font-bold tracking-wider text-outline block">Auspicio Provincial</span>
+            <h4 class="font-title-sm text-primary font-bold text-sm">Espacio de Auspicio Disponible</h4>
+            <p class="font-body-md text-on-surface-variant text-xs mt-1">Promocioná tu municipio, marca o empresa turística en el portal de mayor crecimiento de la provincia.</p>
+          </div>
+        </div>
+        <a href="mailto:hola@agendasantacruz.ar?subject=Auspicio Provincial - Agenda Santa Cruz" class="bg-primary text-white hover:bg-primary-container font-button px-5 py-2.5 rounded-lg text-xs font-bold transition-colors shadow-sm inline-flex items-center gap-1.5 whitespace-nowrap">
+          <span class="material-symbols-outlined text-[16px]">mail</span>
+          Quiero auspiciar mi localidad
+        </a>
       </div>
     </section>
 
@@ -922,7 +965,10 @@ function renderHome() {
   `;
   
   document.getElementById('app').innerHTML = shell(content, 'home');
-  document.title = 'Agenda Santa Cruz | Eventos, Destinos y Servicios';
+  setMeta(
+    "Agenda Santa Cruz: eventos, destinos y servicios turísticos",
+    "Encontrá qué hacer en Santa Cruz. Agenda de eventos, guías por localidad y prestadores turísticos con contacto directo por WhatsApp."
+  );
   
   document.getElementById('home-search-form').addEventListener('submit', function(e) {
     e.preventDefault();
@@ -1009,6 +1055,37 @@ function renderMunicipios() {
 }
 
 
+function sponsoredEventCard() {
+  return `
+    <div class="bg-surface-container-low border border-secondary/40 rounded-xl overflow-hidden hover:ambient-shadow transition-shadow duration-300 flex flex-col group relative">
+      <div class="absolute top-sm left-sm bg-secondary text-white font-label-sm text-[10px] uppercase px-2 py-1 rounded-md border border-secondary/30 z-10 font-bold tracking-wider shadow-sm flex items-center gap-1">
+        <span class="material-symbols-outlined text-[12px]">workspace_premium</span>
+        Auspiciado
+      </div>
+      <div class="h-48 relative overflow-hidden bg-surface-container">
+        <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" src="${images.tour}" alt="Visitas Guiadas Especiales" />
+      </div>
+      <div class="p-md flex flex-col flex-grow">
+        <div class="flex items-center gap-xs mb-xs">
+          <span class="bg-secondary/15 text-secondary font-label-sm text-[10px] px-2 py-0.5 rounded-full uppercase tracking-wider font-bold">Turismo Provincial</span>
+          <span class="text-on-surface-variant font-label-sm flex items-center gap-[2px] truncate"><span class="material-symbols-outlined text-[14px]">location_on</span> Toda la Provincia</span>
+        </div>
+        <h3 class="font-title-sm text-primary mb-0.5 line-clamp-2 font-bold">Guía de Turismo Oficial de Santa Cruz</h3>
+        <p class="font-body-md text-on-surface-variant mb-md line-clamp-2 flex-grow text-xs leading-relaxed">Descubrí las bellezas naturales con excursiones guiadas autorizadas. Descuentos exclusivos reservando online.</p>
+        <div class="pt-3 border-t border-outline-variant/30 flex justify-between items-center">
+          <a href="mailto:hola@agendasantacruz.ar?subject=Auspicio Evento - Agenda Santa Cruz" class="text-secondary font-button text-xs hover:underline flex items-center gap-0.5 font-bold">
+            Anunciar mi evento <span class="material-symbols-outlined text-[14px] leading-none">arrow_forward</span>
+          </a>
+          <a href="https://wa.me/5492974000000?text=Hola! Quiero consultar por las Guías de Turismo Oficiales de Santa Cruz." target="_blank" class="bg-[#075e54] text-white font-button py-1.5 px-3 rounded-lg flex items-center gap-1 hover:bg-[#053e2a] transition-colors text-[11px] font-bold">
+            <span class="material-symbols-outlined text-[14px]">chat</span>
+            Consultar
+          </a>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
 function renderAgenda() {
   const localitiesList = ['Todas', ...localities];
   const categoriesList = ['Todas', 'Cultural', 'Deportivo', 'Gastronómico', 'Institucional'];
@@ -1018,20 +1095,32 @@ function renderAgenda() {
     return baseEvents.filter(e => {
       if (state.agenda.locality !== 'Todas' && e.locality !== state.agenda.locality) return false;
       if (state.agenda.category !== 'Todas' && e.category !== state.agenda.category) return false;
+      
+      // Fechas
       if (state.agenda.date === 'Hoy' && parseInt(e.day) !== 12) return false; 
       if (state.agenda.date === 'Esta semana' && parseInt(e.day) > 19) return false; 
+      
+      // Chips Rápidos
+      if (state.agenda.quick === 'Gratis' && e.ticket !== 'Gratis') return false;
+      if (state.agenda.quick === 'Con entrada' && e.ticket !== 'Con entrada') return false;
+      if (state.agenda.quick === 'Con reserva' && e.ticket !== 'Reserva') return false;
+      if (state.agenda.quick === 'Para hoy' && parseInt(e.day) !== 12) return false;
+      
       return true;
     });
   };
 
   const currentEvents = filterEvents();
   
-  const hasFilters = state.agenda.locality !== 'Todas' || state.agenda.category !== 'Todas' || state.agenda.date !== 'Esta semana';
+  const hasFilters = state.agenda.locality !== 'Todas' || 
+                    state.agenda.category !== 'Todas' || 
+                    state.agenda.date !== 'Esta semana' || 
+                    (state.agenda.quick && state.agenda.quick !== 'Todos');
 
   const content = `
     <div class="max-w-7xl mx-auto px-container-margin py-xl">
       <div class="mb-lg border-b border-outline-variant/30 pb-sm">
-        <h1 class="font-display-lg text-primary mb-xs">Agenda Santa Cruz</h1>
+        <h1 class="font-display-lg text-primary mb-xs font-bold text-2xl md:text-3xl">Agenda de Eventos en Santa Cruz</h1>
         <p class="font-body-md text-on-surface-variant">Actividades de esparcimiento, ferias, deportes y cultura en la provincia.</p>
       </div>
       
@@ -1043,18 +1132,18 @@ function renderAgenda() {
           </h3>
           
           <div class="mb-md">
-            <label class="font-label-sm text-on-surface-variant mb-xs block">Localidad</label>
-            <select id="agenda-filter-locality" class="w-full bg-surface-bright border border-outline-variant rounded-lg px-sm py-2 focus:border-primary outline-none font-body-md text-on-background">
+            <label class="font-label-sm text-on-surface-variant mb-xs block text-xs font-semibold">Localidad</label>
+            <select id="agenda-filter-locality" class="w-full bg-surface-bright border border-outline-variant rounded-lg px-sm py-2 focus:border-primary outline-none font-body-md text-on-background text-sm cursor-pointer">
               ${localitiesList.map(l => `<option value="${l}" ${state.agenda.locality === l ? 'selected' : ''}>${l === 'Todas' ? 'Toda la provincia' : l}</option>`).join('')}
             </select>
           </div>
           
           <div class="mb-md">
-            <label class="font-label-sm text-on-surface-variant mb-xs block">Fecha</label>
+            <label class="font-label-sm text-on-surface-variant mb-xs block text-xs font-semibold">Fecha</label>
             <div class="flex flex-col gap-2">
               ${datesList.map(d => `
-                <label class="flex items-center gap-2 font-body-md text-on-background cursor-pointer">
-                  <input type="radio" name="agenda-date" value="${d}" ${state.agenda.date === d ? 'checked' : ''} class="text-secondary focus:ring-secondary border-outline-variant w-4 h-4">
+                <label class="flex items-center gap-2 font-body-md text-on-background cursor-pointer text-sm">
+                  <input type="radio" name="agenda-date" value="${d}" ${state.agenda.date === d ? 'checked' : ''} class="text-secondary focus:ring-secondary border-outline-variant w-4 h-4 cursor-pointer">
                   <span>${d}</span>
                 </label>
               `).join('')}
@@ -1062,11 +1151,11 @@ function renderAgenda() {
           </div>
           
           <div class="mb-xs">
-            <label class="font-label-sm text-on-surface-variant mb-xs block">Categoría</label>
+            <label class="font-label-sm text-on-surface-variant mb-xs block text-xs font-semibold">Categoría</label>
             <div class="flex flex-col gap-2">
               ${categoriesList.map(c => `
-                <label class="flex items-center gap-2 font-body-md text-on-background cursor-pointer">
-                  <input type="radio" name="agenda-category" value="${c}" ${state.agenda.category === c ? 'checked' : ''} class="text-secondary focus:ring-secondary border-outline-variant w-4 h-4">
+                <label class="flex items-center gap-2 font-body-md text-on-background cursor-pointer text-sm">
+                  <input type="radio" name="agenda-category" value="${c}" ${state.agenda.category === c ? 'checked' : ''} class="text-secondary focus:ring-secondary border-outline-variant w-4 h-4 cursor-pointer">
                   <span>${c}</span>
                 </label>
               `).join('')}
@@ -1076,30 +1165,62 @@ function renderAgenda() {
         
         <!-- Results Column -->
         <div class="flex-grow">
-          <div class="flex flex-wrap items-center gap-2 mb-md">
+          <!-- Chips de Filtros Rápidos (UX) -->
+          <div class="flex flex-wrap gap-2 mb-md items-center bg-surface-container-low/50 p-2.5 rounded-xl border border-outline-variant/20">
+            <span class="text-xs font-bold text-primary mr-1">Filtros rápidos:</span>
+            ${[
+              ['Todos', 'Todos'],
+              ['Gratis', 'Gratis 🎉'],
+              ['Con entrada', 'Con entrada 🎟️'],
+              ['Con reserva', 'Con reserva 📅'],
+              ['Para hoy', 'Para hoy ⚡']
+            ].map(([val, label]) => {
+              const active = (state.agenda.quick || 'Todos') === val;
+              return `<button onclick="setAgendaQuickFilter('${val}')" class="px-3 py-1.5 rounded-full text-xs font-bold transition-all border ${active ? 'bg-secondary text-white border-secondary shadow-sm' : 'bg-surface border-outline-variant/50 text-on-surface-variant hover:bg-surface-container-low'}">${label}</button>`;
+            }).join('')}
+          </div>
+
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-md">
             ${!hasFilters ? `
-              <span class="font-label-sm text-outline">Mostrando: Toda la provincia &middot; Esta semana &middot; Todas las categorías</span>
+              <span class="font-label-sm text-outline text-xs">Mostrando: Toda la provincia &middot; Esta semana &middot; Todas las categorías</span>
             ` : `
-              <span class="font-label-sm text-outline">Filtros activos:</span>
-              ${state.agenda.locality !== 'Todas' ? `<button onclick="clearAgendaFilter('locality')" class="bg-secondary/10 hover:bg-secondary/20 text-secondary border border-secondary/30 font-label-sm px-3 py-1 rounded-full flex items-center gap-1 transition-colors">Localidad: ${state.agenda.locality} <span class="material-symbols-outlined text-[14px] leading-none">close</span></button>` : ''}
-              ${state.agenda.category !== 'Todas' ? `<button onclick="clearAgendaFilter('category')" class="bg-secondary/10 hover:bg-secondary/20 text-secondary border border-secondary/30 font-label-sm px-3 py-1 rounded-full flex items-center gap-1 transition-colors">Categoría: ${state.agenda.category} <span class="material-symbols-outlined text-[14px] leading-none">close</span></button>` : ''}
-              ${state.agenda.date !== 'Esta semana' ? `<button onclick="clearAgendaFilter('date')" class="bg-secondary/10 hover:bg-secondary/20 text-secondary border border-secondary/30 font-label-sm px-3 py-1 rounded-full flex items-center gap-1 transition-colors">Fecha: ${state.agenda.date} <span class="material-symbols-outlined text-[14px] leading-none">close</span></button>` : ''}
-              <button onclick="resetAgendaFilters()" class="text-error hover:underline font-label-sm ml-2">Limpiar filtros</button>
+              <div class="flex flex-wrap items-center gap-1.5">
+                <span class="font-label-sm text-outline text-xs">Filtros activos:</span>
+                ${state.agenda.locality !== 'Todas' ? `<button onclick="clearAgendaFilter('locality')" class="bg-secondary/10 hover:bg-secondary/20 text-secondary border border-secondary/30 font-label-sm px-2.5 py-0.5 rounded-full flex items-center gap-1 transition-colors text-xs">Localidad: ${state.agenda.locality} <span class="material-symbols-outlined text-[12px] leading-none">close</span></button>` : ''}
+                ${state.agenda.category !== 'Todas' ? `<button onclick="clearAgendaFilter('category')" class="bg-secondary/10 hover:bg-secondary/20 text-secondary border border-secondary/30 font-label-sm px-2.5 py-0.5 rounded-full flex items-center gap-1 transition-colors text-xs">Categoría: ${state.agenda.category} <span class="material-symbols-outlined text-[12px] leading-none">close</span></button>` : ''}
+                ${state.agenda.date !== 'Esta semana' ? `<button onclick="clearAgendaFilter('date')" class="bg-secondary/10 hover:bg-secondary/20 text-secondary border border-secondary/30 font-label-sm px-2.5 py-0.5 rounded-full flex items-center gap-1 transition-colors text-xs">Fecha: ${state.agenda.date} <span class="material-symbols-outlined text-[12px] leading-none">close</span></button>` : ''}
+                ${(state.agenda.quick && state.agenda.quick !== 'Todos') ? `<button onclick="clearAgendaFilter('quick')" class="bg-secondary/10 hover:bg-secondary/20 text-secondary border border-secondary/30 font-label-sm px-2.5 py-0.5 rounded-full flex items-center gap-1 transition-colors text-xs">Tipo: ${state.agenda.quick} <span class="material-symbols-outlined text-[12px] leading-none">close</span></button>` : ''}
+              </div>
+              <button onclick="resetAgendaFilters()" class="text-error hover:underline font-label-sm text-xs font-bold">Limpiar filtros</button>
             `}
           </div>
           
           ${currentEvents.length === 0 ? `
-            <div class="bg-surface border border-outline-variant/30 rounded-xl p-xl text-center ambient-shadow">
+            <div class="bg-surface border border-outline-variant/30 rounded-xl p-xl text-center ambient-shadow flex flex-col items-center justify-center">
               <span class="material-symbols-outlined text-outline-variant text-[48px] mb-sm">event_busy</span>
-              <h3 class="font-title-sm text-primary mb-xs">Sin eventos programados</h3>
-              <p class="font-body-md text-on-surface-variant max-w-sm mx-auto mb-md">No encontramos actividades que coincidan con los filtros aplicados en este momento.</p>
-              <button onclick="resetAgendaFilters()" class="bg-primary text-white font-button px-md py-sm rounded-lg hover:bg-primary-container transition-colors">
-                Restablecer Filtros
-              </button>
+              <h3 class="font-title-sm text-primary mb-xs font-bold text-lg">Sin eventos programados</h3>
+              <p class="font-body-md text-on-surface-variant max-w-sm mx-auto mb-md text-xs">No encontramos actividades que coincidan con los filtros aplicados en este momento.</p>
+              <div class="flex gap-2">
+                <button onclick="resetAgendaFilters()" class="bg-primary text-white font-button px-md py-sm rounded-lg hover:bg-primary-container transition-colors text-xs font-bold">
+                  Restablecer Filtros
+                </button>
+                <a href="#/publicar/evento" class="bg-secondary-fixed text-primary font-button px-md py-sm rounded-lg hover:bg-white transition-colors text-xs font-bold border border-outline-variant/30">
+                  Sugerir Evento
+                </a>
+              </div>
             </div>
           ` : `
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-md">
-              ${currentEvents.map(e => eventCard(e)).join('')}
+              ${(() => {
+                let cards = currentEvents.map(e => eventCard(e));
+                // Inyección Espacio C: Tarjeta auspiciada en segunda posición
+                if (cards.length > 0) {
+                  cards.splice(1, 0, sponsoredEventCard());
+                } else {
+                  cards.push(sponsoredEventCard());
+                }
+                return cards.join('');
+              })()}
             </div>
           `}
         </div>
@@ -1108,7 +1229,10 @@ function renderAgenda() {
   `;
   
   document.getElementById('app').innerHTML = shell(content, 'agenda');
-  document.title = 'Agenda de Eventos en Santa Cruz | Agenda Santa Cruz';
+  setMeta(
+    "Agenda de eventos en Santa Cruz (hoy, semana y mes) | Agenda Santa Cruz",
+    "Explorá eventos culturales, deportivos y gastronómicos en Santa Cruz. Filtrá por localidad, fecha y categoría."
+  );
 
   document.getElementById('agenda-filter-locality').addEventListener('change', function(e) {
     state.agenda.locality = e.target.value;
@@ -1130,10 +1254,16 @@ function renderAgenda() {
   });
 }
 
+window.setAgendaQuickFilter = function(val) {
+  state.agenda.quick = val;
+  renderAgenda();
+};
+
 window.clearAgendaFilter = function(filter) {
   if (filter === 'locality') state.agenda.locality = 'Todas';
   if (filter === 'category') state.agenda.category = 'Todas';
   if (filter === 'date') state.agenda.date = 'Esta semana';
+  if (filter === 'quick') state.agenda.quick = 'Todos';
   renderAgenda();
 };
 
@@ -1141,6 +1271,7 @@ window.resetAgendaFilters = function() {
   state.agenda.locality = 'Todas';
   state.agenda.category = 'Todas';
   state.agenda.date = 'Esta semana';
+  state.agenda.quick = 'Todos';
   renderAgenda();
 };
 
@@ -1178,9 +1309,14 @@ function renderEventDetail(id) {
 
   const content = `
     <div class="max-w-7xl mx-auto px-container-margin py-xl pb-24 md:pb-xl">
-      <a href="#/agenda" class="inline-flex items-center gap-1 font-button text-on-surface-variant hover:text-primary mb-md transition-colors text-sm">
-        <span class="material-symbols-outlined text-[18px]">arrow_back</span> Volver a la Agenda
-      </a>
+      <!-- Breadcrumbs -->
+      <nav class="flex items-center gap-2 text-xs font-semibold text-on-surface-variant mb-md uppercase tracking-wider">
+        <a href="#/agenda" class="hover:text-primary transition-colors">Agenda</a>
+        <span class="text-outline-variant">/</span>
+        <a href="#/localidad/${slug(ev.locality)}" class="hover:text-primary transition-colors">${ev.locality}</a>
+        <span class="text-outline-variant">/</span>
+        <span class="text-primary truncate max-w-[200px]">${ev.title}</span>
+      </nav>
       
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-lg items-start">
         <!-- Main Column (Img & Info) -->
@@ -1196,16 +1332,16 @@ function renderEventDetail(id) {
           </div>
           
           <div class="p-lg">
-            <h1 class="font-display-lg text-[28px] md:text-[32px] text-primary leading-tight mb-md font-bold">Evento: ${ev.title} (${ev.day} de ${ev.month})</h1>
+            <h1 class="font-display-lg text-[28px] md:text-[32px] text-primary leading-tight mb-md font-bold">Evento: ${ev.title}</h1>
             
-            <!-- Link to Locality (Internal linking) -->
-            <div class="mb-4">
-              <a href="#/localidad/${slug(ev.locality)}" class="inline-flex items-center gap-1 text-secondary hover:underline font-title-sm text-sm font-bold">
-                <span class="material-symbols-outlined text-[16px]">location_on</span>
-                Ver guía y servicios de ${ev.locality}
+            <!-- Botón secundario Ver guía de localidad -->
+            <div class="mb-lg">
+              <a href="#/localidad/${slug(ev.locality)}" class="inline-flex items-center gap-2 bg-secondary/10 hover:bg-secondary/20 text-secondary font-button px-4 py-2 rounded-xl text-xs font-bold transition-all shadow-sm">
+                <span class="material-symbols-outlined text-[16px]">explore</span>
+                Ver guía de ${ev.locality}
               </a>
             </div>
-
+            
             <div class="font-body-md text-on-surface-variant leading-relaxed mb-lg space-y-4 text-sm md:text-base">
               <p>${ev.description}</p>
               <p>Participá de esta gran propuesta local para conectar con la cultura y las costumbres regionales. Se aconseja llegar con anticipación para asegurar su lugar ya que el espacio cuenta con cupo limitado.</p>
@@ -1302,7 +1438,12 @@ function renderEventDetail(id) {
   `;
   
   document.getElementById('app').innerHTML = shell(content, 'agenda');
-  document.title = `Evento: ${ev.title} (${ev.day} de ${ev.month}) | Agenda Santa Cruz`;
+  
+  const cleanDesc = ev.description ? ev.description.replace(/"/g, '&quot;').slice(0, 150) : '';
+  setMeta(
+    `Evento: ${ev.title} (${ev.day} de ${ev.month === 'JUL' ? 'Julio' : ev.month}) en ${ev.locality} | Agenda Santa Cruz`,
+    `${cleanDesc}. Consultá al organizador por WhatsApp y mirá más eventos y servicios en ${ev.locality}.`
+  );
 }
 
 function renderDestinations() {
@@ -1421,7 +1562,10 @@ function renderDestinations() {
   `;
   
   document.getElementById('app').innerHTML = shell(content, 'destinos');
-  document.title = 'Explorar Destinos Turísticos | Agenda Santa Cruz';
+  setMeta(
+    "Destinos y localidades de Santa Cruz | Guías y servicios | Agenda Santa Cruz",
+    "Explorá localidades de Santa Cruz con guías, eventos próximos y directorio de servicios turísticos para planificar tu visita."
+  );
   
   const searchInput = document.getElementById('dest-search');
   if (searchInput) {
@@ -1486,8 +1630,21 @@ function renderLocality(slugName) {
           <div class="font-body-md text-on-surface-variant leading-relaxed space-y-4 text-sm md:text-base">
             <p>${desc}</p>
             <p>
-              Explorar esta localidad te permite conectar con las raíces y la inmensidad de la Patagonia santacruceña. Desde senderos de trekking, museos históricos y avistajes náuticos, cada rincón ofrece una experiencia inigualable. Recordá revisar el calendario local de actividades para planificar tu viaje coincidiendo con las festividades de la región.
+              Explorar esta localidad te permite conectar con las raíces y la inmensidad de la Patagonia santacruceña. Desde atractivos locales, museos históricos y excursiones guiadas, cada rincón ofrece una experiencia inigualable.
             </p>
+          </div>
+          
+          <!-- Enlaces directos de navegación contextual (Localidad) -->
+          <div class="flex flex-wrap gap-3 mt-6 border-t border-outline-variant/20 pt-4">
+            <button onclick="state.agenda.locality='${name}'; route('/agenda');" class="inline-flex items-center gap-1.5 text-secondary hover:underline font-title-sm text-sm font-bold">
+              <span class="material-symbols-outlined text-[18px]">calendar_month</span>
+              Ver agenda de ${name}
+            </button>
+            <span class="text-outline-variant hidden sm:inline">|</span>
+            <button onclick="state.services.locality='${name}'; state.services.rubric='Todos'; state.services.query=''; route('/servicios');" class="inline-flex items-center gap-1.5 text-secondary hover:underline font-title-sm text-sm font-bold">
+              <span class="material-symbols-outlined text-[18px]">storefront</span>
+              Ver servicios de ${name}
+            </button>
           </div>
         </section>
   `;
@@ -1659,6 +1816,23 @@ function renderLocality(slugName) {
           ` : ''}
         </div>
 
+        <!-- Espacio B: Auspicia Localidad -->
+        <div class="bg-surface border border-secondary/20 p-6 rounded-2xl shadow-sm relative text-left mb-6">
+          <div class="absolute top-3 right-3 bg-secondary/15 text-secondary text-[9px] uppercase font-bold px-2 py-0.5 rounded tracking-wider border border-secondary/25 font-semibold">
+            Auspiciado
+          </div>
+          <h4 class="font-title-sm text-primary font-bold text-sm mb-2 flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-secondary text-[18px]">workspace_premium</span>
+            Auspicia ${name}
+          </h4>
+          <p class="font-body-md text-on-surface-variant text-xs leading-relaxed mb-4">
+            Este espacio de destaque está disponible para el Municipio local o prestadores turísticos referentes de ${name}.
+          </p>
+          <a href="mailto:hola@agendasantacruz.ar?subject=Auspicio Localidad: ${name}" class="w-full bg-primary text-white hover:bg-primary-container font-button py-2 rounded-lg text-xs font-bold transition-colors text-center block shadow-sm">
+            Contactar para Auspicio
+          </a>
+        </div>
+
         <!-- Colaboradores widget -->
         <div class="bg-surface-container-low border border-outline-variant/30 p-6 rounded-2xl shadow-sm">
           <h4 class="font-title-sm text-primary font-bold text-sm mb-2">Proyecto de turismo colaborativo</h4>
@@ -1674,9 +1848,45 @@ function renderLocality(slugName) {
   `;
 
   document.getElementById('app').innerHTML = shell(content, 'destinos');
-  document.title = `Qué hacer en ${name} | Agenda Santa Cruz`;
+  setMeta(
+    `Qué hacer en ${name}: eventos y servicios turísticos | Agenda Santa Cruz`,
+    `Guía de ${name} con próximos eventos, dónde dormir, dónde comer, excursiones y prestadores turísticos.`
+  );
 }
 
+
+function recommendedServiceCard() {
+  return `
+    <article class="bg-surface-container-low border border-secondary/40 rounded-xl p-md hover:ambient-shadow transition-shadow flex flex-col justify-between group relative cursor-pointer" onclick="if(!event.target.closest('a')) route('/prestador/puerto-deseado-alojamiento-0')">
+      <div class="absolute top-sm left-sm bg-secondary text-white font-label-sm text-[10px] uppercase px-2 py-1 rounded-md border border-secondary/30 z-10 font-bold tracking-wider shadow-sm flex items-center gap-1">
+        <span class="material-symbols-outlined text-[12px]">workspace_premium</span>
+        Recomendado
+      </div>
+      <div>
+        <div class="flex items-center justify-between gap-2 mb-3 mt-6">
+          <span class="font-label-sm text-[10px] font-bold text-primary-container bg-surface-container px-2 py-1 rounded uppercase">
+            Alojamiento
+          </span>
+          <span class="text-on-surface-variant font-label-sm flex items-center gap-[2px] truncate">
+            <span class="material-symbols-outlined text-[14px] leading-none">pin_drop</span>
+            Puerto Deseado
+          </span>
+        </div>
+        <h3 class="font-title-sm text-primary mb-2 line-clamp-1 group-hover:text-secondary transition-colors font-bold">Cabañas del Estuario</h3>
+        <p class="font-body-md text-on-surface-variant line-clamp-3 mb-4 text-xs">Alojamiento de primer nivel frente a la ría con todas las comodidades. Calefacción central, Wi-Fi libre y asesoramiento turístico local.</p>
+      </div>
+      <div class="pt-4 border-t border-outline-variant/30 flex flex-col gap-2">
+        <a href="https://wa.me/5492974000000?text=Hola! Te contacto desde el espacio destacado de Agenda Santa Cruz por Cabañas del Estuario." target="_blank" class="w-full bg-[#075e54] text-white font-button py-2.5 px-3 rounded-lg flex items-center justify-center gap-1.5 hover:bg-[#053e2a] transition-colors text-xs font-bold shadow-sm">
+          <span class="material-symbols-outlined text-[16px]">chat</span>
+          WhatsApp de Reservas
+        </a>
+        <a href="#/prestador/puerto-deseado-alojamiento-0" class="text-on-surface-variant hover:text-primary font-button py-1 text-center text-xs transition-colors hover:underline">
+          Ver Detalles y Ubicación
+        </a>
+      </div>
+    </article>
+  `;
+}
 
 function renderServices() {
   const localitiesList = ['Todas', ...localities];
@@ -1696,6 +1906,26 @@ function renderServices() {
 
   const currentServices = filterServices();
   const hasFilters = state.services.query || state.services.locality !== 'Todas' || state.services.rubric !== 'Todos';
+
+  // Mezclar resultados de diferentes localidades si "Todas" está seleccionado (UX)
+  if (state.services.locality === 'Todas') {
+    const grouped = {};
+    currentServices.forEach(s => {
+      if (!grouped[s.locality]) grouped[s.locality] = [];
+      grouped[s.locality].push(s);
+    });
+    const mixed = [];
+    let maxLen = Math.max(...Object.values(grouped).map(arr => arr.length), 0);
+    for (let i = 0; i < maxLen; i++) {
+      Object.keys(grouped).forEach(loc => {
+        if (grouped[loc][i]) {
+          mixed.push(grouped[loc][i]);
+        }
+      });
+    }
+    currentServices.length = 0;
+    currentServices.push(...mixed);
+  }
 
   const content = `
     <div class="max-w-7xl mx-auto px-container-margin py-xl">
@@ -1761,7 +1991,16 @@ function renderServices() {
         </div>
       ` : `
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-md">
-          ${currentServices.map(s => serviceCard(s)).join('')}
+          ${(() => {
+            let cards = currentServices.map(s => serviceCard(s));
+            // Inyectar Espacio D: Prestador destacado en primera posición
+            if (cards.length > 0) {
+              cards.splice(0, 0, recommendedServiceCard());
+            } else {
+              cards.push(recommendedServiceCard());
+            }
+            return cards.join('');
+          })()}
         </div>
       `}
     </div>
@@ -1774,7 +2013,10 @@ function renderServices() {
   if (headerElem && state.services.locality !== 'Todas') {
     headerElem.innerText = `Servicios turísticos en ${state.services.locality}`;
   }
-  document.title = `Servicios Turísticos ${state.services.locality !== 'Todas' ? 'en ' + state.services.locality : ''} | Agenda Santa Cruz`;
+  setMeta(
+    `Servicios turísticos en Santa Cruz: alojamiento, gastronomía y excursiones | Agenda Santa Cruz`,
+    `Conectá con prestadores turísticos en Santa Cruz. Filtrá por localidad y rubro y contactá por WhatsApp.`
+  );
 
   document.getElementById('services-search-form').addEventListener('submit', function(e) {
     e.preventDefault();
@@ -1815,12 +2057,19 @@ function renderProvider(id) {
 
   const content = `
     <div class="max-w-3xl mx-auto px-container-margin py-12">
-      <a href="#/servicios" class="inline-flex items-center gap-1 font-button text-on-surface-variant hover:text-primary mb-6 transition-colors text-sm">
-        <span class="material-symbols-outlined text-[18px]">arrow_back</span> Volver a Servicios
-      </a>
+      <!-- Breadcrumbs -->
+      <nav class="flex items-center gap-2 text-xs font-semibold text-on-surface-variant mb-6 uppercase tracking-wider">
+        <a href="#/servicios" class="hover:text-primary transition-colors">Servicios</a>
+        <span class="text-outline-variant">/</span>
+        <span class="text-outline-variant">${s.rubric}</span>
+        <span class="text-outline-variant">/</span>
+        <a href="#/localidad/${slug(s.locality)}" class="hover:text-primary transition-colors">${s.locality}</a>
+        <span class="text-outline-variant">/</span>
+        <span class="text-primary truncate max-w-[150px]">${s.name}</span>
+      </nav>
       
       <div class="bg-surface border border-outline-variant/30 rounded-2xl p-6 md:p-8 shadow-sm">
-        <div class="flex items-center justify-between gap-4 mb-4">
+        <div class="flex flex-wrap items-center justify-between gap-4 mb-4 pb-3 border-b border-outline-variant/20">
           <span class="font-label-sm text-xs font-bold text-primary-container bg-surface-container px-3 py-1 rounded-full uppercase tracking-wider">
             ${s.rubric}
           </span>
@@ -1830,7 +2079,11 @@ function renderProvider(id) {
           </a>
         </div>
         
-        <h1 class="font-display-lg text-[28px] md:text-[36px] text-primary mb-4 font-bold">Qué hacer en ${s.locality}: ${s.name}</h1>
+        <h1 class="font-display-lg text-[28px] md:text-[36px] text-primary mb-2 font-bold leading-tight">${s.name}</h1>
+        <p class="font-body-md text-on-surface-variant text-sm font-semibold mb-6 flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-secondary text-[18px]">verified</span>
+          ${s.rubric} en ${s.locality}
+        </p>
         
         <!-- Big prominent WhatsApp button on top -->
         <div class="mb-6 bg-surface-container-low p-4 rounded-xl border border-outline-variant/20 flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -1875,7 +2128,10 @@ function renderProvider(id) {
   `;
 
   document.getElementById('app').innerHTML = shell(content, 'servicios');
-  document.title = `${s.name} - ${s.rubric} en ${s.locality} | Agenda Santa Cruz`;
+  setMeta(
+    `${s.name} en ${s.locality} | ${s.rubric} | Agenda Santa Cruz`,
+    `Contactá a ${s.name} por WhatsApp. Información y ubicación en ${s.locality}, Santa Cruz.`
+  );
 }
 
 function renderPublish(kind = 'event') {
@@ -1993,7 +2249,7 @@ function renderPublish(kind = 'event') {
           <div class="mt-md">
             <button type="submit" class="w-full bg-secondary-fixed text-primary font-button py-3.5 rounded-lg hover:bg-white transition-colors shadow-sm flex items-center justify-center gap-2 font-bold text-sm">
               <span class="material-symbols-outlined text-[20px]">send</span>
-              Enviar (publicación en menos de 24 hs)
+              Enviar (Revisión estimada: 24–48 hs)
             </button>
           </div>
         </form>
@@ -2020,7 +2276,7 @@ function renderPublish(kind = 'event') {
               <span class="w-8 h-8 rounded-full bg-primary/20 text-primary font-button flex items-center justify-center flex-shrink-0 text-xs font-bold">3</span>
               <div>
                 <h4 class="font-title-sm text-on-surface font-bold text-sm">Publicación en vivo</h4>
-                <p class="font-body-md text-on-surface-variant mt-1 text-xs">El evento o servicio aparecerá en el listado oficial en menos de 24 horas.</p>
+                <p class="font-body-md text-on-surface-variant mt-1 text-xs">El evento o servicio aparecerá en el listado oficial tras ser aprobado.</p>
               </div>
             </li>
           </ul>
@@ -2030,7 +2286,17 @@ function renderPublish(kind = 'event') {
   `;
 
   document.getElementById('app').innerHTML = shell(content, 'publicar', { footer: false });
-  document.title = `Sugerir ${isEvent ? 'Evento' : 'Servicio'} | Agenda Santa Cruz`;
+  if (isEvent) {
+    setMeta(
+      "Publicar un evento en Santa Cruz | Agenda Santa Cruz",
+      "Sugerí un evento para que el equipo lo revise y lo publique. Aportá a la agenda local y llegá a más personas."
+    );
+  } else {
+    setMeta(
+      "Sumar servicio turístico en Santa Cruz | Agenda Santa Cruz",
+      "Sumá tu servicio turístico para que lo revisemos y lo publiquemos. Recibí consultas por WhatsApp."
+    );
+  }
 
   const form = document.getElementById('publish-form');
   form.addEventListener('submit', function(e) {
@@ -2080,7 +2346,10 @@ function renderConfirmation(kind = 'event') {
   `;
 
   document.getElementById('app').innerHTML = shell(content, 'publicar', { footer: false });
-  document.title = 'Propuesta Enviada con Éxito | Agenda Santa Cruz';
+  setMeta(
+    "Propuesta Enviada con Éxito | Agenda Santa Cruz",
+    "El formulario de publicación se envió correctamente. Nuestro equipo lo revisará en las próximas horas."
+  );
 }
 
 // Router trigger
