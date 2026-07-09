@@ -827,6 +827,7 @@ console.log("PATCH1 running, protocol:", window.location.protocol);
 console.log("PATCH1 running, protocol:", window.location.protocol);
 console.log("PATCH1 running, protocol:", window.location.protocol);
 console.log("PATCH1 running, protocol:", window.location.protocol);
+console.log("PATCH1 running, protocol:", window.location.protocol);
 const state = {
   route: 'home',
   params: {},
@@ -2226,9 +2227,9 @@ function renderDestinations() {
         <!-- Sidebar: Search & Filters -->
         <aside class="w-full lg:w-64 flex-shrink-0 lg:sticky lg:top-24 h-fit flex flex-col gap-6">
           <!-- Search Box -->
-          <div class="bg-surface border border-outline-variant/40 rounded-xl p-4 shadow-sm">
-            <label class="font-label-sm text-primary font-bold block mb-2 text-xs">Buscar Destino</label>
-            <div class="relative flex items-center bg-surface-container rounded-lg border border-outline-variant/30 px-2.5 py-1">
+          <div class="bg-surface border border-outline-variant/40 rounded-xl p-4 shadow-sm text-left">
+            <label for="dest-search" class="font-label-sm text-primary font-bold block mb-2 text-xs">Buscar Destino</label>
+            <div class="relative flex items-center bg-surface-container rounded-lg border border-outline-variant/30 px-2.5 py-1 focus-within:border-secondary focus-within:ring-2 focus-within:ring-secondary/35 transition-all">
               <span class="material-symbols-outlined text-on-surface-variant text-[20px]">search</span>
               <input id="dest-search" type="text" value="${state.destinationSearch}" placeholder="Ej. El Chaltén..." class="w-full bg-transparent border-none focus:ring-0 font-body-md text-on-background px-2 py-1.5 outline-none text-sm">
             </div>
@@ -2314,6 +2315,7 @@ function renderDestinations() {
     searchInput.addEventListener('input', function(e) {
       state.destinationSearch = e.target.value;
       const val = e.target.value;
+      updateUrlParams({ search: state.destinationSearch, region: state.destinationRegion });
       renderDestinations();
       const newSearchInput = document.getElementById('dest-search');
       if (newSearchInput) {
@@ -2326,11 +2328,13 @@ function renderDestinations() {
 
 window.setDestSearch = function(val) {
   state.destinationSearch = val;
+  updateUrlParams({ search: state.destinationSearch, region: state.destinationRegion });
   renderDestinations();
 };
 
 window.setDestRegion = function(val) {
   state.destinationRegion = val;
+  updateUrlParams({ search: state.destinationSearch, region: state.destinationRegion });
   renderDestinations();
 };
 
@@ -3321,6 +3325,9 @@ function navigate() {
     state.agenda.category = urlParams.get('category') || 'Todas';
     state.agenda.date = urlParams.get('date') || 'Esta semana';
     state.agenda.quick = urlParams.get('quick') || 'Todos';
+  } else if (state.route === 'destinos') {
+    state.destinationSearch = urlParams.get('search') || '';
+    state.destinationRegion = urlParams.get('region') || 'Todas';
   }
   
   try {
