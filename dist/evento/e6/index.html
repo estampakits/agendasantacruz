@@ -137,6 +137,50 @@
         box-shadow: none;
       }
     }
+    
+    /* Micro-interactions: scale down slightly on active click/press for tactile feedback */
+    button:active, 
+    a:active, 
+    article:active, 
+    [onclick]:active,
+    .btn-active-scale:active {
+      transform: scale(0.97) !important;
+      transition: transform 150ms cubic-bezier(0.23, 1, 0.32, 1) !important;
+    }
+    
+    /* Gated Hover: hover styles only apply to devices with precise pointers (fine hover support) */
+    @media (hover: hover) and (pointer: fine) {
+      .group:hover .group-hover\:scale-105 {
+        transform: scale(1.05) !important;
+      }
+    }
+    
+    /* Accessibility focus styling: clearly visible 2px offset outline */
+    input:focus-visible, 
+    select:focus-visible, 
+    textarea:focus-visible, 
+    button:focus-visible, 
+    a:focus-visible {
+      outline: 2.5px solid #006a60 !important;
+      outline-offset: 2.5px !important;
+      box-shadow: 0 0 0 4px rgba(0, 106, 96, 0.25) !important;
+    }
+    
+    /* Support users who prefer reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, ::before, ::after {
+        animation-delay: -1ms !important;
+        animation-duration: 1ms !important;
+        animation-iteration-count: 1 !important;
+        background-attachment: initial !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0s !important;
+        transition-delay: 0s !important;
+      }
+      .group-hover\:scale-105 {
+        transform: none !important;
+      }
+    }
   </style><meta property="og:title" content="Evento: Jornada comunitaria del bosque (19 de Julio) en 28 de Noviembre | Agenda Santa Cruz"><meta property="og:description" content="Una propuesta abierta para residentes y visitantes, con cupos sujetos a disponibilidad. Actividad pensada para disfrutar la identidad local y conectar. Consultá al organizador por WhatsApp y mirá más eventos y servicios en 28 de Noviembre."></head>
 <body class="bg-background text-on-background min-h-screen flex flex-col font-body-md">
   <div id="toast-container" class="fixed top-5 right-5 z-[9999] flex flex-col gap-2 pointer-events-none"></div>
@@ -533,6 +577,7 @@ console.log("PATCH1 running, protocol:", window.location.protocol);
 console.log("PATCH1 running, protocol:", window.location.protocol);
 console.log("PATCH1 running, protocol:", window.location.protocol);
 console.log("PATCH1 running, protocol:", window.location.protocol);
+console.log("PATCH1 running, protocol:", window.location.protocol);
 const state = {
   route: 'home',
   params: {},
@@ -776,7 +821,7 @@ function getRubricImage(rubric, locality) {
   return mapping[rubric] || getLocalityImage(locality);
 }
 
-// Inject highlight animation style once
+// Inject highlight, focus-visible, and active scale animations once
 if (typeof window !== 'undefined' && !document.getElementById('highlight-glow-style')) {
   const style = document.createElement('style');
   style.id = 'highlight-glow-style';
@@ -792,6 +837,50 @@ if (typeof window !== 'undefined' && !document.getElementById('highlight-glow-st
       100% {
         outline: 3px solid transparent;
         box-shadow: none;
+      }
+    }
+    
+    /* Micro-interactions: scale down slightly on active click/press for tactile feedback */
+    button:active, 
+    a:active, 
+    article:active, 
+    [onclick]:active,
+    .btn-active-scale:active {
+      transform: scale(0.97) !important;
+      transition: transform 150ms cubic-bezier(0.23, 1, 0.32, 1) !important;
+    }
+    
+    /* Gated Hover: hover styles only apply to devices with precise pointers (fine hover support) */
+    @media (hover: hover) and (pointer: fine) {
+      .group:hover .group-hover\\:scale-105 {
+        transform: scale(1.05) !important;
+      }
+    }
+    
+    /* Accessibility focus styling: clearly visible 2px offset outline */
+    input:focus-visible, 
+    select:focus-visible, 
+    textarea:focus-visible, 
+    button:focus-visible, 
+    a:focus-visible {
+      outline: 2.5px solid #006a60 !important;
+      outline-offset: 2.5px !important;
+      box-shadow: 0 0 0 4px rgba(0, 106, 96, 0.25) !important;
+    }
+    
+    /* Support users who prefer reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, ::before, ::after {
+        animation-delay: -1ms !important;
+        animation-duration: 1ms !important;
+        animation-iteration-count: 1 !important;
+        background-attachment: initial !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0s !important;
+        transition-delay: 0s !important;
+      }
+      .group-hover\\:scale-105 {
+        transform: none !important;
       }
     }
   `;
@@ -1395,39 +1484,44 @@ function renderMunicipios() {
 }
 
 
-function sponsoredEventCard() {
+function sponsoredEventHeaderCard() {
   return `
-    <div class="bg-secondary/[0.03] border-2 border-secondary rounded-xl overflow-hidden hover:ambient-shadow transition-shadow duration-300 flex flex-col group relative p-md shadow-md shadow-secondary/5">
-      <!-- Ribbon Auspiciado -->
-      <div class="absolute top-2 right-2 bg-secondary text-white text-[9px] uppercase font-bold px-2 py-0.5 rounded shadow-sm flex items-center gap-1 z-10">
-        <span class="material-symbols-outlined text-[10px]">workspace_premium</span>
-        Auspiciado
+    <div class="bg-secondary/[0.04] border-2 border-secondary rounded-2xl overflow-hidden hover:ambient-shadow transition-all duration-300 flex flex-col md:flex-row items-center p-md md:p-lg gap-md md:gap-lg relative shadow-md shadow-secondary/5 mb-6 text-left" onclick="route('/evento/e1')">
+      <!-- Badge Auspiciado -->
+      <div class="absolute top-3 right-3 bg-secondary text-white text-[9px] uppercase font-black tracking-wider px-2.5 py-1 rounded-full shadow-sm flex items-center gap-1 z-10">
+        <span class="material-symbols-outlined text-[11px]">workspace_premium</span>
+        Auspiciado Principal
       </div>
       
-      <div class="flex-grow text-left">
-        <div class="flex items-center gap-xs mb-2">
+      <!-- Icon/Thumbnail Section -->
+      <div class="w-16 h-16 md:w-20 md:h-20 bg-secondary/10 text-secondary rounded-xl flex items-center justify-center flex-shrink-0">
+        <span class="material-symbols-outlined text-[32px] md:text-[40px]">explore</span>
+      </div>
+      
+      <!-- Info Section -->
+      <div class="flex-grow min-w-0">
+        <div class="flex items-center gap-2 mb-1.5 flex-wrap">
           <span class="bg-secondary/15 text-secondary font-label-sm text-[10px] px-2 py-0.5 rounded-full uppercase tracking-wider font-bold">Campaña Provincial</span>
-          <span class="text-on-surface-variant font-label-sm flex items-center gap-[2px] truncate"><span class="material-symbols-outlined text-[14px]">location_on</span> Toda la Provincia</span>
+          <span class="text-on-surface-variant font-label-sm flex items-center gap-[2px] truncate text-[11px]"><span class="material-symbols-outlined text-[13px] leading-none">location_on</span> Toda la Provincia</span>
         </div>
-        <h3 class="font-title-sm text-primary mb-1 line-clamp-2 font-bold text-sm">Guía de Turismo Oficial de Santa Cruz</h3>
-        <p class="font-body-md text-on-surface-variant mb-4 text-xs leading-relaxed">Descubrí las bellezas naturales con excursiones guiadas autorizadas. Descuentos exclusivos y prestadores habilitados.</p>
+        <h3 class="font-title-md text-primary font-bold text-base md:text-lg mb-1 leading-snug">Guía de Turismo Oficial de Santa Cruz</h3>
+        <p class="font-body-md text-on-surface-variant text-xs md:text-sm leading-relaxed max-w-2xl">Descubrí las bellezas naturales con guías y excursiones autorizadas. Accedé a descuentos exclusivos y contratá prestadores habilitados.</p>
         
-        <!-- Line of Value -->
-        <div class="bg-secondary/5 border border-secondary/10 rounded-lg p-2 mb-4">
-          <p class="text-[10px] text-secondary font-medium flex items-center gap-1">
-            <span class="material-symbols-outlined text-[12px]">check_circle</span>
-            Incluye guía completa + recomendados provinciales
-          </p>
+        <!-- Key Value Point -->
+        <div class="flex items-center gap-1.5 mt-2 text-secondary font-semibold text-[11px]">
+          <span class="material-symbols-outlined text-[14px]">check_circle</span>
+          <span>Incluye listado completo de prestadores y excursiones habilitadas por la provincia</span>
         </div>
       </div>
       
-      <div class="pt-3 border-t border-outline-variant/30 flex items-center justify-between gap-2">
-        <a href="mailto:hola@agendasantacruz.ar?subject=Consulta Campaña Oficial" class="text-on-surface-variant hover:text-primary font-button py-1 text-xs transition-colors hover:underline font-bold">
-          Más info
-        </a>
-        <a href="https://wa.me/5492974000000?text=Hola! Quiero consultar por las Guías de Turismo Oficiales de Santa Cruz." target="_blank" class="bg-[#075e54] text-white font-button py-2 px-4 rounded-lg flex items-center gap-1.5 hover:bg-[#053e2a] transition-colors text-xs font-bold shadow-sm">
+      <!-- CTA Action Buttons -->
+      <div class="flex md:flex-col items-stretch gap-2 w-full md:w-auto flex-shrink-0 pt-3 md:pt-0 border-t md:border-t-0 border-outline-variant/20">
+        <a href="https://wa.me/5492974000000?text=Hola! Quiero consultar por las Guías de Turismo Oficiales de Santa Cruz." target="_blank" onclick="event.stopPropagation();" class="bg-[#075e54] text-white font-button py-2.5 px-4 rounded-xl flex items-center justify-center gap-1.5 hover:bg-[#053e2a] transition-all text-xs font-bold shadow-sm flex-grow md:flex-grow-0 active:scale-[0.97] duration-150">
           <span class="material-symbols-outlined text-[16px]">chat</span>
           Conocer campaña
+        </a>
+        <a href="mailto:hola@agendasantacruz.ar?subject=Consulta Campaña Oficial" onclick="event.stopPropagation();" class="text-on-surface-variant hover:text-primary font-button py-2 px-4 rounded-xl transition-all text-xs font-semibold text-center border border-outline-variant hover:bg-surface-container-low active:scale-[0.97] duration-150">
+          Más información
         </a>
       </div>
     </div>
@@ -1474,13 +1568,13 @@ function renderAgenda() {
       
       <div class="flex flex-col lg:flex-row gap-lg">
         <!-- Sidebar Filters -->
-        <aside class="w-full lg:w-72 flex-shrink-0 bg-surface border border-outline-variant/50 p-md rounded-xl ambient-shadow h-fit">
+        <aside class="w-full lg:w-72 flex-shrink-0 bg-surface border border-outline-variant/50 p-md rounded-xl ambient-shadow h-fit text-left">
           <h3 class="font-title-sm text-primary mb-md pb-xs border-b border-outline-variant/30 flex items-center gap-2">
             <span class="material-symbols-outlined text-[20px]">filter_alt</span> Filtros
           </h3>
           
           <div class="mb-md">
-            <label class="font-label-sm text-on-surface-variant mb-xs block text-xs font-semibold">Localidad</label>
+            <label for="agenda-filter-locality" class="font-label-sm text-on-surface-variant mb-xs block text-xs font-semibold">Localidad</label>
             <select id="agenda-filter-locality" class="w-full bg-surface-bright border border-outline-variant rounded-lg px-sm py-2 focus:border-primary outline-none font-body-md text-on-background text-sm cursor-pointer">
               ${localitiesList.map(l => `<option value="${l}" ${state.agenda.locality === l ? 'selected' : ''}>${l === 'Todas' ? 'Toda la provincia' : l}</option>`).join('')}
             </select>
@@ -1489,9 +1583,9 @@ function renderAgenda() {
           <div class="mb-md">
             <label class="font-label-sm text-on-surface-variant mb-xs block text-xs font-semibold">Fecha</label>
             <div class="flex flex-col gap-2">
-              ${datesList.map(d => `
+              ${datesList.map((d, idx) => `
                 <label class="flex items-center gap-2 font-body-md text-on-background cursor-pointer text-sm">
-                  <input type="radio" name="agenda-date" value="${d}" ${state.agenda.date === d ? 'checked' : ''} class="text-secondary focus:ring-secondary border-outline-variant w-4 h-4 cursor-pointer">
+                  <input type="radio" id="agenda-date-${idx}" name="agenda-date" value="${d}" ${state.agenda.date === d ? 'checked' : ''} class="text-secondary focus:ring-secondary border-outline-variant w-4 h-4 cursor-pointer">
                   <span>${d}</span>
                 </label>
               `).join('')}
@@ -1501,9 +1595,9 @@ function renderAgenda() {
           <div class="mb-xs">
             <label class="font-label-sm text-on-surface-variant mb-xs block text-xs font-semibold">Categoría</label>
             <div class="flex flex-col gap-2">
-              ${categoriesList.map(c => `
+              ${categoriesList.map((c, idx) => `
                 <label class="flex items-center gap-2 font-body-md text-on-background cursor-pointer text-sm">
-                  <input type="radio" name="agenda-category" value="${c}" ${state.agenda.category === c ? 'checked' : ''} class="text-secondary focus:ring-secondary border-outline-variant w-4 h-4 cursor-pointer">
+                  <input type="radio" id="agenda-cat-${idx}" name="agenda-category" value="${c}" ${state.agenda.category === c ? 'checked' : ''} class="text-secondary focus:ring-secondary border-outline-variant w-4 h-4 cursor-pointer">
                   <span>${c}</span>
                 </label>
               `).join('')}
@@ -1528,7 +1622,7 @@ function renderAgenda() {
             }).join('')}
           </div>
 
-          <div class="flex flex-wrap items-center justify-between gap-2 mb-md">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-md text-left">
             ${!hasFilters ? `
               <span class="font-label-sm text-outline text-xs">Mostrando: Toda la provincia &middot; Esta semana &middot; Todas las categorías</span>
             ` : `
@@ -1558,23 +1652,19 @@ function renderAgenda() {
               </div>
             </div>
           ` : `
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-md">
-              ${(() => {
-                let cards = currentEvents.map(e => eventCard(e));
-                // Inyección Espacio C: Tarjeta auspiciada en segunda posición
-                if (cards.length > 0) {
-                  cards.splice(1, 0, sponsoredEventCard());
-                } else {
-                  cards.push(sponsoredEventCard());
-                }
-                return cards.join('');
-              })()}
+            <!-- Destacado / Auspiciado Principal -->
+            ${sponsoredEventHeaderCard()}
+
+            <!-- Grilla de Eventos de 2 Columnas para evitar rebosamiento de texto -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+              ${currentEvents.map(e => eventCard(e)).join('')}
             </div>
           `}
         </div>
       </div>
     </div>
   `;
+
   
   document.getElementById('app').innerHTML = shell(content, 'agenda');
   setMeta(
@@ -2478,14 +2568,14 @@ function renderServices() {
       <div class="bg-surface border border-outline-variant/30 p-md rounded-xl shadow-sm mb-xl">
         <form id="services-search-form" class="grid grid-cols-1 md:grid-cols-12 gap-md items-end">
           <div class="md:col-span-6 text-left">
-            <label class="font-label-sm text-on-surface-variant mb-xs block text-xs font-semibold">Buscar</label>
+            <label for="srv-search" class="font-label-sm text-on-surface-variant mb-xs block text-xs font-semibold">Buscar</label>
             <div class="relative">
               <span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">search</span>
               <input id="srv-search" type="text" value="${state.services.query}" class="w-full bg-surface-bright border border-outline-variant rounded-lg pl-10 pr-sm py-2.5 focus:border-primary outline-none font-body-md text-on-background text-sm" placeholder="Ej. Cabañas, Pizzería...">
             </div>
           </div>
           <div class="md:col-span-5 text-left">
-            <label class="font-label-sm text-on-surface-variant mb-xs block text-xs font-semibold">Localidad</label>
+            <label for="srv-locality" class="font-label-sm text-on-surface-variant mb-xs block text-xs font-semibold">Localidad</label>
             <select id="srv-locality" class="w-full bg-surface-bright border border-outline-variant rounded-lg px-sm py-2.5 focus:border-primary outline-none font-body-md text-on-background text-sm cursor-pointer">
               ${localitiesList.map(l => `<option value="${l}" ${state.services.locality === l ? 'selected' : ''}>${l === 'Todas' ? 'Toda la provincia' : l}</option>`).join('')}
             </select>
@@ -2737,20 +2827,20 @@ function renderPublish(kind = 'event') {
           </div>
           
           <div>
-            <label class="font-label-sm text-on-surface-variant block mb-xs text-xs font-semibold">Título / Nombre *</label>
+            <label for="pub-title" class="font-label-sm text-on-surface-variant block mb-xs text-xs font-semibold">Título / Nombre *</label>
             <input type="text" id="pub-title" required class="w-full bg-surface-bright border border-outline-variant rounded-lg px-sm py-2.5 focus:border-primary outline-none font-body-md text-on-background text-sm peer invalid:[&:not(:placeholder-shown)]:border-error" placeholder="${isEvent ? 'Ej. Peña Folclórica Nocturna' : 'Ej. Alquiler de Cabañas Las Nubes'}">
             <span class="hidden peer-invalid:[&:not(:placeholder-shown)]:block text-error text-[11px] mt-1">Este campo es obligatorio.</span>
           </div>
           
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-md">
             <div>
-              <label class="font-label-sm text-on-surface-variant block mb-xs text-xs font-semibold">Localidad *</label>
+              <label for="pub-locality" class="font-label-sm text-on-surface-variant block mb-xs text-xs font-semibold">Localidad *</label>
               <select id="pub-locality" required class="w-full bg-surface-bright border border-outline-variant rounded-lg px-sm py-2.5 focus:border-primary outline-none font-body-md text-on-background text-sm cursor-pointer">
                 ${localities.map(l => `<option value="${l}" ${l === prefLoc ? 'selected' : ''}>${l}</option>`).join('')}
               </select>
             </div>
             <div>
-              <label class="font-label-sm text-on-surface-variant block mb-xs text-xs font-semibold">Categoría / Rubro *</label>
+              <label for="pub-category" class="font-label-sm text-on-surface-variant block mb-xs text-xs font-semibold">Categoría / Rubro *</label>
               <select id="pub-category" required class="w-full bg-surface-bright border border-outline-variant rounded-lg px-sm py-2.5 focus:border-primary outline-none font-body-md text-on-background text-sm cursor-pointer">
                 ${isEvent 
                   ? ['Cultural', 'Deportivo', 'Gastronómico', 'Institucional'].map(c => `<option value="${c}">${c}</option>`).join('')
@@ -2763,21 +2853,21 @@ function renderPublish(kind = 'event') {
           ${isEvent ? `
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-md">
               <div>
-                <label class="font-label-sm text-on-surface-variant block mb-xs text-xs font-semibold">Fecha *</label>
+                <label for="pub-date" class="font-label-sm text-on-surface-variant block mb-xs text-xs font-semibold">Fecha *</label>
                 <input type="date" id="pub-date" required class="w-full bg-surface-bright border border-outline-variant rounded-lg px-sm py-2.5 focus:border-primary outline-none font-body-md text-on-background text-sm peer invalid:[&:not(:placeholder-shown)]:border-error">
               </div>
               <div>
-                <label class="font-label-sm text-on-surface-variant block mb-xs text-xs font-semibold">Horario de Inicio *</label>
+                <label for="pub-time" class="font-label-sm text-on-surface-variant block mb-xs text-xs font-semibold">Horario de Inicio *</label>
                 <input type="time" id="pub-time" required class="w-full bg-surface-bright border border-outline-variant rounded-lg px-sm py-2.5 focus:border-primary outline-none font-body-md text-on-background text-sm peer invalid:[&:not(:placeholder-shown)]:border-error">
               </div>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-md">
               <div>
-                <label class="font-label-sm text-on-surface-variant block mb-xs text-xs font-semibold">Lugar / Dirección del Evento *</label>
+                <label for="pub-place" class="font-label-sm text-on-surface-variant block mb-xs text-xs font-semibold">Lugar / Dirección del Evento *</label>
                 <input type="text" id="pub-place" required class="w-full bg-surface-bright border border-outline-variant rounded-lg px-sm py-2.5 focus:border-primary outline-none font-body-md text-on-background text-sm peer invalid:[&:not(:placeholder-shown)]:border-error" placeholder="Ej. Gimnasio Municipal">
               </div>
               <div>
-                <label class="font-label-sm text-on-surface-variant block mb-xs text-xs font-semibold">Tipo de Entrada *</label>
+                <label for="pub-ticket" class="font-label-sm text-on-surface-variant block mb-xs text-xs font-semibold">Tipo de Entrada *</label>
                 <select id="pub-ticket" required class="w-full bg-surface-bright border border-outline-variant rounded-lg px-sm py-2.5 focus:border-primary outline-none font-body-md text-on-background text-sm cursor-pointer">
                   <option value="Gratis">Gratis</option>
                   <option value="Con entrada">Con entrada</option>
@@ -2789,14 +2879,14 @@ function renderPublish(kind = 'event') {
           ` : ''}
 
           <div>
-            <label class="font-label-sm text-on-surface-variant block mb-xs text-xs font-semibold">Descripción *</label>
+            <label for="pub-desc" class="font-label-sm text-on-surface-variant block mb-xs text-xs font-semibold">Descripción *</label>
             <textarea id="pub-desc" required rows="4" class="w-full bg-surface-bright border border-outline-variant rounded-lg px-sm py-2.5 focus:border-primary outline-none font-body-md text-on-background resize-y text-sm peer invalid:[&:not(:placeholder-shown)]:border-error" placeholder="Brindá información útil para los visitantes (duración, costos, características)..."></textarea>
             <span class="hidden peer-invalid:[&:not(:placeholder-shown)]:block text-error text-[11px] mt-1">Este campo es obligatorio.</span>
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-md">
             <div>
-              <label class="font-label-sm text-on-surface-variant block mb-xs text-xs font-semibold">WhatsApp de Contacto *</label>
+              <label for="pub-phone" class="font-label-sm text-on-surface-variant block mb-xs text-xs font-semibold">WhatsApp de Contacto *</label>
               <div class="relative">
                 <span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">phone</span>
                 <input type="tel" id="pub-phone" required pattern="^\\+?549?\\d{10}$" class="w-full bg-surface-bright border border-outline-variant rounded-lg pl-9 pr-sm py-2.5 focus:border-primary outline-none font-body-md text-on-background text-sm peer invalid:[&:not(:placeholder-shown)]:border-error" placeholder="+54 9 297 4123456">
